@@ -3,6 +3,8 @@ angular.module('camera', [
   'common'
 ]);
 
+//testing
+//another test
 angular
   .module('camera')
   .controller('IndexController', function($scope, supersonic) {
@@ -12,7 +14,7 @@ angular
 	  quality: 50,
 	  targetWidth: 300,
 	  targetHeight: 300,
-	  saveToPhotoAlbum: true,
+	  saveToPhotoAlbum: false,
 	  destinationType: "dataURL"
 	};
 	
