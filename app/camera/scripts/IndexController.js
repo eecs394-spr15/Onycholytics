@@ -5,6 +5,7 @@ angular
   .controller('IndexController', function($scope, supersonic) {
   	$scope.image = "";
 //11s
+      
     var options = {
 	  quality: 50,
 	  targetWidth: 300,
