@@ -1,4 +1,5 @@
 //testing
+//another test
 angular
   .module('camera')
   .controller('IndexController', function($scope, supersonic) {
