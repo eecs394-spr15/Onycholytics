@@ -4,7 +4,8 @@ angular
   .module('camera')
   .controller('IndexController', function($scope, supersonic) {
   	$scope.image = "";
-
+//11s
+//2
     var options = {
 	  quality: 50,
 	  targetWidth: 300,
