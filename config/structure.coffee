@@ -17,7 +17,7 @@ module.exports =
     {
       title: "Internet"
       id: "internet"
-      location: "http://google.com" # URLs are supported!
+      location: "camera#index" # URLs are supported!
     }
   ]
 
