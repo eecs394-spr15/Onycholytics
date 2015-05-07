@@ -10,8 +10,8 @@
     <button class="button button-block button-positive" ng-click="takePhoto()">Take a picture!</button>
   </div>
 
-  <div class="padding">
-    <img ng-src="data:image/jpeg;base64,{{ image }}" alt="Description"/>
+  <div class="padding" ng-repeat="progress in progresstables">
+    <img ng-src="data:image/jpeg;base64,{{ progress['photo'] }}" alt="Description"/>
   </div>
 
 </div>
