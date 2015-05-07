@@ -11,7 +11,7 @@
   <meta charset="utf8">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-  <title>index</title>
+  <title>new</title>
 
   <link rel="stylesheet" href="/components/supersonic/css/supersonic.css" />
   <link rel="stylesheet" href="/app/common/stylesheets/application.css" />
@@ -26,28 +26,27 @@
   
   <script src="/app/common.js"></script>
   
-  <script src="/app/camera.js"></script>
+  <script src="/app/progresstable.js"></script>
   
 </head>
-<body ng-app="camera">
+<body ng-app="progresstable" class="content">
 
-<div ng-controller="IndexController">
-
+<div ng-controller="NewController">
   <super-navbar>
+    <super-navbar-button ng-click="cancel()">
+      Cancel
+    </super-navbar-button>
     <super-navbar-title>
-      Index
+      New Progresstable
     </super-navbar-title>
   </super-navbar>
 
   <div class="padding">
-    <button class="button button-block button-positive" ng-click="takePhoto()">Take a picture!</button>
+    <div ng-show="showSpinner" ng-include="'_spinner.html'"></div>
+    <form ng-hide="showSpinner" ng-submit="submitForm()" ng-include="'_form.html'"></form>
   </div>
-
-  <div class="padding" ng-repeat="progress in progresstables">
-    <img ng-src="data:image/jpeg;base64,{{ progress['photo'] }}" alt="Description"/>
-  </div>
-
 </div>
+
 
 </body>
 </html>

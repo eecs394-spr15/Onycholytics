@@ -1,0 +1,34 @@
+<div ng-controller="ShowController">
+  <super-navbar>
+    <super-navbar-title>
+      Show
+    </super-navbar-title>
+  </super-navbar>
+
+  <div class="padding">
+    <div ng-show="showSpinner" ng-include="'_spinner.html'"></div>
+    <div ng-hide="showSpinner">
+      <h2 ng-bind="progresstable['createdAt']"></h2>
+      
+      
+      
+       <p>objectId: <span ng-bind="progresstable['objectId']"></span></p> 
+      
+       <p>photo: <span ng-bind="progresstable['photo']"></span></p> 
+      
+       <p>updatedAt: <span ng-bind="progresstable['updatedAt']"></span></p> 
+      
+
+
+      <super-modal-show location="progresstable#edit?id={{ progresstable.id }}">
+        <button class="button button-block button-positive">
+          Edit
+        </button>
+      </super-modal-show>
+
+      <button ng-click="remove(progresstable.id)" class="button button-block button-negative">
+        Remove
+      </button>
+    </div>
+  </div>
+</div>

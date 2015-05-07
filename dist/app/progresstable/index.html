@@ -26,28 +26,43 @@
   
   <script src="/app/common.js"></script>
   
-  <script src="/app/camera.js"></script>
+  <script src="/app/progresstable.js"></script>
   
 </head>
-<body ng-app="camera">
+<body ng-app="progresstable" class="content">
 
 <div ng-controller="IndexController">
-
   <super-navbar>
     <super-navbar-title>
-      Index
+      Progresstable Index
     </super-navbar-title>
   </super-navbar>
 
-  <div class="padding">
-    <button class="button button-block button-positive" ng-click="takePhoto()">Take a picture!</button>
-  </div>
+  <div ng-show="showSpinner" ng-include="'_spinner.html'"></div>
+  <div ng-hide="showSpinner">
+    <ul class="list" ng-hide="progresstables.length == 0">
 
-  <div class="padding" ng-repeat="progress in progresstables">
-    <img ng-src="data:image/jpeg;base64,{{ progress['photo'] }}" alt="Description"/>
-  </div>
+      <super-navigate location="progresstable#show" data-params-id="{{ progresstable.id }}" ng-repeat="progresstable in progresstables">
+        <li class="item item-icon-right">
+          <span ng-bind="progresstable['createdAt']"></span>
+          <i class="icon super-ios7-arrow-right"></i>
+        </li>
+      </super-navigate>
 
+    </ul>
+
+    <h4 ng-show="progresstables.length == 0" class="assertive padding">
+      No progresstables found. Create one?
+    </h4>
+
+    <super-modal-show location="progresstable#new">
+      <button class="button button-full button-positive">
+        Create a new progresstable
+      </button>
+    </super-modal-show>
+  </div>
 </div>
+
 
 </body>
 </html>

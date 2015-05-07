@@ -11,7 +11,7 @@
   <meta charset="utf8">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-  <title>index</title>
+  <title>show</title>
 
   <link rel="stylesheet" href="/components/supersonic/css/supersonic.css" />
   <link rel="stylesheet" href="/app/common/stylesheets/application.css" />
@@ -26,28 +26,46 @@
   
   <script src="/app/common.js"></script>
   
-  <script src="/app/camera.js"></script>
+  <script src="/app/progresstable.js"></script>
   
 </head>
-<body ng-app="camera">
+<body ng-app="progresstable" class="content">
 
-<div ng-controller="IndexController">
-
+<div ng-controller="ShowController">
   <super-navbar>
     <super-navbar-title>
-      Index
+      Show
     </super-navbar-title>
   </super-navbar>
 
   <div class="padding">
-    <button class="button button-block button-positive" ng-click="takePhoto()">Take a picture!</button>
-  </div>
+    <div ng-show="showSpinner" ng-include="'_spinner.html'"></div>
+    <div ng-hide="showSpinner">
+      <h2 ng-bind="progresstable['createdAt']"></h2>
+      
+      
+      
+       <p>objectId: <span ng-bind="progresstable['objectId']"></span></p> 
+      
+       <p>photo: <span ng-bind="progresstable['photo']"></span></p> 
+      
+       <p>updatedAt: <span ng-bind="progresstable['updatedAt']"></span></p> 
+      
 
-  <div class="padding" ng-repeat="progress in progresstables">
-    <img ng-src="data:image/jpeg;base64,{{ progress['photo'] }}" alt="Description"/>
-  </div>
 
+      <super-modal-show location="progresstable#edit?id={{ progresstable.id }}">
+        <button class="button button-block button-positive">
+          Edit
+        </button>
+      </super-modal-show>
+
+      <button ng-click="remove(progresstable.id)" class="button button-block button-negative">
+        Remove
+      </button>
+    </div>
+  </div>
 </div>
+
 
 </body>
 </html>

@@ -5,23 +5,38 @@ angular.module('camera', [
 
 angular
   .module('camera')
-  .controller('IndexController', function($scope, supersonic) {
-  	$scope.image = "";
+  .controller('IndexController', function ($scope, Progresstable, supersonic) {
+  	$scope.progresstable = {};
+  	$scope.progresstables = null;
 
     var options = {
-	  quality: 50,
+	  quality: 100,
 	  targetWidth: 300,
 	  targetHeight: 300,
-	  saveToPhotoAlbum: true,
+	  saveToPhotoAlbum: false,
 	  destinationType: "dataURL"
 	};
+
+    Progresstable.all().whenChanged( function (progresstables) {
+        $scope.$apply( function () {
+          $scope.progresstables = progresstables;
+        });
+    });
 	
 	$scope.takePhoto = function() {
 		supersonic.media.camera.takePicture(options).then( function(result){
   		// Do something with the image URI
-  		alert(result);
-  		$scope.image = result;
+  			$scope.progresstable['photo'] = result;
+	  		newprogresstable = new Progresstable($scope.progresstable);
+	     	newprogresstable.save().then( function () {
+	        	alert("Photo saved");
+	      	});
 		});
+	
 	}
 	
   });
+
+angular
+  .module('camera')
+  .constant('Progresstable', supersonic.data.model('progresstable'));
