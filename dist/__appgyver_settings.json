@@ -20,7 +20,7 @@
       "position": 1,
       "id": "settings",
       "title": "Settings",
-      "target_url": "http://localhost/app/example/settings.html"
+      "target_url": "http://localhost/app/camera/try.html"
     },
     {
       "position": 2,
