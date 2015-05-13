@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+  window.addEventListener('WebComponentsReady', function() {
+    supersonic.app.splashscreen.hide();
+  });
+  </script>
+  <!-- Cloud resource definition file for Supersonic Data -->
+  <script src="/cloud-resources.js"></script>
+  <meta charset="utf8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  <title>image</title>
+
+  <link rel="stylesheet" href="/components/supersonic/css/supersonic.css" />
+  <link rel="stylesheet" href="/app/common/stylesheets/application.css" />
+  <link rel="import" href="/components/supersonic/components/import.html">
+
+  <script src="http://localhost/cordova.js"></script>
+  <script src="/components/steroids-js/steroids.js"></script>
+  <script src="/components/angular/angular.js"></script>
+  <script src="/components/supersonic/supersonic.js"></script>
+  <script src="/components/webcomponentsjs/webcomponents.js"></script>
+
+  
+  <script src="/app/common.js"></script>
+  
+  <script src="/app/camera.js"></script>
+  
+</head>
+<body ng-app="camera">
+
+<div ng-controller="ImageController">
+    <super-navbar>
+        <super-navbar-title>
+          Picture Views
+        </super-navbar-title>
+    </super-navbar>
+
+
+
+<div id="draggable" >
+    <img name="myImage" src="http://i44.tinypic.com/1hezvm.jpg" alt="pic" width="100px" height="70px" />
+</div>
+
+<body onload="initial()"> 
+    <div class="wrapper">
+
+        <p><button id="login-button" ng-click="zoomIn()">Zoom In</button></p>
+        <p><button id="login-button" ng-click="zoomOut()">Zoom Out</button></p>
+        <p><button id="login-button" ng-click="resetImage()">Reset</button></p>
+    </div>
+
+</div>
+
+</body>
+</html>
