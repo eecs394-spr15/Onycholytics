@@ -11,15 +11,18 @@
     <button class="button button-block button-positive" ng-click="takePhoto()">Take a picture!</button>
   </div>
 -->
-  <p>Image {{numImage + 1}} / {{totalImage}} </p>
+<div class="padding">
+  <h2 align="center">Image {{numImage + 1}} / {{totalImage}} </h2>
+</div>
 
   <div id="image-container" class="padding"> 
-    <img ng-src="data:image/jpeg;base64,{{ progresstables[ numImage ]['photo'] }}" alt="Image"/>
+    <img align="middle" ng-src="data:image/jpeg;base64,{{ progresstables[ numImage ]['photo'] }}" alt="Image"/>
   </div>
 
-  <div class="padding">
-      <button id="image-view-button" class="button button-energized" ng-click="previousImage()">Previous</button>
-      <button id="image-view-button" class="button button-energized" ng-click="nextImage()">Next</button>
+  <div class="button-bar">
+
+      <a id="image-view-button" class="button icon-left super-chevron-left button-energized" ng-click="previousImage()">Previous</a>
+      <a id="image-view-button" class="button icon-right super-chevron-right button-energized" ng-click="nextImage()">Next</a>
   </div>
 
 <!--

@@ -29,7 +29,10 @@ angular
     }
 
     $scope.nextImage = function() {
-    	$scope.numImage = ($scope.numImage + 1) % $scope.totalImage;
+      if($scope.numImage!=$scope.totalImage-1){
+        $scope.numImage = ($scope.numImage + 1) % $scope.totalImage;
+      }
+    	
     	//alert('Next Image');
     }
 
