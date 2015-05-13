@@ -12,7 +12,8 @@ module.exports =
     {
       title: "Settings"
       id: "settings"
-      location: "camera#try"
+      location: "camera#image"
+
     }
     {
       title: "Internet"
