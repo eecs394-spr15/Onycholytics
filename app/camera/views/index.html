@@ -2,16 +2,30 @@
 
   <super-navbar>
     <super-navbar-title>
-      Index
+      Image Viewer
     </super-navbar-title>
   </super-navbar>
 
+  <!--
   <div class="padding">
     <button class="button button-block button-positive" ng-click="takePhoto()">Take a picture!</button>
   </div>
+-->
+  <p>Image {{numImage + 1}} / {{totalImage}} </p>
 
+  <div id="image-container" class="padding"> 
+    <img ng-src="data:image/jpeg;base64,{{ progresstables[ numImage ]['photo'] }}" alt="Image"/>
+  </div>
+
+  <div class="padding">
+      <button id="image-view-button" class="button button-energized" ng-click="previousImage()">Previous</button>
+      <button id="image-view-button" class="button button-energized" ng-click="nextImage()">Next</button>
+  </div>
+
+<!--
   <div class="padding" ng-repeat="progress in progresstables">
     <img ng-src="data:image/jpeg;base64,{{ progress['photo'] }}" alt="Description"/>
   </div>
+-->
 
 </div>
