@@ -1,7 +1,17 @@
 <div ng-controller="ImageController">
+    <super-navbar>
+        <super-navbar-title>
+          Picture Views
+        </super-navbar-title>
+    </super-navbar>
+
+
+
 <div id="draggable" >
+    <img name="myImage" src="http://i44.tinypic.com/1hezvm.jpg" alt="pic" width="100px" height="70px" />
 </div>
-
-<div class="wrapper"><button id="login-button" >Zoom In</button></div>
-
-<div class="wrapper"><button id="login-button" >Zoom Out</button></div>
+<body onload="initial()"> 
+<div class="wrapper">
+    <button id="login-button" ng-click="zoomIn()">Zoom In</button>
+    <button id="login-button" ng-click="zoomOut()">Zoom Out</button>
+</div>

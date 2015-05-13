@@ -13,6 +13,8 @@ module.exports =
       title: "Settings"
       id: "settings"
       location: "camera#image"
+      #location: "camera#try"
+
 
     }
     {
