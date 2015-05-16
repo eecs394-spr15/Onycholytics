@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+  window.addEventListener('WebComponentsReady', function() {
+    supersonic.app.splashscreen.hide();
+  });
+  </script>
+  <!-- Cloud resource definition file for Supersonic Data -->
+  <script src="/cloud-resources.js"></script>
+  <meta charset="utf8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  <title>try</title>
+
+  <link rel="stylesheet" href="/components/supersonic/css/supersonic.css" />
+  <link rel="stylesheet" href="/app/common/stylesheets/application.css" />
+  <link rel="import" href="/components/supersonic/components/import.html">
+
+  <script src="http://localhost/cordova.js"></script>
+  <script src="/components/steroids-js/steroids.js"></script>
+  <script src="/components/angular/angular.js"></script>
+  <script src="/components/supersonic/supersonic.js"></script>
+  <script src="/components/webcomponentsjs/webcomponents.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="https://hammerjs.github.io/dist/hammer.js"></script>
+
+  
+  <script src="/app/common.js"></script>
+  
+  <script src="/app/camera.js"></script>
+  
+</head>
+<body ng-app="camera">
+
+<div ng-controller="try">
+    <super-navbar>
+        <super-navbar-title>
+          Picture Views
+        </super-navbar-title>
+    </super-navbar>
+
+    <style type="text/css">
+
+    /*Default CSS for pan containers*/
+    .pancontainer{
+    position:relative; /*keep this intact*/
+    overflow:hidden; /*keep this intact*/
+    width:300px;
+    height:300px;
+    border:1px solid black;
+    }
+
+    .pancontainer .zoomcontrols{ /* default CSS class for magnify controls within container */
+    position:absolute;
+    width: 30px;
+    height: 30px;
+    background: #eee;
+    border: 1px solid gray;
+    }
+
+    </style>
+    
+<!--    <script type="text/javascript" src="try.js"></script>-->
+    <style type="text/css">
+
+    /*Default CSS for pan containers*/
+    .pancontainer{
+    position:relative; /*keep this intact*/
+    overflow:hidden; /*keep this intact*/
+    width:300px;
+    height:300px;
+    border:1px solid black;
+    }
+
+    .pancontainer .zoomcontrols{ /* default CSS class for magnify controls within container */
+    position:absolute;
+    width: 30px;
+    height: 30px;
+    background: #eee;
+    border: 1px solid gray;
+    }
+
+    </style>
+    </style>
+
+<!--    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>-->
+
+
+</script>
+    <body onload="initial()"> 
+
+    <div class="pancontainer" data-canzoom="yes" data-orient="center"  id="biankuang" > 
+        <img name="myImage" src="http://i44.tinypic.com/1hezvm.jpg" alt="pic" />
+    </div> 
+
+ <!--   <input type="button" value="Zoom in" ng-click="zoomIn()"> 
+    <input type="button" value="Zoom out" ng-click="zoomOut()"> 
+    <input type="button" value="Reset" ng-click="resetImage()"> 
+     <input type="button" value="Move" ng-click="move()">
+   <span id="zoomsize"></span> <span id="imgsize"></span></p>  -->
+
+      <div class="padding">
+        <button class="button button-block button-positive" ng-click="zoomIn()">Zoom in</button>
+      </div>
+      <div class="padding">
+        <button class="button button-block button-positive" ng-click="zoomOut()">Zoom out</button>
+      </div>
+      <div class="padding">
+        <button class="button button-block button-positive" ng-click="resetImage()">Reset</button>
+      </div>
+
+    </body>  
+
+
+</div>
+
+</body>
+</html>

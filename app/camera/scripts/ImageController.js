@@ -1,6 +1,33 @@
 angular
   .module('camera')
   .controller("ImageController", function ($scope, Progresstable, supersonic) {
+    var myElement = document.getElementById("draggable");
+    var mc = new Hammer.Manager(myElement);
+
+    // create a pinch and rotate recognizer
+    // these require 2 pointers
+    var pinch = new Hammer.Pinch();
+    //var rotate = new Hammer.Rotate();
+
+    // we want to detect both the same time
+    //pinch.recognizeWith(rotate);
+
+    // add to the Manager
+    mc.add([pinch]);
+
+
+    mc.on("pinchout", function(ev) {
+        document.myImage.width += 10;
+        document.myImage.height += 10;
+        //myElement.textContent += ev.scale +" ";
+    });
+
+    mc.on("pinchin", function(ev) {
+        document.myImage.width -= 10;
+        document.myImage.height -= 10;
+        //myElement.textContent += ev.scale +" ";
+    });
+
     $scope.showimage=false;
     var draggable = document.getElementById('draggable');
     var template = document.getElementById('template');
@@ -32,12 +59,12 @@ angular
             update(); 
         }
         else {
-            alert("This does not make up for your small dick.");
+            alert("Too Big!");
         }
     }
     $scope.zoomOut=function(){ 
         if (document.myImage.width < 20 || document.myImage.height < 20) {
-            alert("This is the size of your dick.")
+            alert("Too Small!")
         }
         else {
             document.myImage.width = currentWidth/1.2; 
