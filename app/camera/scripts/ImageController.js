@@ -2,6 +2,18 @@ angular
   .module('camera')
   .controller("ImageController", function ($scope, Progresstable, supersonic) {
     $scope.showimage=false;
+
+    if(steroids.view.params.photo){
+      $scope.photo = "data:image/png;base64," + steroids.view.params.photo;
+    }
+    else
+    {
+      $scope.photo = "/images/finger.png";  
+    }
+    
+
+
+
     var draggable = document.getElementById('draggable');
     var template = document.getElementById('template');
     draggable.addEventListener('touchmove', function(event) {
