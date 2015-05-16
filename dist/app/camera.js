@@ -24,16 +24,26 @@ angular
         event.preventDefault();
     }, false);
     $scope.zoomIn = function() {
-        document.myImage.width = currentWidth*1.2; 
-        document.myImage.height = currentHeight*1.2; 
-        zoomLevel = zoomLevel + 1; 
-        update(); 
+        if (document.myImage.width < screen.width && document.myImage.height < screen.height) {
+            document.myImage.width = currentWidth*1.2; 
+            document.myImage.height = currentHeight*1.2; 
+            zoomLevel = zoomLevel + 1; 
+            update(); 
+        }
+        else {
+            alert("This does not make up for your small dick.");
+        }
     }
     $scope.zoomOut=function(){ 
-        document.myImage.width = currentWidth/1.2; 
-        document.myImage.height = currentHeight/1.2; 
-        zoomLevel = zoomLevel - 1; 
-        update(); 
+        if (document.myImage.width < 20 || document.myImage.height < 20) {
+            alert("This is the size of your dick.")
+        }
+        else {
+            document.myImage.width = currentWidth/1.2; 
+            document.myImage.height = currentHeight/1.2; 
+            zoomLevel = zoomLevel - 1; 
+            update(); 
+        }
     } 
     $scope.resetImage=function(){ 
         document.myImage.width = originalWidth; 
