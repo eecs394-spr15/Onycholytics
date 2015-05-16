@@ -1,7 +1,7 @@
 angular
   .module('camera')
   .controller("ImageController", function ($scope, Progresstable, supersonic) {
-
+    $scope.showimage=false;
     var draggable = document.getElementById('draggable');
     var template = document.getElementById('template');
     draggable.addEventListener('touchmove', function(event) {
@@ -49,5 +49,8 @@ angular
         currentHeight = document.myImage.height; 
         zoomsize.innerText = zoomLevel; 
         imgsize.innerText = currentWidth + "X" + currentHeight; 
+    }
+    $scope.imagechange=function(){
+    $scope.showimage=!$scope.showimage;
     }
 });

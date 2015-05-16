@@ -86,5 +86,6 @@ button#login-button {
 
 .crop img {
     position: absolute;
+    
     clip: rect(0px,200px,300px,100px);
 }
