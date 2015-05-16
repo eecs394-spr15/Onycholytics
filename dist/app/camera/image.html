@@ -38,27 +38,35 @@
         </super-navbar-title>
     </super-navbar>
 
+    
+        <div id="draggable" >
+            <img name="myImage" src="/images/finger.png" alt="pic" width="70px" height="100px" />
+        </div>
+   
 
 
-    <div id="draggable" >
-        <img name="myImage" src="/images/Finger-icon.png" alt="pic" width="100px" height="100px" />
-    </div>
+        <div id="template" >
+            <img name="myImage2" src="/images/Finger-icon.png" alt="pic" width="102px" height="200px" />
+        </div>
+
 
     <body onload="initial()"> 
         <div class="wrapper">
 
-            <p><button id="login-button" ng-click="zoomIn()">Zoom In</button></p>
-            <p><button id="login-button" ng-click="zoomOut()">Zoom Out</button></p>
-            <p><button id="login-button" ng-click="resetImage()">Reset</button></p>
+            <button id="login-button" ng-click="zoomIn()"><img name="zoomin" src="/icons/zoomin.svg" width="30px" height="30px" /></button>
+            <button id="login-button" ng-click=""><img name="cropping" src="/icons/cropping.svg" width="30px" height="30px" /></button>
+            <button id="login-button" ng-click="zoomOut()"><img name="zoomin" src="/icons/zoomout.svg" width="30px" height="30px" /></button>
+            <!--<p><button id="login-button" ng-click="resetImage()">Reset</button></p>-->
         </div>
     </body>
+    <!--
     <div class="crop1" >
         <img src="/images/pointing_finger.png" alt="pic" width="300px" height="300px" />
     </div>
     <div class="crop" >
         <img src="/images/pointing_finger.png" alt="pic" width="300px" height="300px" />
     </div>
-<!--    <div class="crop">
+   <div class="crop">
         <img src="/images/pointing_finger.png" alt="pic" />
     </div>-->
 </div>
