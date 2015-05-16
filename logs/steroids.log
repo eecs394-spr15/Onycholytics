@@ -8047,6 +8047,7 @@
 {"datetime":1431560219083,"view":"http://localhost/app/example/using-the-scanner.html","host":"10.101.49.0:4567","device":"iPhone","level":"debug","message":"\"supersonic.app.splashscreen.hide called\"","timestamp":"2015-05-13T23:38:03.735Z"}
 {"datetime":1431560219089,"view":"http://localhost/app/example/learn-more.html","host":"10.101.49.0:4567","device":"iPhone","level":"debug","message":"\"supersonic.app.splashscreen.hide resolved\"","timestamp":"2015-05-13T23:38:03.747Z"}
 {"datetime":1431560219097,"view":"http://localhost/app/example/using-the-scanner.html","host":"10.101.49.0:4567","device":"iPhone","level":"debug","message":"\"supersonic.app.splashscreen.hide resolved\"","timestamp":"2015-05-13T23:38:03.756Z"}
+<<<<<<< HEAD
 =======
 {"datetime":"2015-05-13T22:54:47.611Z","view":"http://localhost/app/camera/image.html","host":"10.101.55.198:4567","device":"iPhone","level":"info","message":"\"ReferenceError: Can't find variable: zoomsize - undefined:undefined\"","timestamp":"2015-05-13T22:54:44.651Z"}
 {"datetime":1431557689180,"view":"http://localhost/app/example/getting-started.html","host":"10.101.55.198:4567","device":"iPhone","level":"debug","message":"\"supersonic.app.splashscreen.hide called\"","timestamp":"2015-05-13T22:54:44.676Z"}
@@ -10222,3 +10223,15 @@
 {"datetime":1431801963527,"view":"http://localhost/app/camera/image.html","host":"10.105.159.34:4567","device":"iPhone","level":"debug","message":"\"supersonic.ui.navigationBar.setStyleId resolved\"","timestamp":"2015-05-16T18:46:01.910Z"}
 {"datetime":1431801963530,"view":"http://localhost/app/camera/image.html","host":"10.105.159.34:4567","device":"iPhone","level":"debug","message":"\"supersonic.ui.navigationBar.update resolved\"","timestamp":"2015-05-16T18:46:01.914Z"}
 {"datetime":1431801963546,"view":"http://localhost/app/camera/image.html","host":"10.105.159.34:4567","device":"iPhone","level":"debug","message":"\"supersonic.ui.navigationBar.show resolved\"","timestamp":"2015-05-16T18:46:01.932Z"}
+=======
+{"datetime":1431560248302,"view":"http://localhost/app/camera/image.html","host":"10.101.49.0:4567","device":"iPhone","level":"debug","message":"\"supersonic.ui.navigationBar.setClass called\"","timestamp":"2015-05-13T23:38:33.157Z"}
+{"datetime":1431560248343,"view":"http://localhost/app/camera/image.html","host":"10.101.49.0:4567","device":"iPhone","level":"debug","message":"\"supersonic.ui.navigationBar.show resolved\"","timestamp":"2015-05-13T23:38:33.184Z"}
+{"datetime":1431560248319,"view":"http://localhost/app/camera/image.html","host":"10.101.49.0:4567","device":"iPhone","level":"debug","message":"\"supersonic.ui.navigationBar.setClass resolved\"","timestamp":"2015-05-13T23:38:33.211Z"}
+{"datetime":1431560248326,"view":"http://localhost/app/camera/image.html","host":"10.101.49.0:4567","device":"iPhone","level":"debug","message":"\"supersonic.ui.navigationBar.update resolved\"","timestamp":"2015-05-13T23:38:33.236Z"}
+{"datetime":1431560248306,"view":"http://localhost/app/camera/image.html","host":"10.101.49.0:4567","device":"iPhone","level":"debug","message":"\"supersonic.ui.navigationBar.setStyle called\"","timestamp":"2015-05-13T23:38:33.264Z"}
+{"datetime":1431560248317,"view":"http://localhost/app/camera/image.html","host":"10.101.49.0:4567","device":"iPhone","level":"debug","message":"\"supersonic.ui.navigationBar.show called\"","timestamp":"2015-05-13T23:38:33.292Z"}
+{"datetime":1431560248315,"view":"http://localhost/app/camera/image.html","host":"10.101.49.0:4567","device":"iPhone","level":"debug","message":"\"supersonic.ui.navigationBar.update called\"","timestamp":"2015-05-13T23:38:33.311Z"}
+{"datetime":1431560248313,"view":"http://localhost/app/camera/image.html","host":"10.101.49.0:4567","device":"iPhone","level":"debug","message":"\"supersonic.ui.navigationBar.setStyleId called\"","timestamp":"2015-05-13T23:38:33.328Z"}
+{"datetime":1431560248324,"view":"http://localhost/app/camera/image.html","host":"10.101.49.0:4567","device":"iPhone","level":"debug","message":"\"supersonic.ui.navigationBar.setStyleId resolved\"","timestamp":"2015-05-13T23:38:33.346Z"}
+{"datetime":1431560248322,"view":"http://localhost/app/camera/image.html","host":"10.101.49.0:4567","device":"iPhone","level":"debug","message":"\"supersonic.ui.navigationBar.setStyle resolved\"","timestamp":"2015-05-13T23:38:33.364Z"}
+>>>>>>> origin/editing
