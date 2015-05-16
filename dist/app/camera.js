@@ -11,11 +11,13 @@ angular
     var template = document.getElementById('template');
     draggable.addEventListener('touchmove', function(event) {
         var touch = event.targetTouches[0];
-        var top = 310;
+        var topmax = 310, topmin = 120; 
     // Place element where the finger is
         draggable.style.left = touch.pageX-100 + 'px';
-        if (touch.pageY+20 > top)
-            draggable.style.top = top + 'px';
+        if (touch.pageY+20 < topmin)
+            draggable.style.top = topmin + 'px';
+        else if (touch.pageY+20 > topmax)
+            draggable.style.top = topmax + 'px';
         else
             draggable.style.top = touch.pageY+20 + 'px';
         
