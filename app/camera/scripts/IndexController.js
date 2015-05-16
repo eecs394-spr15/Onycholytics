@@ -3,6 +3,7 @@ angular
   .controller('IndexController', function ($scope, Progresstable, supersonic) {
   	$scope.progresstable = {};
   	$scope.progresstables = null;
+    $scope.photoToken=null;
 
     var options = {
 	  quality: 100,
@@ -25,6 +26,7 @@ angular
 	  		newprogresstable = new Progresstable($scope.progresstable);
 	     	newprogresstable.save().then( function () {
 	        	alert("Photo saved");
+            $scope.photoToken=result;
 	      	});
 		});
 	
