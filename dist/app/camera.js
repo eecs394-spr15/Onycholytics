@@ -166,18 +166,18 @@ angular
     	//alert('Next Image');
     }
 
-	$scope.takePhoto = function() {
-		supersonic.media.camera.takePicture(options).then( function(result){
-  		// Do something with the image URI
-  			$scope.progresstable['photo'] = result;
-	  		newprogresstable = new Progresstable($scope.progresstable);
-	     	newprogresstable.save().then( function () {
-	        	alert("Photo saved");
-            $scope.photoToken=result;
-	      	});
-		});
+	// $scope.takePhoto = function() {
+	// 	supersonic.media.camera.takePicture(options).then( function(result){
+ //  		// Do something with the image URI
+ //  			$scope.progresstable['photo'] = result;
+	//   		newprogresstable = new Progresstable($scope.progresstable);
+	//      	newprogresstable.save().then( function () {
+	//         	alert("Photo saved");
+ //            $scope.photoToken=result;
+	//       	});
+	// 	});
 	
-	}
+	// }
 	
   });
 
