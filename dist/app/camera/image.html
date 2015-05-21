@@ -42,7 +42,7 @@
 
     
         <div id="draggable" >
-            <img name="myImage" ng-src= "{{photo}}" alt="pic"/>
+            <img name="myImage" id="editImage" src="/images/finger.png" alt="pic"/>
         </div>
    
 
@@ -55,9 +55,9 @@
     <body onload="initial()"> 
         <div class="wrapper">
 
-            <button id="login-button" ng-click="zoomIn()"><img name="zoomin" src="/icons/zoomin.svg" width="30px" height="30px" /></button>
-            <button id="login-button" ng-click="imagechange()"><img name="cropping" src="/icons/cropping.svg" width="30px" height="30px" /></button>
-            <button id="login-button" ng-click="zoomOut()"><img name="zoomin" src="/icons/zoomout.svg" width="30px" height="30px" /></button>
+            <button id="login-button" ng-click="resetImage()">Reset</button>
+            <button id="login-button" ng-click="imagechange()">Crop</button>
+            <!-- <button id="login-button" ng-click="zoomOut()"><img name="zoomin" src="/icons/zoomout.svg" width="30px" height="30px" /></button> -->
             <!--<p><button id="login-button" ng-click="resetImage()">Reset</button></p>-->
         </div>
     </body>
