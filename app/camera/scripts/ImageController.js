@@ -116,5 +116,23 @@ angular
         var right = tempWidth + 102;
         var bottom = tempHeight + 200;
         draggable.style.clip = "rect("+top+"px "+right+"px " +bottom+"px "+left+"px)";
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+        var img = document.getElementById("dragimage");
+        ctx.drawImage(img, left, top, 102, 200, 0, 0, 102,200);
+        var canvas = document.getElementById("myCanvas");
+        document.getElementById("theimage").src = canvas.toDataURL();
+        Canvas2Image.saveAsPNG(canvas);
+
     }
+    
+
+/*
+    $scope.to_image=function(){
+        var canvas = document.getElementById("thecanvas");
+        document.getElementById("theimage").src = canvas.toDataURL();
+        Canvas2Image.saveAsPNG(canvas);
+    }*/
+
+
 });

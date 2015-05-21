@@ -24,6 +24,15 @@
     
 }
 
+#myCanvas{
+   /*top:800px;*/
+    visibility: hidden;
+}
+
+#theimage{
+    border:1px solid;
+    /*top:800px;*/
+}
 .wrapper{
   text-align: center;
   margin-top: 30px;
@@ -71,5 +80,5 @@ button#login-button {
 .crop img {
     position: absolute;
     
-    clip: rect(0px,200px,300px,100px);
+ /*   clip: rect(0px,200px,300px,100px);*/
 }
