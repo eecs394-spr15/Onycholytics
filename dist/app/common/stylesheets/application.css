@@ -30,6 +30,8 @@
 }
 
 #theimage{
+    margin-top: 300px;
+    margin-left: calc(50% - 51px);
     border:1px solid;
     /*top:800px;*/
 }
