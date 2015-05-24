@@ -118,14 +118,16 @@ angular
         draggable.style.clip = "rect("+top+"px "+right+"px " +bottom+"px "+left+"px)";
         var c = document.getElementById("myCanvas");
         var ctx = c.getContext("2d");
-        alert(tempHeight.toString() + tempWidth.toString());
-        topCanvas = - (tempHeight + 25);
+        topCanvas = tempHeight;
+        if (topCanvas < 0)
+            topCanvas = 0;
+        alert(tempHeight.toString());
         leftCanvas = tempWidth;
         var img = document.getElementById("dragImage");
-        ctx.drawImage(img, leftCanvas, topCanvas, 102,200, 0, 10, 102,200);
+        ctx.drawImage(img, leftCanvas, topCanvas, 102,200, 0, 0, 102,200);
         var canvas = document.getElementById("myCanvas");
         document.getElementById("theimage").src = canvas.toDataURL();
-        Canvas2Image.saveAsPNG(canvas);
+        
 
     }
     
