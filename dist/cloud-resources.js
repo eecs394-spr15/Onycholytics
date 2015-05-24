@@ -29,6 +29,58 @@ window.ag.data = {
         },
         "identifier": "objectId"
       }
+    },
+    "usertable": {
+      "schema": {
+        "fields": {
+          "createdAt": {
+            "type": "string"
+          },
+          "isPatient": {
+            "type": "boolean"
+          },
+          "objectId": {
+            "type": "string",
+            "identity": true
+          },
+          "password": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          }
+        },
+        "identifier": "objectId"
+      }
+    },
+    "usermessage": {
+      "schema": {
+        "fields": {
+          "coordID": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "message": {
+            "type": "object"
+          },
+          "objectId": {
+            "type": "string",
+            "identity": true
+          },
+          "patientID": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "identifier": "objectId"
+      }
     }
   }
 };

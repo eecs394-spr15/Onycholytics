@@ -24,6 +24,11 @@ module.exports =
     }
   ]
 
+  initialView:
+      id: "initialView"
+      location: "camera#login"
+
+
   # rootView:
   #   location: "example#getting-started"
 
@@ -38,14 +43,15 @@ module.exports =
     }
   ]
 
-  # drawers:
+
+  #drawers:
   #   left:
   #     id: "leftDrawer"
-  #     location: "example#drawer"
+  #     location: "example#getting-started"
   #     showOnAppLoad: false
   #   options:
   #     animation: "swingingDoor"
-  #
+  
   # initialView:
   #   id: "initialView"
   #   location: "example#initial-view"
