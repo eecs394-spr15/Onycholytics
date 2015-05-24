@@ -52,14 +52,13 @@ angular
 
     $scope.showimage=false;
 
-    //$scope.photo = "/images/finger.png";  
-    // if(steroids.view.params.photo){
-    //   $scope.photo = "data:image/png;base64," + steroids.view.params.photo;
-    // }
-    // else
-    // {
-    //   $scope.photo = "/images/finger.png";  
-    // }
+    if(steroids.view.params.photo){
+      $scope.photo = "data:image/png;base64," + steroids.view.params.photo;
+    }
+    else
+    {
+      $scope.photo = "/images/finger.png";  
+    }
 
     var tempLeft = 0;
     var tempTop = 0;
