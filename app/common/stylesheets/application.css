@@ -26,8 +26,7 @@
     top:135px;
     left: calc(50% - 51px);
     /*left:60px;*/
-    z-index: 1;
-    
+    z-index: 1;  
 }
 
 .wrapper{
