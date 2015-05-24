@@ -55,6 +55,32 @@ window.ag.data = {
         },
         "identifier": "objectId"
       }
+    },
+    "usermessage": {
+      "schema": {
+        "fields": {
+          "coordID": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "message": {
+            "type": "object"
+          },
+          "objectId": {
+            "type": "string",
+            "identity": true
+          },
+          "patientID": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "identifier": "objectId"
+      }
     }
   }
 };
