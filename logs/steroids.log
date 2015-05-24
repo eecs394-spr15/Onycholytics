@@ -6065,3 +6065,9 @@
 {"datetime":1432427248481,"view":"http://localhost/app/camera/index.html","host":"10.101.48.5:4567","level":"debug","message":"\"supersonic.ui.navigationBar.update resolved\"","timestamp":"2015-05-24T00:27:30.824Z"}
 {"datetime":1432427248487,"view":"http://localhost/app/camera/index.html","host":"10.101.48.5:4567","level":"debug","message":"\"supersonic.ui.navigationBar.show resolved\"","timestamp":"2015-05-24T00:27:30.840Z"}
 {"datetime":1432427248459,"view":"http://localhost/app/camera/index.html","host":"10.101.48.5:4567","level":"debug","message":"\"supersonic.ui.navigationBar.setClass resolved\"","timestamp":"2015-05-24T00:27:30.840Z"}
+{"datetime":1432427692119,"view":"http://localhost/app/camera/index.html","host":"10.101.48.5:4567","level":"debug","message":"\"supersonic.ui.navigationBar.setStyle called\"","timestamp":"2015-05-24T00:36:00.385Z"}
+{"datetime":1432427692163,"view":"http://localhost/app/camera/index.html","host":"10.101.48.5:4567","level":"debug","message":"\"supersonic.ui.navigationBar.update called\"","timestamp":"2015-05-24T00:36:00.385Z"}
+{"datetime":1432427692130,"view":"http://localhost/app/camera/index.html","host":"10.101.48.5:4567","level":"debug","message":"\"supersonic.ui.navigationBar.setStyleId called\"","timestamp":"2015-05-24T00:36:00.400Z"}
+{"datetime":1432427692177,"view":"http://localhost/app/camera/index.html","host":"10.101.48.5:4567","level":"debug","message":"\"supersonic.ui.navigationBar.show called\"","timestamp":"2015-05-24T00:36:00.400Z"}
+{"datetime":1432427692187,"view":"http://localhost/app/camera/index.html","host":"10.101.48.5:4567","level":"debug","message":"\"supersonic.ui.navigationBar.setClass resolved\"","timestamp":"2015-05-24T00:36:00.400Z"}
+{"datetime":1432427692192,"view":"http://localhost/app/camera/index.html","host":"10.101.48.5:4567","level":"debug","message":"\"supersonic.ui.navigationBar.setStyle resolved\"","timestamp":"2015-05-24T00:36:00.416Z"}
