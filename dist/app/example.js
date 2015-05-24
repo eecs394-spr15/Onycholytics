@@ -9,15 +9,14 @@ angular
   .controller('GettingStartedController', function($scope, supersonic) {
 
 	var options = {
-	  quality: 25,
+	  quality: 10,
 	  allowEdit: false,
-	  targetWidth: 400,
-	  targetHeight: 400,
+	  targetWidth: 300,
+	  targetHeight: 300,
 	  encodingType: "png",
 	  saveToPhotoAlbum: false,
 	  destinationType: "dataURL",
       cameraDirection: "back",
-      correctOrientation:false
 	};
 		
 	$scope.takePhoto = function() {
