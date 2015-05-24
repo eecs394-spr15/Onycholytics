@@ -24,6 +24,11 @@ module.exports =
     }
   ]
 
+  initialView:
+      id: "initialView"
+      location: "camera#login"
+
+
   # rootView:
   #   location: "example#getting-started"
 
@@ -37,6 +42,7 @@ module.exports =
       location: "example#using-the-scanner"
     }
   ]
+
 
   # drawers:
   #   left:
