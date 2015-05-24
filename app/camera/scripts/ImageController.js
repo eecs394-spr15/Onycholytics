@@ -1,6 +1,10 @@
 angular
   .module('camera')
   .controller("ImageController", function ($scope, Progresstable, supersonic) {
+    $scope.Back = function(){
+        supersonic.ui.modal.hide();
+    }
+
     var myElement = document.getElementById("draggable");
     var mc = new Hammer.Manager(myElement);
 
@@ -115,6 +119,7 @@ angular
         update(); 
     } 
    $scope.initial=function(){ 
+        //template.style.left = 200;
         currentWidth = document.myImage.width; 
         currentHeight = document.myImage.height; 
         originalWidth = currentWidth; 
@@ -129,12 +134,7 @@ angular
     }
     $scope.imagechange=function(){
         var tempHeight =  150 - tempTop;
-        var tempWidth = 0;
-        //var tempWidth = (screen.height/2) - 51 - tempLeft;
-        if(window.orientation==180||window.orientation==0)
-            tempWidth = (screen.width/2) - 51 - tempLeft;
-        if(window.orientation==90||window.orientation==-90)
-            tempWidth = (screen.height/2) - 51 - tempLeft;
+        var tempWidth = (screen.width/2) - 51 - tempLeft;
         var top = tempHeight;
         var left = tempWidth ;
         var right = tempWidth + 102;
