@@ -6,6 +6,10 @@ angular.module('camera', [
 angular
   .module('camera')
   .controller("ImageController", function ($scope, Progresstable, supersonic) {
+    $scope.Back = function(){
+        supersonic.ui.modal.hide();
+    }
+
     var myElement = document.getElementById("draggable");
     var mc = new Hammer.Manager(myElement);
 
