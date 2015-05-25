@@ -77,3 +77,8 @@ button#login-button {
     
     clip: rect(0px,200px,300px,100px);
 }
+
+#draggable {
+    -ms-transform: rotate(90deg); /* IE 9 */
+    transform: rotate(90deg);
+}
