@@ -4,7 +4,7 @@ angular
   .controller('GettingStartedController', function($scope, supersonic) {
 
 	var options = {
-	  quality: 10,
+	  quality: 100,
 	  allowEdit: false,
 	  targetWidth: 300,
 	  targetHeight: 300,
@@ -13,10 +13,12 @@ angular
 	  destinationType: "dataURL",
       cameraDirection: "back",
 	};
-		
+
+
 	$scope.takePhoto = function() {
 		supersonic.media.camera.takePicture(options).then( function(result){
-  	 		supersonic.ui.modal.show("camera#image?photo=" + result);
+			localStorage.imageURL = result;
+  	 		supersonic.ui.modal.show("camera#image");
 		});
 	}	
 

@@ -1,11 +1,31 @@
 angular
   .module('camera')
   .controller("ImageController", function ($scope, Progresstable, supersonic) {
+
+
     $scope.Back = function(){
         supersonic.ui.modal.hide();
     }
 
+    function show_image(src, width, height) {
+        var img = document.createElement("img");
+        img.name = "myImage";
+        img.src = src;
+        img.width = width;
+        img.height = height;
+
+        // This next line will just add it to the <body> tag
+        document.getElementById("draggable").appendChild(img);
+        //document.body.appendChild(img);
+
+}
+    if (localStorage.imageURL) {
+        show_image("data:image/png;base64,"+localStorage.imageURL, 300, 300);
+    }
+
+   
     var myElement = document.getElementById("draggable");
+
     var mc = new Hammer.Manager(myElement);
 
     // create a pinch and rotate recognizer
@@ -23,17 +43,17 @@ angular
     //var ratio = document.myImage.width/document.myImage.height;
 
     mc.on("pinchout", function(ev) {
-        if(document.myImage.width <1000 && document.myImage.height<1000) {
-            document.myImage.width *= 1.01;
-            document.myImage.height *= 1.01;
+        if(document.myImage.width <400 && document.myImage.height<400) {
+            document.myImage.width *= 1.02;
+            document.myImage.height *= 1.02;
             //myElement.textContent += ev.scale +" ";
         }
     });
 
     mc.on("pinchin", function(ev) {
-        if(document.myImage.width > 100 && document.myImage.height>100){
-            document.myImage.width /=1.01;
-            document.myImage.height /=1.01;
+        if(document.myImage.width > 200 && document.myImage.height>200){
+            document.myImage.width /=1.02;
+            document.myImage.height /=1.02;
         }
         
         //myElement.textContent += ev.scale +" ";
@@ -55,16 +75,15 @@ angular
     //     $("#draggable").rotateRight(45);
     // });
 
-    $scope.showimage=false;
+    // $scope.showimage=false;
 
-    if(steroids.view.params.photo){
-      $scope.photo = "data:image/png;base64," + steroids.view.params.photo;
-    }
-    else
-    {
-      $scope.photo = "/images/bigtoe.png";  
-    }
-
+    // if(steroids.view.params.photo){
+    //   $scope.photo = "data:image/png;base64," + steroids.view.params.photo;
+    // }
+    // else
+    // {
+    //   $scope.photo = "/images/finger.png";  
+    // }
 
     //drag stuff below
     // var draggable = document.getElementById('draggable');
@@ -155,10 +174,6 @@ angular
         ctx.drawImage(img, left, top, 150,220, 0, 0, 150,220);
         var canvas = document.getElementById("myCanvas");
         document.getElementById("theimage").src = canvas.toDataURL();
-        
-        
-        
-        
         
     }
 });

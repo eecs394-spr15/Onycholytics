@@ -14,7 +14,8 @@
     background-color:#f00;*/
     position:absolute;
     top: 200px;
-    z-index: -1;
+    z-index: 1;
+    opacity: 0.95;
 }
 
 #template {
@@ -26,7 +27,7 @@
     top:135px;
     left: calc(50% - 75px);
     /*left:60px;*/
-    z-index: 1;  
+    z-index: -1;  
 }
 
 .wrapper{
@@ -75,4 +76,9 @@ button#login-button {
     position: absolute;
     
     clip: rect(0px,200px,300px,100px);
+}
+
+#draggable {
+    -ms-transform: rotate(90deg); /* IE 9 */
+    transform: rotate(90deg);
 }
