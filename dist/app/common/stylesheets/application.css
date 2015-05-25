@@ -26,7 +26,12 @@
     top:135px;
     left: calc(50% - 51px);
     /*left:60px;*/
-    z-index: 1;  
+<<<<<<< HEAD
+    z-index: 1;
+=======
+    z-index:1;
+>>>>>>> 981d4aa43f443ee8f74c5cab36230ab84cde84e0
+    
 }
 
 .wrapper{

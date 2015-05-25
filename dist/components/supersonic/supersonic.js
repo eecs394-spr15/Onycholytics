@@ -1,7 +1,7 @@
 /**
  * supersonic
- * Version: 1.5.5
- * Published: 2015-05-25
+ * Version: 1.5.3
+ * Published: 2015-05-22
  * Homepage: https://github.com/AppGyver/supersonic
  * License: MIT
  */
@@ -24860,32 +24860,18 @@ module.exports = function(window) {
 
 
 },{"baconjs":165,"deep-equal":167}],211:[function(require,module,exports){
-var Promise, Session, adapters;
+var Session, adapters;
 
 adapters = require('./storage/adapters');
 
 Session = require('./session');
-
-Promise = require('bluebird');
 
 module.exports = function(logger, window) {
   var channel, defaultAsyncStorageAdapter, model, property, session, storage;
   channel = require('./channel')(window);
   property = require('./storage/property')(logger, window, channel);
   session = new Session(window);
-  defaultAsyncStorageAdapter = function() {
-    return {
-      getItem: function(key) {
-        return Promise.resolve(window.localStorage.getItem(key));
-      },
-      setItem: function(key, value) {
-        return Promise.resolve(window.localStorage.setItem(key, value));
-      },
-      removeItem: function(key) {
-        return Promise.resolve(window.localStorage.removeItem(key));
-      }
-    };
-  };
+  defaultAsyncStorageAdapter = adapters.localforage;
   model = require('./model')(logger, window, defaultAsyncStorageAdapter, session);
   storage = {
     adapters: adapters,
@@ -24901,7 +24887,7 @@ module.exports = function(logger, window) {
 
 
 
-},{"./channel":210,"./model":212,"./session":213,"./storage/adapters":214,"./storage/property":216,"bluebird":166}],212:[function(require,module,exports){
+},{"./channel":210,"./model":212,"./session":213,"./storage/adapters":214,"./storage/property":216}],212:[function(require,module,exports){
 var Bacon, data;
 
 data = require('ag-data');
