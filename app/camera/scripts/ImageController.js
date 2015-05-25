@@ -59,10 +59,15 @@ angular
         //myElement.textContent += ev.scale +" ";
     });
 
+    //drag stuff below
+    var tempLeft = 0;
+    var tempTop = 0;
     mc.on("panleft panright panup pandown", function(ev) {
         //myElement.textContent = ev.type +" gesture detected.";
-        myElement.style.left = (ev.center.x - document.myImage.width/2.0) + "px";
-        myElement.style.top = (ev.center.y - document.myImage.height/2.0) + "px";
+        myElement.style.left = (ev.center.x - document.myImage.width/4.0) + "px";
+        myElement.style.top = (ev.center.y - document.myImage.height/4.0) + "px";
+        tempLeft = ev.center.x - document.myImage.width/4.0;
+        tempTop = ev.center.y - document.myImage.height/4.0;
     });
 
     // mc.on("rotate", function(ev) {
@@ -72,6 +77,7 @@ angular
 
     // $scope.showimage=false;
 
+<<<<<<< HEAD
     // if(steroids.view.params.photo){
     //   $scope.photo = "data:image/png;base64," + steroids.view.params.photo;
     // }
@@ -79,9 +85,17 @@ angular
     // {
     //   $scope.photo = "/images/finger.png";  
     // }
+=======
+    if(steroids.view.params.photo){
+      $scope.photo = "data:image/png;base64," + steroids.view.params.photo;
+    }
+    else
+    {
+      $scope.photo = "/images/bigtoe.png";  
+    }
+>>>>>>> master
 
-    var tempLeft = 0;
-    var tempTop = 0;
+
     //drag stuff below
     // var draggable = document.getElementById('draggable');
     // var template = document.getElementById('template');
@@ -153,11 +167,23 @@ angular
     }
     $scope.imagechange=function(){
         var tempHeight =  150 - tempTop;
-        var tempWidth = (screen.width/2) - 51 - tempLeft;
+        var tempWidth = (screen.width/2) - 75 - tempLeft;
         var top = tempHeight;
         var left = tempWidth ;
-        var right = tempWidth + 102;
-        var bottom = tempHeight + 200;
+        var right = tempWidth + 150;
+        var bottom = tempHeight + 220;
         draggable.style.clip = "rect("+top+"px "+right+"px " +bottom+"px "+left+"px)";
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+        var img = document.getElementById("editImage");
+        //ctx.drawImage(img, leftCanvas*$scope.zoomchange, topCanvas*$scope.zoomchange, 102*$scope.zoomchange,200*$scope.zoomchange, 0, 0, 102,200);
+        ctx.drawImage(img, 0, 0, 150,220, 0, 0, 150,220);
+        var canvas = document.getElementById("myCanvas");
+        document.getElementById("theimage").src = canvas.toDataURL();
+        
+        
+        
+        
+        
     }
 });

@@ -22,6 +22,11 @@ module.exports =
       id: "photos"
       location: "camera#index" # URLs are supported!
     }
+    {
+      title: "Messages"
+      id: "messages"
+      location: "camera#message"
+    }
   ]
 
   initialView:

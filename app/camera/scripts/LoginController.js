@@ -44,7 +44,7 @@ angular
       var flag = false;
       $scope.username = "studyCoordinator";
       $scope.password = "studyCoordinator";
-    
+
       for (i = 0; i < $scope.userdatas.length; i++){
         if ($scope.username != "" && $scope.password != "" && $scope.userdatas[i].username == $scope.username && $scope.userdatas[i].password == $scope.password){           
           flag = true;
