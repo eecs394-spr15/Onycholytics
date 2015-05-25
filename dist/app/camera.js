@@ -119,20 +119,22 @@ angular
     //         update(); 
     //     }
     // } 
-
+    var originalWidth = 300;
+    var originalHeight = 300;
     $scope.resetImage=function(){ 
         document.myImage.width = originalWidth; 
         document.myImage.height = originalHeight; 
         zoomLevel = 0; 
-        update(); 
+        //update(); 
     } 
+
    $scope.initial=function(){ 
         //template.style.left = 200;
-        currentWidth = document.myImage.width; 
-        currentHeight = document.myImage.height; 
-        originalWidth = currentWidth; 
-        originalHeight = currentHeight; 
-        update(); 
+        var currentWidth = document.myImage.width; 
+        var currentHeight = document.myImage.height; 
+        originalWidth = 300; 
+        originalHeight = 300; 
+        //update(); 
     }
     $scope.update=function(){ 
         currentWidth = document.myImage.width; 
@@ -141,6 +143,7 @@ angular
         imgsize.innerText = currentWidth + "X" + currentHeight; 
     }
     $scope.imagechange=function(){
+        //alert(originalHeight + "," + originalWidth)
         var tempHeight =  150 - tempTop;
         var tempWidth = (screen.width/2) - 75 - tempLeft;
         var top = tempHeight;
@@ -152,7 +155,9 @@ angular
         var ctx = c.getContext("2d");
         var img = document.getElementById("editImage");
         //ctx.drawImage(img, leftCanvas*$scope.zoomchange, topCanvas*$scope.zoomchange, 102*$scope.zoomchange,200*$scope.zoomchange, 0, 0, 102,200);
-        ctx.drawImage(img, 0, 0, 150,220, 0, 0, 150,220);
+        if (top < 0)
+            top = 0;
+        ctx.drawImage(img, left, top, 150,220, 0, 0, 150,220);
         var canvas = document.getElementById("myCanvas");
         document.getElementById("theimage").src = canvas.toDataURL();
         
