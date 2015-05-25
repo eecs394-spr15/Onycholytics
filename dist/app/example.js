@@ -9,7 +9,7 @@ angular
   .controller('GettingStartedController', function($scope, supersonic) {
 
 	var options = {
-	  quality: 50,
+	  quality: 100,
 	  allowEdit: false,
 	  targetWidth: 300,
 	  targetHeight: 300,
