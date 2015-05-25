@@ -20,7 +20,7 @@ angular
 
 }
     if (localStorage.imageURL) {
-        show_image("data:image/png;base64,"+localStorage.imageURL, 400, 400);
+        show_image("data:image/png;base64,"+localStorage.imageURL, 300, 300);
     }
 
    
@@ -43,17 +43,17 @@ angular
     //var ratio = document.myImage.width/document.myImage.height;
 
     mc.on("pinchout", function(ev) {
-        if(document.myImage.width <1000 && document.myImage.height<1000) {
-            document.myImage.width *= 1.01;
-            document.myImage.height *= 1.01;
+        if(document.myImage.width <400 && document.myImage.height<400) {
+            document.myImage.width *= 1.02;
+            document.myImage.height *= 1.02;
             //myElement.textContent += ev.scale +" ";
         }
     });
 
     mc.on("pinchin", function(ev) {
-        if(document.myImage.width > 100 && document.myImage.height>100){
-            document.myImage.width /=1.01;
-            document.myImage.height /=1.01;
+        if(document.myImage.width > 200 && document.myImage.height>200){
+            document.myImage.width /=1.02;
+            document.myImage.height /=1.02;
         }
         
         //myElement.textContent += ev.scale +" ";
@@ -77,7 +77,6 @@ angular
 
     // $scope.showimage=false;
 
-<<<<<<< HEAD
     // if(steroids.view.params.photo){
     //   $scope.photo = "data:image/png;base64," + steroids.view.params.photo;
     // }
@@ -85,16 +84,6 @@ angular
     // {
     //   $scope.photo = "/images/finger.png";  
     // }
-=======
-    if(steroids.view.params.photo){
-      $scope.photo = "data:image/png;base64," + steroids.view.params.photo;
-    }
-    else
-    {
-      $scope.photo = "/images/bigtoe.png";  
-    }
->>>>>>> master
-
 
     //drag stuff below
     // var draggable = document.getElementById('draggable');
@@ -180,10 +169,6 @@ angular
         ctx.drawImage(img, 0, 0, 150,220, 0, 0, 150,220);
         var canvas = document.getElementById("myCanvas");
         document.getElementById("theimage").src = canvas.toDataURL();
-        
-        
-        
-        
         
     }
 });
