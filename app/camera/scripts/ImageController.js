@@ -44,10 +44,10 @@ angular
     var tempTop = 0;
     mc.on("panleft panright panup pandown", function(ev) {
         //myElement.textContent = ev.type +" gesture detected.";
-        myElement.style.left = (ev.center.x - document.myImage.width/2.0) + "px";
-        myElement.style.top = (ev.center.y - document.myImage.height/2.0) + "px";
-        tempLeft = ev.center.x - document.myImage.width/2.0;
-        tempTop = ev.center.y - document.myImage.height/2.0;
+        myElement.style.left = (ev.center.x - document.myImage.width/4.0) + "px";
+        myElement.style.top = (ev.center.y - document.myImage.height/4.0) + "px";
+        tempLeft = ev.center.x - document.myImage.width/4.0;
+        tempTop = ev.center.y - document.myImage.height/4.0;
     });
 
     // mc.on("rotate", function(ev) {
