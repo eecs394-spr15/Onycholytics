@@ -1,0 +1,36 @@
+{
+  "preloads": [
+    {
+      "id": "learn-more",
+      "location": "http://localhost/app/example/learn-more.html"
+    },
+    {
+      "id": "using-the-scanner",
+      "location": "http://localhost/app/example/using-the-scanner.html"
+    }
+  ],
+  "initialView": {
+    "id": "initialView",
+    "location": "http://localhost/app/camera/login.html"
+  },
+  "tabs": [
+    {
+      "position": 0,
+      "id": "camera",
+      "title": "Camera",
+      "target_url": "http://localhost/app/example/getting-started.html"
+    },
+    {
+      "position": 1,
+      "id": "editor",
+      "title": "Editor",
+      "target_url": "http://localhost/app/camera/image.html"
+    },
+    {
+      "position": 2,
+      "id": "photos",
+      "title": "Photos",
+      "target_url": "http://localhost/app/camera/index.html"
+    }
+  ]
+}
