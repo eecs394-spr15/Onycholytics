@@ -19,7 +19,7 @@ angular
     }
 
     if (localStorage.imageURL) {
-        show_image("data:image/png;base64,"+localStorage.imageURL, 300, 300);
+        show_image("data:image/png;base64,"+localStorage.imageURL, 400, 400);
     }
 
     var myElement = document.getElementById("draggable");
