@@ -31,6 +31,12 @@
       "id": "photos",
       "title": "Photos",
       "target_url": "http://localhost/app/camera/index.html"
+    },
+    {
+      "position": 3,
+      "id": "messages",
+      "title": "Messages",
+      "target_url": "http://localhost/app/camera/message.html"
     }
   ]
 }

@@ -250,7 +250,7 @@ angular
       var flag = false;
       $scope.username = "studyCoordinator";
       $scope.password = "studyCoordinator";
-    
+
       for (i = 0; i < $scope.userdatas.length; i++){
         if ($scope.username != "" && $scope.password != "" && $scope.userdatas[i].username == $scope.username && $scope.userdatas[i].password == $scope.password){           
           flag = true;
@@ -356,6 +356,38 @@ angular
 angular
   .module('camera')
   .constant('Usertable',  supersonic.data.model('usertable'));
+
+angular
+  .module('camera')
+  .constant('Usermessage',  supersonic.data.model('usermessage'));
+
+angular
+  .module('camera')
+  .constant('Coormessage',  supersonic.data.model('coormessage'));
+  
+angular
+  .module('camera')
+  .controller("messageController", function ($scope, Usertable, Usermessage, Coormessage, supersonic) {
+
+    $scope.messages= null;    
+    $scope.userType = null;
+
+    Usertable.find(localStorage.objectId).then( function(row) {
+        $scope.$apply( function () {
+            $scope.userType = row["isPatient"];
+        }); });
+
+    if ($scope.userType == true ) {
+        Usermessage.all().whenChanged( function (usermessages) {
+            $scope.messages = usermessages;         
+        });
+    } else {
+            Coormessage.all().whenChanged( function (usermessages) {
+            $scope.messages = usermessages;         
+        });
+    }
+
+});
 angular
   .module('camera')
   .controller("try", function ($scope, Progresstable,  supersonic) {

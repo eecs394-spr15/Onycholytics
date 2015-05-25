@@ -1,0 +1,13 @@
+<div ng-controller="messageController" class="container-fluid">
+    <super-navbar>
+    <super-navbar-title>Onycholytics</super-navbar-title> 
+    </super-navbar>
+
+    <p>isPatient {{userType}}</p>
+    <div id="message-container">
+        <div ng-repeat="message in messages">
+            <p>{{ message["message"].text }}</p>
+        </div>
+    </div>
+    
+</div>
