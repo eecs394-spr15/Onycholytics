@@ -67,7 +67,7 @@ angular
     }
     else
     {
-      $scope.photo = "/images/finger.png";  
+      $scope.photo = "/images/bigtoe.png";  
     }
 
 
@@ -148,6 +148,18 @@ angular
         var right = tempWidth + 150;
         var bottom = tempHeight + 220;
         draggable.style.clip = "rect("+top+"px "+right+"px " +bottom+"px "+left+"px)";
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+        var img = document.getElementById("editImage");
+        //ctx.drawImage(img, leftCanvas*$scope.zoomchange, topCanvas*$scope.zoomchange, 102*$scope.zoomchange,200*$scope.zoomchange, 0, 0, 102,200);
+        ctx.drawImage(img, 0, 0, 150,220, 0, 0, 150,220);
+        var canvas = document.getElementById("myCanvas");
+        document.getElementById("theimage").src = canvas.toDataURL();
+        
+        
+        
+        
+        
     }
 });
 angular

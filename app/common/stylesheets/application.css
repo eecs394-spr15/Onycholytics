@@ -33,7 +33,17 @@
   text-align: center;
   margin-top: 30px;
 }
+#myCanvas{
+   /*top:800px;*/
+    visibility: hidden;
+}
 
+#theimage{
+    margin-top: 300px;
+    margin-left: calc(50% - 51px);
+    border:1px solid;
+    /*top:800px;*/
+}
 #editing {
     margin-top: 10px;
     width: 95%;
