@@ -71,3 +71,7 @@ tab-bar-item#camera {
 tab-bar-item#photos {
   background-image: url(icons/search.svg);
 }
+
+tab-bar-item#messages {
+  background-image: url(icons/search.svg);
+}
