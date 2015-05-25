@@ -24,7 +24,7 @@
     background-color:#f00;*/
     position: absolute;
     top:135px;
-    left: calc(50% - 51px);
+    left: calc(50% - 75px);
     /*left:60px;*/
     z-index: 1;  
 }
