@@ -1,11 +1,26 @@
 angular
   .module('camera')
   .controller("ImageController", function ($scope, Progresstable, supersonic) {
+
+    function show_image(src, width, height) {
+        var img = document.createElement("img");
+        img.src = src;
+        img.width = width;
+        img.height = height;
+
+        // This next line will just add it to the <body> tag
+        document.body.appendChild(img);
+    }
+
+    if (localStorage.imageURL) {
+        show_image("data:image/png;base64,"+localStorage.imageURL, 300, 300);
+    }
+
     $scope.Back = function(){
         supersonic.ui.modal.hide();
     }
 
-    var myElement = document.getElementById("draggable");
+    var myElement = document.getElementById("img");
     var mc = new Hammer.Manager(myElement);
 
     // create a pinch and rotate recognizer
@@ -52,13 +67,13 @@ angular
 
     $scope.showimage=false;
 
-    if(steroids.view.params.photo){
-      $scope.photo = "data:image/png;base64," + steroids.view.params.photo;
-    }
-    else
-    {
-      $scope.photo = "/images/finger.png";  
-    }
+    // if(steroids.view.params.photo){
+    //   $scope.photo = "data:image/png;base64," + steroids.view.params.photo;
+    // }
+    // else
+    // {
+    //   $scope.photo = "/images/finger.png";  
+    // }
 
     var tempLeft = 0;
     var tempTop = 0;
