@@ -81,6 +81,35 @@ window.ag.data = {
         },
         "identifier": "objectId"
       }
+    },
+    "coormessage": {
+      "schema": {
+        "fields": {
+          "Read": {
+            "type": "boolean"
+          },
+          "coorID": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "message": {
+            "type": "object"
+          },
+          "objectId": {
+            "type": "string",
+            "identity": true
+          },
+          "patientID": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "identifier": "objectId"
+      }
     }
   }
 };
