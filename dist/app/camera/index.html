@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+  window.addEventListener('WebComponentsReady', function() {
+    supersonic.app.splashscreen.hide();
+  });
+  </script>
+  <!-- Cloud resource definition file for Supersonic Data -->
+  <script src="/cloud-resources.js"></script>
+  <meta charset="utf8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  <title>index</title>
+
+  <link rel="stylesheet" href="/components/supersonic/css/supersonic.css" />
+  <link rel="stylesheet" href="/app/common/stylesheets/application.css" />
+  <link rel="import" href="/components/supersonic/components/import.html">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+  <script src="http://localhost/cordova.js"></script>
+  <script src="/components/steroids-js/steroids.js"></script>
+  <script src="/components/angular/angular.js"></script>
+  <script src="/components/supersonic/supersonic.js"></script>
+  <script src="/components/webcomponentsjs/webcomponents.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="https://hammerjs.github.io/dist/hammer.js"></script>
+
+  
+  <script src="/app/common.js"></script>
+  
+  <script src="/app/camera.js"></script>
+  
+</head>
+<body ng-app="camera">
+
+<div ng-controller="IndexController">
+
+  <super-navbar>
+    <super-navbar-title>
+      My Photos
+    </super-navbar-title>
+  </super-navbar>
+
+  <!--
+  <div class="padding">
+    <button class="button button-block button-positive" ng-click="takePhoto()">Take a picture!</button>
+  </div>
+-->
+<div class="padding">
+  <h2 align="center">Image {{numImage + 1}} / {{totalImage}} </h2>
+</div>
+
+  <div id="image-container" class="padding"> 
+    <img id="viewed-img" align="middle" ng-src="data:image/jpeg;base64,{{ progresstables[ numImage ]['photo'] }}" alt="Image"/>
+  </div>
+
+  <div class="button-bar">
+
+      <a id="image-view-button" class="button icon-left super-chevron-left button-energized" ng-click="previousImage()">Previous</a>
+      <a id="image-view-button" class="button icon-right super-chevron-right button-energized" ng-click="nextImage()">Next</a>
+  </div>
+
+<!--
+  <div class="padding" ng-repeat="progress in progresstables">
+    <img ng-src="data:image/jpeg;base64,{{ progress['photo'] }}" alt="Description"/>
+  </div>
+-->
+
+<!--   <div class="crop" >
+      <img src="data:image/jpeg;base64,{{ photoToken }}" alt="pic" width="300px" height="300px" />
+  </div> -->
+</div>
+
+</body>
+</html>
