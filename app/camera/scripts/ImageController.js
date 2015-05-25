@@ -2,6 +2,7 @@ angular
   .module('camera')
   .controller("ImageController", function ($scope, Progresstable, supersonic) {
 
+
     $scope.Back = function(){
         supersonic.ui.modal.hide();
     }
@@ -16,13 +17,15 @@ angular
         // This next line will just add it to the <body> tag
         document.getElementById("draggable").appendChild(img);
         //document.body.appendChild(img);
-    }
 
+}
     if (localStorage.imageURL) {
         show_image("data:image/png;base64,"+localStorage.imageURL, 300, 300);
     }
 
+   
     var myElement = document.getElementById("draggable");
+
     var mc = new Hammer.Manager(myElement);
 
     // create a pinch and rotate recognizer
