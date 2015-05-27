@@ -22,7 +22,6 @@ angular
 }
     if (steroids.view.params.photo) {
         $scope.photo = "data:image/png;base64," + steroids.view.params.photo;
-
     }
     else{
         $scope.photo = "/images/bigtoe.png"
@@ -140,30 +139,32 @@ angular
     // } 
     var originalWidth = 300;
     var originalHeight = 300;
+    
     $scope.resetImage=function(){ 
         document.myImage.width = originalWidth; 
         document.myImage.height = originalHeight; 
-        zoomLevel = 0; 
+        myElement.style.left = 20 + "px";
+        myElement.style.top = 200 + "px";      
         //update(); 
     } 
-
+    /*
    $scope.initial=function(){ 
         //template.style.left = 200;
-        var currentWidth = document.myImage.width; 
-        var currentHeight = document.myImage.height; 
-        originalWidth = 300; 
-        originalHeight = 300; 
+        currentWidth = document.myImage.width; 
+        currentHeight = document.myImage.height; 
+        
         //update(); 
     }
     $scope.update=function(){ 
         currentWidth = document.myImage.width; 
         currentHeight = document.myImage.height; 
-        zoomsize.innerText = zoomLevel; 
+        //zoomsize.innerText = zoomLevel; 
         imgsize.innerText = currentWidth + "X" + currentHeight; 
     }
+    */
 
     $scope.imagechange=function(){
-        //alert(originalHeight + "," + originalWidth)
+        //alert(originalHeight + "," + originalWidth);
         var tempHeight =  150 - tempTop;
         var tempWidth = (screen.width/2) - 75 - tempLeft;
         var top = tempHeight;
