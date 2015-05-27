@@ -168,9 +168,10 @@ angular
         var tempHeight =  150 - tempTop;
         var tempWidth = (screen.width/2) - 75 - tempLeft;
         var top = tempHeight;
-        var left = tempWidth ;
+        var left = tempWidth;
         var right = tempWidth + 150;
         var bottom = tempHeight + 220;
+        var startY = 0;
         $scope.zoomchange=document.getElementById("editImage").width/300;
         draggable.style.clip = "rect("+top+"px "+right+"px " +bottom+"px "+left+"px)";
         var c = document.getElementById("myCanvas");
@@ -178,44 +179,64 @@ angular
         var img = document.getElementById("editImage");
         var canvasWidth=150/$scope.zoomchange;
         var canvasHeight=220/$scope.zoomchange;
+        var canvasW = 150;
+        var canvasH = 220;
         $scope.originalW=300;
         $scope.originalH=300;
         //ctx.drawImage(img, leftCanvas*$scope.zoomchange, topCanvas*$scope.zoomchange, 102*$scope.zoomchange,200*$scope.zoomchange, 0, 0, 102,200);
-        if (top < 0) /*too bottom*/
-            top = 0;
-        if (tempHeight>=document.getElementById("editImage").height)
-            //the height is smaller than the templete
+        //image is too small
+        if(canvasHeight>=295 || canvasWidth>=295)
         {
-            top=0;
+            alert("too small! keep whole picture");
+            canvasHeight=299;
+            canvasWidth=299;
+            left = 0;
+            top = 0;
+            canvasW = 150;
+            canvasH = 150;
+            startY = 25;
         }
-        //image is too right
-        if (left<=0){
-            left=0;
-            //canvasWidth=150;
-            //canvasHeight=220;
-            alert("image right");
+        else{
+            //image is too bottom
+            if (top < 0){
+                alert("too bottom"+bottom)
+                top = 0;
+            } 
+            
+            if (bottom > document.getElementById("editImage").height)
+                //the height is smaller than the templete
+            {
+                alert("too top:" + bottom);
+                canvasHeight = document.getElementById("editImage").width - top;
+                canvasWidth = 150/220*canvasHeight;
+            }
+            
+            //image is too left
+            if (left < 0){
+                alert("too left:"+left);
+                left = 0;
+                //canvasWidth=150;
+                //canvasHeight=220;
+                //alert("image right");
+            }
+            if (right > document.getElementById("editImage").width){
+                alert("too right:" + right);
+                canvasWidth = document.getElementById("editImage").width - left;
+                //canvasHeight = 220/150*canvasHeight;
+            }
         }
-        alert(left);
+        //alert(left);
         // the image is too left
+        /*
         if (left+tempWidth>=document.getElementById("editImage").width){
             left=300-150;
             canvasWidth=149;
             canvasHeight=219;
             alert("image left");
         }
-        //the canvas is too large, the image is too zoomin(small)
-        if(canvasHeight>=295)
-        {
-            alert("h is too small");
-            canvasHeight=299;
-            canvasWidth=299*15/22;
-        }
-        //this is impossible in most case
-        if(canvasWidth>=295){
-            alert("w is too small");
-            canvasWidth=299*15/22;
-            canvasHeight=299;
-        }
+        */
+       
+        /*
         //templete is left and bottom according to the image
         if (top+canvasHeight>=document.getElementById("editImage").height && left<=0){
             if (top >0){
@@ -251,8 +272,9 @@ angular
             alert("templete in right bottom or left ");
 
         }
-        alert($scope.zoomchange+ ", #### " + left+ ", " + top+ ", " + canvasWidth+ ", " + canvasHeight+", ####"+$scope.originalW+","+$scope.originalH +",####"+document.getElementById("editImage").width+","+document.getElementById("editImage").height);
-        ctx.drawImage(img, left, top, canvasWidth,canvasHeight, 0, 0, 150,220);
+        */
+        //alert($scope.zoomchange+ ", #### " + left+ ", " + top+ ", " + canvasWidth+ ", " + canvasHeight+", ####"+$scope.originalW+","+$scope.originalH +",####"+document.getElementById("editImage").width+","+document.getElementById("editImage").height);
+        ctx.drawImage(img, left, top, canvasWidth,canvasHeight, 0, startY, canvasW, canvasH);
         var canvas = document.getElementById("myCanvas");
         document.getElementById("theimage").src = canvas.toDataURL();
         
