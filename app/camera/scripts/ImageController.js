@@ -1,7 +1,8 @@
 angular
   .module('camera')
   .controller("ImageController", function ($scope, Progresstable, supersonic) {
-
+    $scope.times=0;
+    $scope.zoomchange=1;  
 
     $scope.Back = function(){
         supersonic.ui.modal.hide();
@@ -31,7 +32,7 @@ angular
     var myElement = document.getElementById("draggable");
 
     var mc = new Hammer.Manager(myElement);
-
+      
     // create a pinch and rotate recognizer
     // these require 2 pointers
     var pinch = new Hammer.Pinch();
@@ -48,6 +49,7 @@ angular
 
     mc.on("pinchout", function(ev) {
         if(document.myImage.width <400 && document.myImage.height<400) {
+            $scope.times+=1;
             document.myImage.width *= 1.02;
             document.myImage.height *= 1.02;
             //myElement.textContent += ev.scale +" ";
@@ -56,6 +58,7 @@ angular
 
     mc.on("pinchin", function(ev) {
         if(document.myImage.width > 200 && document.myImage.height>200){
+            $scope.times-=1;
             document.myImage.width /=1.02;
             document.myImage.height /=1.02;
         }
@@ -160,6 +163,7 @@ angular
         zoomsize.innerText = zoomLevel; 
         imgsize.innerText = currentWidth + "X" + currentHeight; 
     }
+
     $scope.imagechange=function(){
         //alert(originalHeight + "," + originalWidth)
         var tempHeight =  150 - tempTop;
@@ -168,14 +172,34 @@ angular
         var left = tempWidth ;
         var right = tempWidth + 150;
         var bottom = tempHeight + 220;
+        $scope.zoomchange=Math.pow(1.02,$scope.times);
+        $scope.originalW=document.getElementById("editImage").width/$scope.zoomchange;
+        $scope.originalH=document.getElementById("editImage").height/$scope.zoomchange;
         draggable.style.clip = "rect("+top+"px "+right+"px " +bottom+"px "+left+"px)";
         var c = document.getElementById("myCanvas");
         var ctx = c.getContext("2d");
         var img = document.getElementById("editImage");
+        var drawWidth = 150;
+        var drawHeight = 220;
+        var canvasWidth=150/$scope.zoomchange;
+        var canvasHeight=220/$scope.zoomchange;
+        if (canvasWidth>= $scope.originalW  )
+        {
+            left= 0;
+            canvasWidth= $scope.originalW;
+            drawWidth=document.getElementById("editImage").width;            
+        }        
+        if ( canvasHeight >= $scope.originalH)
+        {
+            top=0;
+            canvasHeight= $scope.originalH;
+            drawHeight=document.getElementById("editImage").height;
+        }
+        alert($scope.times+","+$scope.zoomchange+ ", #### " + left+ ", " + top+ ", " + canvasWidth+ ", " + canvasHeight+", ####"+$scope.originalW+","+$scope.originalH +",####"+document.getElementById("editImage").width+","+document.getElementById("editImage").height);
         //ctx.drawImage(img, leftCanvas*$scope.zoomchange, topCanvas*$scope.zoomchange, 102*$scope.zoomchange,200*$scope.zoomchange, 0, 0, 102,200);
         if (top < 0)
             top = 0;
-        ctx.drawImage(img, left, top, 150,220, 0, 0, 150,220);
+        ctx.drawImage(img, left, top, canvasWidth,canvasHeight, 0, 0, drawWidth,drawHeight);
         var canvas = document.getElementById("myCanvas");
         document.getElementById("theimage").src = canvas.toDataURL();
         
