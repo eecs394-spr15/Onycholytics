@@ -187,26 +187,69 @@ angular
             //the height is smaller than the templete
         {
             top=0;
-
         }
-        //too right?
+        //image is too right
         if (left<=0){
             left=0;
-            canvasWidth=150;
+            //canvasWidth=150;
+            //canvasHeight=220;
+            alert("image right");
         }
         alert(left);
+        // the image is too left
         if (left+tempWidth>=document.getElementById("editImage").width){
             left=300-150;
-            canvasWidth=150;
+            canvasWidth=149;
+            canvasHeight=219;
+            alert("image left");
         }
-
+        //the canvas is too large, the image is too zoomin(small)
         if(canvasHeight>=295)
-            //too large
         {
-            canvasHeight=295;
+            alert("h is too small");
+            canvasHeight=299;
+            canvasWidth=299*15/22;
         }
+        //this is impossible in most case
         if(canvasWidth>=295){
-            canvasWidth=295;
+            alert("w is too small");
+            canvasWidth=299*15/22;
+            canvasHeight=299;
+        }
+        //templete is left and bottom according to the image
+        if (top+canvasHeight>=document.getElementById("editImage").height && left<=0){
+            if (top >0){
+                top=80;
+                left=0;
+            }
+            else{
+                top=0;
+                left=0;
+            }
+            if(top+canvasHeight>=299 || left+canvasWidth>=299) {
+                canvasWidth=149;
+                canvasHeight=219;
+            }
+            alert("templete in left botom or right top");
+
+        }
+        //templete is right and bottom according to the image
+        if (top+canvasHeight>=document.getElementById("editImage").height && left>0 &&(document.getElementById("editImage").width-left>tempWidth ))//not sure about the last require
+        {
+            if (top >0){
+                top=80;
+                left=150;
+            }
+            else{
+                top=0;
+                left=150;
+            }
+            if(top+canvasHeight>=299 || left+canvasWidth>=299) {
+                canvasWidth=149;
+                canvasHeight=219;
+            }
+            alert("templete in right bottom or left ");
+
         }
         alert($scope.zoomchange+ ", #### " + left+ ", " + top+ ", " + canvasWidth+ ", " + canvasHeight+", ####"+$scope.originalW+","+$scope.originalH +",####"+document.getElementById("editImage").width+","+document.getElementById("editImage").height);
         ctx.drawImage(img, left, top, canvasWidth,canvasHeight, 0, 0, 150,220);
