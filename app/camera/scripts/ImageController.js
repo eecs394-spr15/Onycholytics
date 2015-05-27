@@ -1,7 +1,8 @@
 angular
   .module('camera')
   .controller("ImageController", function ($scope, Progresstable, supersonic) {
-
+    $scope.times=0;
+    $scope.zoomchange=1;  
 
     $scope.Back = function(){
         supersonic.ui.modal.hide();
@@ -19,6 +20,7 @@ angular
         //document.body.appendChild(img);
 
 }
+
     if (localStorage.imageURL) {
         $scope.photo = "data:image/png;base64,"+localStorage.imageURL;
     }
@@ -30,7 +32,7 @@ angular
     var myElement = document.getElementById("draggable");
 
     var mc = new Hammer.Manager(myElement);
-
+      
     // create a pinch and rotate recognizer
     // these require 2 pointers
     var pinch = new Hammer.Pinch();
@@ -138,43 +140,142 @@ angular
     // } 
     var originalWidth = 300;
     var originalHeight = 300;
+    
     $scope.resetImage=function(){ 
         document.myImage.width = originalWidth; 
         document.myImage.height = originalHeight; 
-        zoomLevel = 0; 
+        myElement.style.left = 20 + "px";
+        myElement.style.top = 200 + "px";      
         //update(); 
     } 
-
+    /*
    $scope.initial=function(){ 
         //template.style.left = 200;
-        var currentWidth = document.myImage.width; 
-        var currentHeight = document.myImage.height; 
-        originalWidth = 300; 
-        originalHeight = 300; 
+        currentWidth = document.myImage.width; 
+        currentHeight = document.myImage.height; 
+        
         //update(); 
     }
     $scope.update=function(){ 
         currentWidth = document.myImage.width; 
         currentHeight = document.myImage.height; 
-        zoomsize.innerText = zoomLevel; 
+        //zoomsize.innerText = zoomLevel; 
         imgsize.innerText = currentWidth + "X" + currentHeight; 
     }
+    */
+
     $scope.imagechange=function(){
-        //alert(originalHeight + "," + originalWidth)
+        //alert(originalHeight + "," + originalWidth);
         var tempHeight =  150 - tempTop;
         var tempWidth = (screen.width/2) - 75 - tempLeft;
         var top = tempHeight;
-        var left = tempWidth ;
+        var left = tempWidth;
         var right = tempWidth + 150;
         var bottom = tempHeight + 220;
+        var startY = 0;
+        $scope.zoomchange=document.getElementById("editImage").width/300;
         draggable.style.clip = "rect("+top+"px "+right+"px " +bottom+"px "+left+"px)";
         var c = document.getElementById("myCanvas");
         var ctx = c.getContext("2d");
         var img = document.getElementById("editImage");
+        var canvasWidth=150/$scope.zoomchange;
+        var canvasHeight=220/$scope.zoomchange;
+        var canvasW = 150;
+        var canvasH = 220;
+        $scope.originalW=300;
+        $scope.originalH=300;
         //ctx.drawImage(img, leftCanvas*$scope.zoomchange, topCanvas*$scope.zoomchange, 102*$scope.zoomchange,200*$scope.zoomchange, 0, 0, 102,200);
-        if (top < 0)
+        //image is too small
+        if(canvasHeight>=295 || canvasWidth>=295)
+        {
+            alert("too small! keep whole picture");
+            canvasHeight=299;
+            canvasWidth=299;
+            left = 0;
             top = 0;
-        ctx.drawImage(img, left, top, 150,220, 0, 0, 150,220);
+            canvasW = 150;
+            canvasH = 150;
+            startY = 25;
+        }
+        else{
+            //image is too bottom
+            if (top < 0){
+                alert("too bottom"+bottom)
+                top = 0;
+            } 
+            
+            if (bottom > document.getElementById("editImage").height)
+                //the height is smaller than the templete
+            {
+                alert("too top:" + bottom);
+                canvasHeight = document.getElementById("editImage").width - top;
+                canvasWidth = 150/220*canvasHeight;
+            }
+            
+            //image is too left
+            if (left < 0){
+                alert("too left:"+left);
+                left = 0;
+                //canvasWidth=150;
+                //canvasHeight=220;
+                //alert("image right");
+            }
+            if (right > document.getElementById("editImage").width){
+                alert("too right:" + right);
+                canvasWidth = document.getElementById("editImage").width - left;
+                //canvasHeight = 220/150*canvasHeight;
+            }
+        }
+        //alert(left);
+        // the image is too left
+        /*
+        if (left+tempWidth>=document.getElementById("editImage").width){
+            left=300-150;
+            canvasWidth=149;
+            canvasHeight=219;
+            alert("image left");
+        }
+        */
+       
+        /*
+        //templete is left and bottom according to the image
+        if (top+canvasHeight>=document.getElementById("editImage").height && left<=0){
+            if (top >0){
+                top=80;
+                left=0;
+            }
+            else{
+                top=0;
+                left=0;
+            }
+            if(top+canvasHeight>=299 || left+canvasWidth>=299) {
+                canvasWidth=149;
+                canvasHeight=219;
+            }
+            alert("templete in left botom or right top");
+
+        }
+        //templete is right and bottom according to the image
+        if (top+canvasHeight>=document.getElementById("editImage").height && left>0 &&(document.getElementById("editImage").width-left>tempWidth ))//not sure about the last require
+        {
+            if (top >0){
+                top=80;
+                left=150;
+            }
+            else{
+                top=0;
+                left=150;
+            }
+            if(top+canvasHeight>=299 || left+canvasWidth>=299) {
+                canvasWidth=149;
+                canvasHeight=219;
+            }
+            alert("templete in right bottom or left ");
+
+        }
+        */
+        //alert($scope.zoomchange+ ", #### " + left+ ", " + top+ ", " + canvasWidth+ ", " + canvasHeight+", ####"+$scope.originalW+","+$scope.originalH +",####"+document.getElementById("editImage").width+","+document.getElementById("editImage").height);
+        ctx.drawImage(img, left, top, canvasWidth,canvasHeight, 0, startY, canvasW, canvasH);
         var canvas = document.getElementById("myCanvas");
         document.getElementById("theimage").src = canvas.toDataURL();
         
