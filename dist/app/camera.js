@@ -216,7 +216,7 @@ angular
                 canvasHeight = bottom;
                 canvasW = canvasWidth;
                 canvasH = canvasHeight;
-                startY = tempTop - startHeight;
+                startY = tempTop - startHeight - 15;
             }
 
             //image is too bottom and too right 
@@ -228,7 +228,7 @@ angular
                 canvasHeight = bottom;
                 canvasW = canvasWidth;
                 canvasH = canvasHeight;
-                startY = tempTop - startHeight;
+                startY = tempTop - startHeight - 15;
                 startX = -tempWidth;
             }
 
@@ -244,8 +244,8 @@ angular
             //image is too top and right
             else if (bottom > document.getElementById("editImage").height && left < 0){
                 alert("image is too top and too right");
-                left = 0;
-                canvasWidth = right;
+                left = 20;
+                canvasWidth = right + 20;
                 canvasHeight = document.getElementById("editImage").height - top;
                 canvasW = canvasWidth;
                 canvasH = canvasHeight;
@@ -260,17 +260,19 @@ angular
                 canvasHeight = bottom;
                 canvasW = canvasWidth;
                 canvasH = canvasHeight;
-                startY = tempTop - startHeight;
+                startY = tempTop - startHeight - 15;
             } 
             
             //image is too top
             else if (bottom > document.getElementById("editImage").height)
             {   
                 alert("image is too top");
+                left += 20;
                 canvasWidth = 150;
                 canvasHeight = document.getElementById("editImage").height - top;               
-                canvasH = canvasHeight;
                 canvasW = canvasWidth;
+                canvasH = canvasHeight;
+                startX = 0;
             }
             
             //image is too left
