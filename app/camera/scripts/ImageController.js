@@ -69,9 +69,9 @@ angular
     var tempTop = 0;
     mc.on("panleft panright panup pandown", function(ev) {
         //myElement.textContent = ev.type +" gesture detected.";
-        myElement.style.left = (ev.center.x - document.myImage.width/4.0) + "px";
+        myElement.style.left = (ev.center.x - document.myImage.width/2.0) + "px";
         myElement.style.top = (ev.center.y - document.myImage.height/4.0) + "px";
-        tempLeft = ev.center.x - document.myImage.width/4.0;
+        tempLeft = ev.center.x - document.myImage.width/2.0;
         tempTop = ev.center.y - document.myImage.height/4.0;
     });
 
@@ -145,9 +145,11 @@ angular
         document.myImage.width = originalWidth; 
         document.myImage.height = originalHeight; 
         myElement.style.left = 20 + "px";
-        myElement.style.top = 200 + "px";      
+        myElement.style.top = 200 + "px";
+        //draggable.style.clip = "restore()";  
         //update(); 
     } 
+
     /*
    $scope.initial=function(){ 
         //template.style.left = 200;
@@ -166,25 +168,27 @@ angular
 
     $scope.imagechange=function(){
         //alert(originalHeight + "," + originalWidth);
-        var tempHeight =  150 - tempTop;
+        var startHeight = 150;
+        var tempHeight =  startHeight - tempTop;
         var tempWidth = (screen.width/2) - 75 - tempLeft;
         var top = tempHeight;
         var left = tempWidth;
         var right = tempWidth + 150;
         var bottom = tempHeight + 220;
-        var startY = 0;
+        
         $scope.zoomchange=document.getElementById("editImage").width/300;
+        //draggable.style.clip = "save()";
         draggable.style.clip = "rect("+top+"px "+right+"px " +bottom+"px "+left+"px)";
-        var c = document.getElementById("myCanvas");
-        var ctx = c.getContext("2d");
+        var can = document.getElementById("myCanvas");
+        var ctx = can.getContext("2d");
         var img = document.getElementById("editImage");
         var canvasWidth=150/$scope.zoomchange;
         var canvasHeight=220/$scope.zoomchange;
         var canvasW = 150;
         var canvasH = 220;
-        $scope.originalW=300;
-        $scope.originalH=300;
-        //ctx.drawImage(img, leftCanvas*$scope.zoomchange, topCanvas*$scope.zoomchange, 102*$scope.zoomchange,200*$scope.zoomchange, 0, 0, 102,200);
+        var startY = 0;
+        var startX = 0;
+        
         //image is too small
         if(canvasHeight>=295 || canvasWidth>=295)
         {
@@ -197,85 +201,95 @@ angular
             canvasH = 150;
             startY = 25;
         }
+        //image's size suitbale for clip
         else{
-            //image is too bottom
-            if (top < 0){
-                alert("too bottom"+bottom)
+            //image is too bottom and too left
+            if (top < 0 && right > document.getElementById("editImage").width){
+                alert("image is too bottom and too left");
                 top = 0;
+                canvasWidth = document.getElementById("editImage").width - left;
+                canvasHeight = bottom;
+                canvasW = canvasWidth;
+                canvasH = canvasHeight;
+                startY = tempTop - startHeight;
+            }
+
+            //image is too bottom and too right 
+            else if (top < 0 && left < 0){
+                alert("image is too bottom and too left");
+                top = 0;
+                left = 0;
+                canvasWidth = right;
+                canvasHeight = bottom;
+                canvasW = canvasWidth;
+                canvasH = canvasHeight;
+                startY = tempTop - startHeight;
+                startX = -tempWidth;
+            }
+
+            //image is too top and too left
+            else if (bottom > document.getElementById("editImage").height && right > document.getElementById("editImage").width){
+                alert("image is too top and too left");
+                canvasWidth = document.getElementById("editImage").width - left;
+                canvasHeight = document.getElementById("editImage").height - top;
+                canvasW = canvasWidth;
+                canvasH = canvasHeight;
+            }
+
+            //image is too top and right
+            else if (bottom > document.getElementById("editImage").height && left < 0){
+                alert("image is too top and too right");
+                left = 0;
+                canvasWidth = right;
+                canvasHeight = document.getElementById("editImage").height - top;
+                canvasW = canvasWidth;
+                canvasH = canvasHeight;
+                startX = -tempWidth;
+            }
+
+            //image is too bottom
+            else if (top < 0){
+                alert("image is too bottom");
+                top = 0;
+                canvasWidth = 150;
+                canvasHeight = bottom;
+                canvasW = canvasWidth;
+                canvasH = canvasHeight;
+                startY = tempTop - startHeight;
             } 
             
-            if (bottom > document.getElementById("editImage").height)
-                //the height is smaller than the templete
-            {
-                alert("too top:" + bottom);
-                canvasHeight = document.getElementById("editImage").width - top;
-                canvasWidth = 150/220*canvasHeight;
+            //image is too top
+            else if (bottom > document.getElementById("editImage").height)
+            {   
+                alert("image is too top");
+                canvasWidth = 150;
+                canvasHeight = document.getElementById("editImage").height - top;               
+                canvasH = canvasHeight;
+                canvasW = canvasWidth;
             }
             
             //image is too left
-            if (left < 0){
-                alert("too left:"+left);
-                left = 0;
-                //canvasWidth=150;
-                //canvasHeight=220;
-                //alert("image right");
-            }
-            if (right > document.getElementById("editImage").width){
-                alert("too right:" + right);
+            else if (right > document.getElementById("editImage").width){
+                alert("image is too left");
                 canvasWidth = document.getElementById("editImage").width - left;
-                //canvasHeight = 220/150*canvasHeight;
+                canvasHeight = 220;
+                canvasW = canvasWidth;
+                canvasH = canvasHeight;
             }
-        }
-        //alert(left);
-        // the image is too left
-        /*
-        if (left+tempWidth>=document.getElementById("editImage").width){
-            left=300-150;
-            canvasWidth=149;
-            canvasHeight=219;
-            alert("image left");
-        }
-        */
-       
-        /*
-        //templete is left and bottom according to the image
-        if (top+canvasHeight>=document.getElementById("editImage").height && left<=0){
-            if (top >0){
-                top=80;
-                left=0;
-            }
-            else{
-                top=0;
-                left=0;
-            }
-            if(top+canvasHeight>=299 || left+canvasWidth>=299) {
-                canvasWidth=149;
-                canvasHeight=219;
-            }
-            alert("templete in left botom or right top");
 
+            //image is too right
+            else if (left < 0){
+                alert("image is too right");
+                left = 0;
+                canvasWidth = right;
+                canvasHeight = 220;
+                canvasW = canvasWidth;
+                canvasH = canvasHeight;
+                startX = -tempWidth;
+            }
         }
-        //templete is right and bottom according to the image
-        if (top+canvasHeight>=document.getElementById("editImage").height && left>0 &&(document.getElementById("editImage").width-left>tempWidth ))//not sure about the last require
-        {
-            if (top >0){
-                top=80;
-                left=150;
-            }
-            else{
-                top=0;
-                left=150;
-            }
-            if(top+canvasHeight>=299 || left+canvasWidth>=299) {
-                canvasWidth=149;
-                canvasHeight=219;
-            }
-            alert("templete in right bottom or left ");
-
-        }
-        */
-        //alert($scope.zoomchange+ ", #### " + left+ ", " + top+ ", " + canvasWidth+ ", " + canvasHeight+", ####"+$scope.originalW+","+$scope.originalH +",####"+document.getElementById("editImage").width+","+document.getElementById("editImage").height);
-        ctx.drawImage(img, left, top, canvasWidth,canvasHeight, 0, startY, canvasW, canvasH);
+        
+        ctx.drawImage(img, left, top, canvasWidth,canvasHeight, startX, startY, canvasW, canvasH);
         var canvas = document.getElementById("myCanvas");
         document.getElementById("theimage").src = canvas.toDataURL();
         
