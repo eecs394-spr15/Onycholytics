@@ -49,7 +49,6 @@ angular
 
     mc.on("pinchout", function(ev) {
         if(document.myImage.width <400 && document.myImage.height<400) {
-            $scope.times+=1;
             document.myImage.width *= 1.02;
             document.myImage.height *= 1.02;
             //myElement.textContent += ev.scale +" ";
@@ -58,7 +57,6 @@ angular
 
     mc.on("pinchin", function(ev) {
         if(document.myImage.width > 200 && document.myImage.height>200){
-            $scope.times-=1;
             document.myImage.width /=1.02;
             document.myImage.height /=1.02;
         }
@@ -172,34 +170,45 @@ angular
         var left = tempWidth ;
         var right = tempWidth + 150;
         var bottom = tempHeight + 220;
-        $scope.zoomchange=Math.pow(1.02,$scope.times);
-        $scope.originalW=document.getElementById("editImage").width/$scope.zoomchange;
-        $scope.originalH=document.getElementById("editImage").height/$scope.zoomchange;
+        $scope.zoomchange=document.getElementById("editImage").width/300;
         draggable.style.clip = "rect("+top+"px "+right+"px " +bottom+"px "+left+"px)";
         var c = document.getElementById("myCanvas");
         var ctx = c.getContext("2d");
         var img = document.getElementById("editImage");
-        var drawWidth = 150;
-        var drawHeight = 220;
         var canvasWidth=150/$scope.zoomchange;
         var canvasHeight=220/$scope.zoomchange;
-        if (canvasWidth>= $scope.originalW  )
-        {
-            left= 0;
-            canvasWidth= $scope.originalW;
-            drawWidth=document.getElementById("editImage").width;            
-        }        
-        if ( canvasHeight >= $scope.originalH)
+        $scope.originalW=300;
+        $scope.originalH=300;
+        //ctx.drawImage(img, leftCanvas*$scope.zoomchange, topCanvas*$scope.zoomchange, 102*$scope.zoomchange,200*$scope.zoomchange, 0, 0, 102,200);
+        if (top < 0) /*too bottom*/
+            top = 0;
+        if (tempHeight>=document.getElementById("editImage").height)
+            //the height is smaller than the templete
         {
             top=0;
-            canvasHeight= $scope.originalH;
-            drawHeight=document.getElementById("editImage").height;
+
         }
-        alert($scope.times+","+$scope.zoomchange+ ", #### " + left+ ", " + top+ ", " + canvasWidth+ ", " + canvasHeight+", ####"+$scope.originalW+","+$scope.originalH +",####"+document.getElementById("editImage").width+","+document.getElementById("editImage").height);
-        //ctx.drawImage(img, leftCanvas*$scope.zoomchange, topCanvas*$scope.zoomchange, 102*$scope.zoomchange,200*$scope.zoomchange, 0, 0, 102,200);
-        if (top < 0)
-            top = 0;
-        ctx.drawImage(img, left, top, canvasWidth,canvasHeight, 0, 0, drawWidth,drawHeight);
+        //too right?
+        if (left<=0){
+            left=0;
+            canvasWidth=150;
+        }
+        alert(left);
+        if (left+tempWidth>=document.getElementById("editImage").width){
+            left=300-150;
+            canvasWidth=150;
+        }
+
+        if(canvasHeight>=295)
+            //too large
+        {
+            canvasHeight=295;
+        }
+        if(canvasWidth>=295){
+            canvasWidth=295;
+        }
+        alert($scope.zoomchange+ ", #### " + left+ ", " + top+ ", " + canvasWidth+ ", " + canvasHeight+", ####"+$scope.originalW+","+$scope.originalH +",####"+document.getElementById("editImage").width+","+document.getElementById("editImage").height);
+        ctx.drawImage(img, left, top, canvasWidth,canvasHeight, 0, 0, 150,220);
         var canvas = document.getElementById("myCanvas");
         document.getElementById("theimage").src = canvas.toDataURL();
         
