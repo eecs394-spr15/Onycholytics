@@ -20,7 +20,10 @@ angular
 
 }
     if (localStorage.imageURL) {
-        show_image("data:image/png;base64,"+localStorage.imageURL, 300, 300);
+        $scope.photo = "data:image/png;base64,"+localStorage.imageURL;
+    }
+    else{
+        $scope.photo = "/images/bigtoe.png"
     }
 
    
