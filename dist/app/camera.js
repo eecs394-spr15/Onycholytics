@@ -151,6 +151,8 @@ angular
         document.myImage.height = originalHeight; 
         myElement.style.left = 20 + "px";
         myElement.style.top = 200 + "px";
+        myElement.reset();
+
         //draggable.style.clip = "restore()";  
         //update(); 
     } 
@@ -189,6 +191,8 @@ angular
         var img = document.getElementById("editImage");
         var canvasWidth=150/$scope.zoomchange;
         var canvasHeight=220/$scope.zoomchange;
+        var left = left/$scope.zoomchange;
+        var top = top/$scope.zoomchange;
         var canvasW = 150;
         var canvasH = 220;
         var startY = 0;
@@ -244,8 +248,8 @@ angular
             //image is too top and right
             else if (bottom > document.getElementById("editImage").height && left < 0){
                 alert("image is too top and too right");
-                left = 20;
-                canvasWidth = right + 20;
+                left = 0;
+                canvasWidth = right;
                 canvasHeight = document.getElementById("editImage").height - top;
                 canvasW = canvasWidth;
                 canvasH = canvasHeight;
@@ -260,14 +264,14 @@ angular
                 canvasHeight = bottom;
                 canvasW = canvasWidth;
                 canvasH = canvasHeight;
-                startY = tempTop - startHeight - 15;
+                startY = tempTop - startHeight -15;
             } 
             
             //image is too top
             else if (bottom > document.getElementById("editImage").height)
             {   
                 alert("image is too top");
-                left += 20;
+                //left += 20;
                 canvasWidth = 150;
                 canvasHeight = document.getElementById("editImage").height - top;               
                 canvasW = canvasWidth;
@@ -294,6 +298,7 @@ angular
                 canvasH = canvasHeight;
                 startX = -tempWidth;
             }
+
         }
         
         ctx.drawImage(img, left, top, canvasWidth,canvasHeight, startX, startY, canvasW, canvasH);
