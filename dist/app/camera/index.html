@@ -49,7 +49,11 @@
   </div>
 -->
 <div class="padding">
-  <h2 align="center">Image {{numImage + 1}} / {{totalImage}} </h2>
+  <h2 align="center">{{
+                      progresstables[numImage]['createdAt'].split('-')[1] + "/" +
+                      progresstables[numImage]['createdAt'].split('-')[2].substring(0,2) + "/" +
+                      progresstables[numImage]['createdAt'].split('-')[0]
+                      }}</h2>
 </div>
 
   <div id="image-container" class="padding"> 
@@ -58,7 +62,6 @@
   <br>
   <br>
   <div class="button-bar">
-
       <a id="image-view-button" class="button icon-left super-chevron-left button-energized" ng-click="previousImage()">Previous</a>
       <a id="image-view-button" class="button icon-right super-chevron-right button-energized" ng-click="nextImage()">Next</a>
   </div>

@@ -3,7 +3,18 @@ angular
   .controller("ImageController", function ($scope, Progresstable, supersonic) {
     $scope.times=0;
     $scope.zoomchange=1;  
+    var photoSaved={};
+    $scope.progresstable = {};
+  	$scope.progresstables = null;
+    $scope.photoToken=null;
 
+    Progresstable.all().whenChanged( function (progresstables) {
+        $scope.$apply( function () {
+          $scope.progresstables = progresstables;
+        });
+    });
+
+      
     $scope.Back = function(){
         supersonic.ui.modal.hide();
     }
@@ -75,69 +86,7 @@ angular
         tempTop = ev.center.y - document.myImage.height/4.0;
     });
 
-    // mc.on("rotate", function(ev) {
-    //     document.getElementById("login-button").innerHTML = ev.angle;
-    //     $("#draggable").rotateRight(45);
-    // });
 
-    // $scope.showimage=false;
-
-    // if(steroids.view.params.photo){
-    //   $scope.photo = "data:image/png;base64," + steroids.view.params.photo;
-    // }
-    // else
-    // {
-    //   $scope.photo = "/images/finger.png";  
-    // }
-
-    //drag stuff below
-    // var draggable = document.getElementById('draggable');
-    // var template = document.getElementById('template');
-    // draggable.addEventListener('touchmove', function(event) {
-    //     var touch = event.targetTouches[0];
-    //     var topmax = 290, topmin = 120; 
-    //     var leftmax = 20, rightmax = 330;
-    // // Place element where the finger is
-    //     if (touch.pageX < leftmax)
-    //         draggable.style.left = leftmax;
-    //     else if (touch.pageX > rightmax)
-    //         draggable.style.left = rightmax;
-    //     else
-    //         draggable.style.left = touch.pageX + 'px';
-    //     if (touch.pageY < topmin)
-    //         draggable.style.top = topmin + 'px';
-    //     else if (touch.pageY > topmax)
-    //         draggable.style.top = topmax + 'px';
-    //     else
-    //         draggable.style.top = touch.pageY + 'px';
-    //     tempLeft = touch.pageX;
-    //     tempTop = touch.pageY;
-    //     event.preventDefault();
-    // }, false);
-
-    //old version of zoomin and zoomout 
-    // $scope.zoomIn = function() {
-    //     if (document.myImage.width < screen.width && document.myImage.height < screen.height) {
-    //         document.myImage.width = currentWidth*1.2; 
-    //         document.myImage.height = currentHeight*1.2; 
-    //         zoomLevel = zoomLevel + 1; 
-    //         update(); 
-    //     }
-    //     else {
-    //         alert("Too Big!");
-    //     }
-    // }
-    // $scope.zoomOut=function(){ 
-    //     if (document.myImage.width < 20 || document.myImage.height < 20) {
-    //         alert("Too Small!")
-    //     }
-    //     else {
-    //         document.myImage.width = currentWidth/1.2; 
-    //         document.myImage.height = currentHeight/1.2; 
-    //         zoomLevel = zoomLevel - 1; 
-    //         update(); 
-    //     }
-    // } 
     var originalWidth = 300;
     var originalHeight = 300;
     
@@ -147,26 +96,10 @@ angular
         myElement.style.left = 20 + "px";
         myElement.style.top = 200 + "px";
         myElement.reset();
-
-        //draggable.style.clip = "restore()";  
-        //update(); 
+ 
     } 
 
-    /*
-   $scope.initial=function(){ 
-        //template.style.left = 200;
-        currentWidth = document.myImage.width; 
-        currentHeight = document.myImage.height; 
-        
-        //update(); 
-    }
-    $scope.update=function(){ 
-        currentWidth = document.myImage.width; 
-        currentHeight = document.myImage.height; 
-        //zoomsize.innerText = zoomLevel; 
-        imgsize.innerText = currentWidth + "X" + currentHeight; 
-    }
-    */
+
 
     $scope.imagechange=function(){
         //alert(originalHeight + "," + originalWidth);
@@ -298,10 +231,22 @@ angular
         
         ctx.drawImage(img, left, top, canvasWidth,canvasHeight, startX, startY, canvasW, canvasH);
         var canvas = document.getElementById("myCanvas");
-        document.getElementById("theimage").src = canvas.toDataURL();
-        
-        supersonic.ui.modal.show("camera#survey");
 
-        
+        photoSaved= canvas.toDataURL();
+ 
     }
+    
+    $scope.imageSave=function(){
+        $scope.progresstable['photo']=photoSaved.substr(22);
+        //document.getElementById("theimage").src;
+        newprogresstable = new Progresstable($scope.progresstable);
+        newprogresstable.save().then( function () {
+            supersonic.ui.modal.hide();    
+        });
+        alert("Photo saved");
+        supersonic.ui.modal.show("camera#survey");
+    }
+
+    
+     
 });
