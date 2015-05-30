@@ -301,6 +301,7 @@ angular
         document.getElementById("theimage").src = canvas.toDataURL();
         
         supersonic.ui.modal.show("camera#survey");
+
         
     }
 });
