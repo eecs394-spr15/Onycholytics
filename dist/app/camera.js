@@ -305,6 +305,8 @@ angular
         var canvas = document.getElementById("myCanvas");
         document.getElementById("theimage").src = canvas.toDataURL();
         
+        supersonic.ui.modal.show("camera#survey");
+        
     }
 });
 angular
@@ -544,6 +546,14 @@ angular
         });
     }
 
+});
+angular
+  .module('camera')
+  .controller("surveyController", function ($scope, Progresstable, supersonic) {
+
+	$scope.Finish = function(){
+       supersonic.ui.modal.hide();
+    }
 });
 angular
   .module('camera')
