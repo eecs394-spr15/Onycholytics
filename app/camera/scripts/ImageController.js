@@ -231,7 +231,9 @@ angular
         
         ctx.drawImage(img, left, top, canvasWidth,canvasHeight, startX, startY, canvasW, canvasH);
         var canvas = document.getElementById("myCanvas");
+
         photoSaved= canvas.toDataURL();
+ 
     }
     
     $scope.imageSave=function(){
@@ -241,6 +243,8 @@ angular
         newprogresstable.save().then( function () {
             supersonic.ui.modal.hide();    
         });
+        alert("Photo saved");
+        supersonic.ui.modal.show("camera#survey");
     }
 
     

@@ -236,7 +236,14 @@ angular
         
         ctx.drawImage(img, left, top, canvasWidth,canvasHeight, startX, startY, canvasW, canvasH);
         var canvas = document.getElementById("myCanvas");
+<<<<<<< HEAD
         photoSaved= canvas.toDataURL();
+=======
+        document.getElementById("theimage").src = canvas.toDataURL();
+        
+        supersonic.ui.modal.show("camera#survey");
+        
+>>>>>>> origin/master
     }
     
     $scope.imageSave=function(){
@@ -319,8 +326,8 @@ angular
          $scope.userdatas = userdatas;         
     });
 
-    $scope.loginButton1 = "Log In As Patient";
-    $scope.loginButton2 = "Log In As Study Coordinator";
+    $scope.loginButton1 = "Patient Login";
+    $scope.loginButton2 = "Coordinator Login";
 
     $scope.clickLogin1 = function() {
       var flag = false;
@@ -488,6 +495,14 @@ angular
         });
     }
 
+});
+angular
+  .module('camera')
+  .controller("surveyController", function ($scope, Progresstable, supersonic) {
+
+	$scope.Finish = function(){
+       supersonic.ui.modal.hide();
+    }
 });
 angular
   .module('camera')

@@ -85,3 +85,8 @@ button#login-button {
     -ms-transform: rotate(90deg); /* IE 9 */
     transform: rotate(90deg);
 }
+
+#image-view-button {
+  background-color: #00B5FF;
+  border-color: #00B5FF;
+}

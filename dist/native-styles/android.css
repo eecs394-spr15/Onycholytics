@@ -60,19 +60,15 @@ tab-bar tab-bar-item marker-top:selected {
   background-color: #1596f7;
 }
 
-tab-bar-item#editor {
-  background-image: url(icons/cog.svg);
-}
-
 tab-bar-item#camera {
-  background-image: url(icons/home.svg);
+  background-image: url(icons/camera.svg);
 }
 
 tab-bar-item#photos {
-  background-image: url(icons/search.svg);
+  background-image: url(icons/images.svg);
 }
 
 tab-bar-item#messages {
-  background-image: url(icons/search.svg);
+  background-image: url(icons/bubbles2.svg);
 }
 

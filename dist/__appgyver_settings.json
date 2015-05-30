@@ -22,18 +22,12 @@
     },
     {
       "position": 1,
-      "id": "editor",
-      "title": "Editor",
-      "target_url": "http://localhost/app/camera/image.html"
-    },
-    {
-      "position": 2,
       "id": "photos",
       "title": "Photos",
       "target_url": "http://localhost/app/camera/index.html"
     },
     {
-      "position": 3,
+      "position": 2,
       "id": "messages",
       "title": "Messages",
       "target_url": "http://localhost/app/camera/message.html"
