@@ -231,7 +231,6 @@ angular
         
         ctx.drawImage(img, left, top, canvasWidth,canvasHeight, startX, startY, canvasW, canvasH);
         var canvas = document.getElementById("myCanvas");
-
         photoSaved= canvas.toDataURL();
  
     }
@@ -240,9 +239,9 @@ angular
         $scope.progresstable['photo']=photoSaved.substr(22);
         //document.getElementById("theimage").src;
         newprogresstable = new Progresstable($scope.progresstable);
-        newprogresstable.save().then( function () {
-            supersonic.ui.modal.hide();    
-        });
+        newprogresstable.save();/*.then( function () {
+            //supersonic.ui.modal.hide();    
+        });*/
         alert("Photo saved");
         supersonic.ui.modal.show("camera#survey");
     }
