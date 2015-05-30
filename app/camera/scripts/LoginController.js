@@ -12,8 +12,8 @@ angular
          $scope.userdatas = userdatas;         
     });
 
-    $scope.loginButton1 = "Log In As Patient";
-    $scope.loginButton2 = "Log In As Study Coordinator";
+    $scope.loginButton1 = "Patient Login";
+    $scope.loginButton2 = "Coordinator Login";
 
     $scope.clickLogin1 = function() {
       var flag = false;

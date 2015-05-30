@@ -10,14 +10,6 @@ module.exports =
       location: "example#getting-started" # Supersonic module#view type navigation
     }
     {
-      title: "Editor"
-      id: "editor"
-      location: "camera#image"
-      #location: "camera#try"
-
-
-    }
-    {
       title: "Photos"
       id: "photos"
       location: "camera#index" # URLs are supported!

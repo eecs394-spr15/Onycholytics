@@ -22,6 +22,11 @@ angular
 		});
 	}	
 
+	$scope.logOut = function() {
+      supersonic.ui.initialView.show();
+    };
+ 
+
 	   
 
   });
