@@ -5,19 +5,14 @@ angular.module('camera', [
 
 angular
   .module('camera')
-  .controller("ImageController", function ($scope, Progresstable, supersonic) {
+  .controller("ImageController", function ($scope, Progresstable, Usertable, supersonic) {
     $scope.times=0;
     $scope.zoomchange=1;  
     var photoSaved={};
     $scope.progresstable = {};
   	$scope.progresstables = null;
     $scope.photoToken=null;
-
-    Progresstable.all().whenChanged( function (progresstables) {
-        $scope.$apply( function () {
-          $scope.progresstables = progresstables;
-        });
-    });
+    $scope.bool = false;
 
       
     $scope.Back = function(){
@@ -240,15 +235,38 @@ angular
  
     }
     
+    Progresstable.all().whenChanged( function (progresstables) {
+        $scope.$apply( function () {
+          $scope.progresstables = progresstables;
+        });
+        Usertable.find(localStorage.objectId).then( function (user) {
+            if ($scope.bool == true) {
+                $scope.bool = false;
+                $scope.$apply( function () {
+                    $scope.myPhotos = user['myPhotos'];
+                    $scope.myPhotos.push(progresstables[progresstables.length-1].id);
+                    user['myPhotos'] = $scope.myPhotos;
+                    user.save();
+                });
+                alert("Photo Saved!");
+                $scope.$apply( function () {
+                    $scope.showSpinner = false;
+                });
+                supersonic.ui.modal.show("camera#survey");
+            }
+        });
+    });
+
     $scope.imageSave=function(){
         $scope.progresstable['photo']=photoSaved.substr(22);
         //document.getElementById("theimage").src;
         newprogresstable = new Progresstable($scope.progresstable);
-        newprogresstable.save();/*.then( function () {
+        newprogresstable.save();
+        $scope.bool = true;
+        $scope.showSpinner = true;
+        /*.then( function () {
             //supersonic.ui.modal.hide();    
         });*/
-        alert("Photo saved");
-        supersonic.ui.modal.show("camera#survey");
     }
 
     
