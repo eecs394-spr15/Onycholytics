@@ -8,16 +8,18 @@ angular
     Usertable.find(localStorage.objectId).then( function(row) {
         $scope.$apply( function () {
             $scope.userType = row["isPatient"];
-        }); });
+        }); 
+        if ($scope.userType == true ) {
+            Usermessage.all().whenChanged( function (usermessages) {
+                $scope.messages = usermessages;         
+            });
+        } else {
+                Coormessage.all().whenChanged( function (usermessages) {
+                $scope.messages = usermessages;         
+            });
+        }
+    });
 
-    if ($scope.userType == true ) {
-        Usermessage.all().whenChanged( function (usermessages) {
-            $scope.messages = usermessages;         
-        });
-    } else {
-            Coormessage.all().whenChanged( function (usermessages) {
-            $scope.messages = usermessages;         
-        });
-    }
+
 
 });

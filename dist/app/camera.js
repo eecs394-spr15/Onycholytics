@@ -498,17 +498,56 @@ angular
     Usertable.find(localStorage.objectId).then( function(row) {
         $scope.$apply( function () {
             $scope.userType = row["isPatient"];
-        }); });
+        }); 
+        if ($scope.userType == true ) {
+            Usermessage.all().whenChanged( function (usermessages) {
+                $scope.messages = usermessages;         
+            });
+        } else {
+                Coormessage.all().whenChanged( function (usermessages) {
+                $scope.messages = usermessages;         
+            });
+        }
+    });
 
-    if ($scope.userType == true ) {
-        Usermessage.all().whenChanged( function (usermessages) {
-            $scope.messages = usermessages;         
+
+
+});
+angular
+  .module('camera')
+  .controller("messageDetailsController", function ($scope, Usertable, Usermessage, Coormessage, supersonic) {
+    $scope.message = null;
+    $scope.dataId = undefined;
+    $scope.userType = null;
+
+
+   var _refreshViewData = function () {
+    if ($scope.userType == "true") {
+        Usermessage.find($scope.dataId).then( function (message) {
+            $scope.$apply( function () {
+              $scope.message = message;
+            });
         });
-    } else {
-            Coormessage.all().whenChanged( function (usermessages) {
-            $scope.messages = usermessages;         
+      } else {
+        Coormessage.find($scope.dataId).then( function (message) {
+            $scope.$apply( function () {
+              $scope.message = message;
+            });
         });
+      }
     }
+
+    supersonic.ui.views.current.whenVisible( function () {
+      if ( $scope.dataId ) {
+        _refreshViewData();
+      }
+    });
+    supersonic.ui.views.current.params.onValue( function (values) {
+      $scope.dataId = values.xid;
+      $scope.userType = values.zid;
+      //$scope.userType = values.uType;
+      _refreshViewData();
+    });  
 
 });
 angular

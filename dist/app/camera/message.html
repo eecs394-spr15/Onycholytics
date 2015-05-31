@@ -42,8 +42,10 @@
 
     <p>isPatient {{userType}}</p>
     <div id="message-container">
-        <div ng-repeat="message in messages">
-            <p>{{ message["message"].text }}</p>
+        <div class="messageRow" ng-repeat="message in messages">
+            <super-navigate location="camera#messageDetails" data-params-xid="{{ message.id }}" data-params-zid="{{ userType }}">
+            	<p>{{ message["message"].title }}</p>
+        	</super-navigate>
         </div>
     </div>
     

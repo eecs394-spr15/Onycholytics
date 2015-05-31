@@ -68,6 +68,9 @@ window.ag.data = {
           "createdAt": {
             "type": "string"
           },
+          "isRead": {
+            "type": "integer"
+          },
           "message": {
             "type": "object"
           },
@@ -76,6 +79,9 @@ window.ag.data = {
             "identity": true
           },
           "patientID": {
+            "type": "string"
+          },
+          "testCol": {
             "type": "string"
           },
           "updatedAt": {
