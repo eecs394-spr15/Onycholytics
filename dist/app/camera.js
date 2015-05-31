@@ -497,7 +497,7 @@ angular
   .controller("surveyController", function ($scope, Progresstable, supersonic) {
 
 	$scope.Finish = function(){
-       supersonic.ui.modal.hide();
+       supersonic.ui.modal.hideAll();
     }
 });
 angular
