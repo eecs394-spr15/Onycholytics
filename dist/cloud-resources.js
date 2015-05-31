@@ -39,6 +39,9 @@ window.ag.data = {
           "isPatient": {
             "type": "boolean"
           },
+          "myPhotos": {
+            "type": "array"
+          },
           "objectId": {
             "type": "string",
             "identity": true
