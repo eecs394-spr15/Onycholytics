@@ -5,4 +5,7 @@ angular
 	$scope.Finish = function(){
        supersonic.ui.modal.hideAll();
     }
+    $scope.FinishInitial = function(){
+       supersonic.ui.modal.hideAll();
+    }
 });
