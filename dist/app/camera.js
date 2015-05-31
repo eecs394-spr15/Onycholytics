@@ -326,6 +326,7 @@ angular
     $scope.loginButton2 = "Coordinator Login";
 
     $scope.clickLogin1 = function() {
+
       var flag = false;
       $scope.username = "patient";
       $scope.password = "patient";
@@ -347,7 +348,7 @@ angular
       if (flag == false){
         alert("Invalid username or password!");
       }
-
+      supersonic.ui.modal.show("camera#initialsurvey");
     }
 
     $scope.clickLogin2 = function() {
@@ -497,6 +498,9 @@ angular
   .controller("surveyController", function ($scope, Progresstable, supersonic) {
 
 	$scope.Finish = function(){
+       supersonic.ui.modal.hideAll();
+    }
+    $scope.FinishInitial = function(){
        supersonic.ui.modal.hideAll();
     }
 });
