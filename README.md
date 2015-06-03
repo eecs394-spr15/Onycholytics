@@ -4,6 +4,7 @@ Onycholytics is a disease-tracking applicaion for mobile and tablet devices that
 
 ##Motivation
 
+# Development Instructions
 ##SYSTEM REQUIRMENTS
 - [AngularJS](https://angularjs.org/) - HTML enhanced for web apps!
 - [Supersonic](http://www.appgyver.com/supersonic/ui) - Build beautiful data-driven apps with real native performance
@@ -35,20 +36,21 @@ A web page will open containing a QR code that you may scan using the [AppGyver 
 
 At the top of the file there should be a short introduction and/ or overview that explains what the project is. This description should match descriptions added for package managers (Gemspec, package.json, etc.)
 
+## Using the Parse.com Backend
+
 ## Deployment
 
-## Google API Reference
+# Google API Reference
 
 Depending on the size of the project, if it is small and simple enough the reference docs can be added to the README. For medium size to larger projects it is important to at least provide a link to where the API reference docs live.
 
-## Present Features
+# Present Features
 
-Describe and show how to run the tests with code examples.
 
-## Using the Parse.com Backend
 
-## Current bugs and limitations
-### Current bugs
+# Current bugs and limitations
+## Current bugs
 1. Taken photos in our apps got rotated 90 degree in our app before editing.
 2. Survey is too big for view at present.
-### Limitations to improve
+
+## Limitations to improve
