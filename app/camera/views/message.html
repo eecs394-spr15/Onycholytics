@@ -3,13 +3,14 @@
     <super-navbar-title>Messages</super-navbar-title> 
     </super-navbar>
 
-    <p>isPatient {{userType}}</p>
+    <div id="inbox">Inbox</div>
     <div id="message-container">
+
         <div class="messageRow" ng-repeat="message in messages">
-            <super-navigate location="camera#messageDetails" data-params-xid="{{ message.id }}" data-params-zid="{{ userType }}">
+            <super-navigate id="messageButton" location="camera#messageDetails" data-params-xid="{{ message.id }}" data-params-zid="{{ userType }}">
             	<p>{{ message["message"].title }}</p>
         	</super-navigate>
         </div>
     </div>
-    
+
 </div>

@@ -239,7 +239,9 @@ angular
         $scope.$apply( function () {
           $scope.progresstables = progresstables;
         });
+        // save the image for current user
         Usertable.find(localStorage.objectId).then( function (user) {
+            // after clicking save button, the bool will be true
             if ($scope.bool == true) {
                 $scope.bool = false;
                 $scope.$apply( function () {
@@ -258,6 +260,8 @@ angular
     });
 
     $scope.imageSave=function(){
+        // save image button function 
+        // delete the first 22 characters which are "data:image/png;base64,", then the rest will be the real image data that we want to save
         $scope.progresstable['photo']=photoSaved.substr(22);
         //document.getElementById("theimage").src;
         newprogresstable = new Progresstable($scope.progresstable);
@@ -274,7 +278,7 @@ angular
 });
 angular
   .module('camera')
-  .controller('IndexController', function ($scope, Progresstable, supersonic) {
+  .controller('IndexController', function ($scope, Progresstable, Usertable, supersonic) {
   	$scope.progresstable = {};
   	$scope.progresstables = null;
     $scope.photoToken=null;
@@ -289,13 +293,29 @@ angular
 	  destinationType: "dataURL"
 	};
 
-    Progresstable.all().whenChanged( function (progresstables) {
-        $scope.$apply( function () {
-          $scope.progresstables = progresstables;
-          $scope.totalImage = progresstables.length;
+    Usertable.all().whenChanged( function (users) {
+        // only show the image for current user
+        Usertable.find(localStorage.objectId).then( function (user) {
+            $scope.$apply( function () {
+                //show one users' own photos
+                $scope.photoArray=[];
+                $scope.photeDate=[];
+                // get the photo array of current user and the number of photos under current user account
+                $scope.myPhotos = user['myPhotos'];
+                $scope.totalImage = user['myPhotos'].length;
+                for (i=0; i < $scope.myPhotos.length; i ++){
+                    Progresstable.find($scope.myPhotos[i]).then( function (progresstable) {
+                        $scope.photoArray.push(progresstable['photo']);
+                        $scope.photeDate.push(progresstable['createdAt']);
+                    });
+                }
+            });
         });
     });
 
+    Progresstable.all().whenChanged(function(progresstables){
+                           
+    });
     $scope.previousImage = function() {
     	$scope.numImage = Math.max(0, ($scope.numImage - 1)% $scope.totalImage);
 
@@ -307,9 +327,9 @@ angular
       if($scope.numImage!=$scope.totalImage-1){
         $scope.numImage = ($scope.numImage + 1) % $scope.totalImage;
       }
-    	
+    }    	
     	//alert('Next Image');
-    }
+
 
 	// $scope.takePhoto = function() {
 	// 	supersonic.media.camera.takePicture(options).then( function(result){
@@ -509,8 +529,6 @@ angular
             });
         }
     });
-
-
 
 });
 angular

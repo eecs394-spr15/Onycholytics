@@ -50,14 +50,14 @@
 -->
 <div class="padding">
   <h2 align="center">{{
-                      progresstables[numImage]['createdAt'].split('-')[1] + "/" +
-                      progresstables[numImage]['createdAt'].split('-')[2].substring(0,2) + "/" +
-                      progresstables[numImage]['createdAt'].split('-')[0]
+                      photeDate[numImage].split('-')[1] + "/" +
+                      photeDate[numImage].split('-')[2].substring(0,2) + "/" +
+                      photeDate[numImage].split('-')[0]
                       }}</h2>
 </div>
 
   <div id="image-container" class="padding"> 
-    <img id="viewed-img" align="middle" ng-src="data:image/jpeg;base64,{{ progresstables[ numImage ]['photo'] }}" alt="Image"/>
+    <img id="viewed-img" align="middle" ng-src="data:image/jpeg;base64,{{ photoArray[ numImage ]}}" alt="Image"/>
   </div>
   <br>
   <div class="padding"><p align="center">Image {{numImage + 1}} / {{totalImage}}</p></div>

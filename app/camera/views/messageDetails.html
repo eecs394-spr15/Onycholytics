@@ -4,8 +4,12 @@
     </super-navbar>
 
     <div id="message-container">
-        <p><span ng-bind="message['message'].title"></span></p>
-        <p><span ng-bind="message['message'].text"></span></p>    
+        <div id="message-title">
+            <p><span ng-bind="message['message'].title"></span></p>
+        </div>
+        <div id="message-body">
+            <p><span ng-bind="message['message'].text"></span></p>    
+        </div>
     </div>
     
 </div>

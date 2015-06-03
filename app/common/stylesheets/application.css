@@ -90,3 +90,41 @@ button#login-button {
   background-color: #00B5FF;
   border-color: #00B5FF;
 }
+
+#inbox {
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  border-bottom: 1px solid gray;
+  font-weight: bold;
+}
+
+.messageRow {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid gray;
+  text-align: left;
+
+}
+
+#message-title {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-weight: bold;
+  border-bottom: 1px solid gray;
+  text-align: center;
+}
+
+#message-body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  padding-top: 15px;
+  padding-bottom: 5px;
+}
+
