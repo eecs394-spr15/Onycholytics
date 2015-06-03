@@ -4,7 +4,7 @@ At the top of the file there should be a short introduction and/ or overview tha
 
 #SYSTEM REQUIRMENTS
 - [AngularJS](https://angularjs.org/) - HTML enhanced for web apps!
-- [Supersonic](http://www.appgyver.com/supersonic/ui) - Hybrid app UI framework
+- [Supersonic](http://www.appgyver.com/supersonic/ui) - Build beautiful data-driven apps with real native performance
 - [Parse](https://parse.com/) - dynamic web app hosting and database
 
 #Code Example
