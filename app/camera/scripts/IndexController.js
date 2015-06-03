@@ -16,10 +16,13 @@ angular
 	};
 
     Usertable.all().whenChanged( function (users) {
+        // only show the image for current user
         Usertable.find(localStorage.objectId).then( function (user) {
             $scope.$apply( function () {
+                //show one users' own photos
                 $scope.photoArray=[];
                 $scope.photeDate=[];
+                // get the photo array of current user and the number of photos under current user account
                 $scope.myPhotos = user['myPhotos'];
                 $scope.totalImage = user['myPhotos'].length;
                 for (i=0; i < $scope.myPhotos.length; i ++){
@@ -46,9 +49,9 @@ angular
       if($scope.numImage!=$scope.totalImage-1){
         $scope.numImage = ($scope.numImage + 1) % $scope.totalImage;
       }
-    	
+    }    	
     	//alert('Next Image');
-    }
+
 
 	// $scope.takePhoto = function() {
 	// 	supersonic.media.camera.takePicture(options).then( function(result){

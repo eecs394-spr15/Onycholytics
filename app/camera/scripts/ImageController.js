@@ -234,7 +234,9 @@ angular
         $scope.$apply( function () {
           $scope.progresstables = progresstables;
         });
+        // save the image for current user
         Usertable.find(localStorage.objectId).then( function (user) {
+            // after clicking save button, the bool will be true
             if ($scope.bool == true) {
                 $scope.bool = false;
                 $scope.$apply( function () {
@@ -253,6 +255,8 @@ angular
     });
 
     $scope.imageSave=function(){
+        // save image button function 
+        // delete the first 22 characters which are "data:image/png;base64,", then the rest will be the real image data that we want to save
         $scope.progresstable['photo']=photoSaved.substr(22);
         //document.getElementById("theimage").src;
         newprogresstable = new Progresstable($scope.progresstable);
