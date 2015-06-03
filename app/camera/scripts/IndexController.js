@@ -1,6 +1,6 @@
 angular
   .module('camera')
-  .controller('IndexController', function ($scope, Progresstable, supersonic) {
+  .controller('IndexController', function ($scope, Progresstable, Usertable, supersonic) {
   	$scope.progresstable = {};
   	$scope.progresstables = null;
     $scope.photoToken=null;
@@ -15,13 +15,26 @@ angular
 	  destinationType: "dataURL"
 	};
 
-    Progresstable.all().whenChanged( function (progresstables) {
-        $scope.$apply( function () {
-          $scope.progresstables = progresstables;
-          $scope.totalImage = progresstables.length;
+    Usertable.all().whenChanged( function (users) {
+        Usertable.find(localStorage.objectId).then( function (user) {
+            $scope.$apply( function () {
+                $scope.photoArray=[];
+                $scope.photeDate=[];
+                $scope.myPhotos = user['myPhotos'];
+                $scope.totalImage = user['myPhotos'].length;
+                for (i=0; i < $scope.myPhotos.length; i ++){
+                    Progresstable.find($scope.myPhotos[i]).then( function (progresstable) {
+                        $scope.photoArray.push(progresstable['photo']);
+                        $scope.photeDate.push(progresstable['createdAt']);
+                    });
+                }
+            });
         });
     });
 
+    Progresstable.all().whenChanged(function(progresstables){
+                           
+    });
     $scope.previousImage = function() {
     	$scope.numImage = Math.max(0, ($scope.numImage - 1)% $scope.totalImage);
 
