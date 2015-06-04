@@ -28,13 +28,13 @@ steroids update
 
 ## Developing the App
 
-To test the code, open the Command Line (Windows) or Terminal (OSX) in the FeldcoLoanRequest root directory and run:
+To test the code you've written, open the Command Line (Windows) or Terminal (OSX) in the FeldcoLoanRequest root directory and run:
 ```
 steroids connect
 ```
 A web page will open containing a QR code that you may scan using the [AppGyver Scanner app](https://play.google.com/store/apps/details?id=com.appgyver.freshandroid&hl=en) on your tablet. You may also open an emulator. Instructions for setting up the GenyMotion Android Emulator can be found [here.](http://docs.appgyver.com/tooling/cli/emulators/genymotion/)
 
-At the top of the file there should be a short introduction and/ or overview that explains what the project is. This description should match descriptions added for package managers (Gemspec, package.json, etc.)
+At the top of the file there should be a short introduction and/ or overview that explains what the project is.
 
 ## Using the Parse.com Backend
 
@@ -50,14 +50,14 @@ At the top of the file there should be a short introduction and/ or overview tha
 
 # Current bugs and limitations
 ## Current bugs
-1. For android system, Taken photos in got rotated 90 degree in our app before editing.
+1. For android system, taken photos in got rotated 90 degree in our app before editing.
 2. Survey is too big for view at present.
 3. Survey cannot be viewed in Android system.
 4. The signin and signup system is not completed.
 5. The order of taken photos may be wrong.
 
 ## Limitations to improve
-1. Let the survey page fit the screen.
+1. Make the survey page fit the screen.
 2. Use camera plugins instead of editing photos.
-3. Improve the function of coordinators, such as respond the patients problem and give them suggestion.
+3. Improve the function for coordinators (doctors),e.g.respond the patients problem and give them suggestion.
 4. Reduce the resolution lost.
