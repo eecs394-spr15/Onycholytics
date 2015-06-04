@@ -41,12 +41,16 @@ At the top of the file there should be a short introduction and/ or overview tha
 ## Deployment
 
 # Present Features
-
+1. Patients and coordinators can login the app on the initial page.
+2. Patients have the option to fill the initial survey when login the app for the 1st time.
+3. Patients can take pictures for their toes following the instructions on Camara Tap.
+4. Patients can edit and crop the taken picture to standardize the nail part and put it in the gallary
+5. Patients can compare the history pictures in the gallary and set up communication with other patients and coordinators
 
 
 # Current bugs and limitations
 ## Current bugs
-1. Taken photos in our apps got rotated 90 degree in our app before editing.
+1. For android system, Taken photos in got rotated 90 degree in our app before editing.
 2. Survey is too big for view at present.
 3. Survey cannot be viewed in Android system.
 4. The signin and signup system is not completed.
