@@ -15,7 +15,7 @@ Onycholytics is a disease-tracking applicaion for mobile and tablet devices that
 We used the AngularJS and AppGyver Steroids frameworks to build this mobile app. Here are some steps required to get everything set up:
 
 1. [Create an account for AppGyver](http://www.appgyver.com/steroids_sign_up)
-2. [Set up developing tools](https://academy.appgyver.com/installwizard/steps#/home) for a guide)
+2. [Set up developing tools](https://academy.appgyver.com/installwizard/steps#/home) 
 
 ## Downloading Source Code and Dependencies
 
@@ -39,10 +39,6 @@ At the top of the file there should be a short introduction and/ or overview tha
 ## Using the Parse.com Backend
 
 ## Deployment
-
-# Google API Reference
-
-Depending on the size of the project, if it is small and simple enough the reference docs can be added to the README. For medium size to larger projects it is important to at least provide a link to where the API reference docs live.
 
 # Present Features
 
