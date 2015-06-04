@@ -23,7 +23,6 @@ angular
 
         // This next line will just add it to the <body> tag
         document.getElementById("draggable").appendChild(img);
-        //document.body.appendChild(img);
 
 }
 
@@ -39,19 +38,8 @@ angular
 
     var mc = new Hammer.Manager(myElement);
       
-    // create a pinch and rotate recognizer
-    // these require 2 pointers
     var pinch = new Hammer.Pinch();
     var pan = new Hammer.Pan();
-    //var rotate = new Hammer.Rotate();
-
-    // we want to detect both the same time
-    //pinch.recognizeWith(rotate);
-
-    // add to the Manager
-    mc.add([pinch, pan]);
-
-    //var ratio = document.myImage.width/document.myImage.height;
 
     mc.on("pinchout", function(ev) {
         if(document.myImage.width <400 && document.myImage.height<400) {
@@ -66,15 +54,12 @@ angular
             document.myImage.width /=1.02;
             document.myImage.height /=1.02;
         }
-        
-        //myElement.textContent += ev.scale +" ";
     });
 
     //drag stuff below
     var tempLeft = 0;
     var tempTop = 0;
     mc.on("panleft panright panup pandown", function(ev) {
-        //myElement.textContent = ev.type +" gesture detected.";
         myElement.style.left = (ev.center.x - document.myImage.width/2.0) + "px";
         myElement.style.top = (ev.center.y - document.myImage.height/4.0) + "px";
         tempLeft = ev.center.x - document.myImage.width/2.0;
@@ -94,10 +79,7 @@ angular
  
     } 
 
-
-
     $scope.imagechange=function(){
-        //alert(originalHeight + "," + originalWidth);
         var startHeight = 150;
         var tempHeight =  startHeight - tempTop;
         var tempWidth = (screen.width/2) - 75 - tempLeft;
@@ -124,7 +106,6 @@ angular
         //image is too small
         if(canvasHeight>=295 || canvasWidth>=295)
         {
-            alert("too small! keep whole picture");
             canvasHeight=299;
             canvasWidth=299;
             left = 0;
@@ -137,7 +118,6 @@ angular
         else{
             //image is too bottom and too left
             if (top < 0 && right > document.getElementById("editImage").width){
-                alert("image is too bottom and too left");
                 top = 0;
                 canvasWidth = document.getElementById("editImage").width - left;
                 canvasHeight = bottom;
@@ -148,7 +128,6 @@ angular
 
             //image is too bottom and too right 
             else if (top < 0 && left < 0){
-                alert("image is too bottom and too left");
                 top = 0;
                 left = 0;
                 canvasWidth = right;
@@ -161,7 +140,6 @@ angular
 
             //image is too top and too left
             else if (bottom > document.getElementById("editImage").height && right > document.getElementById("editImage").width){
-                alert("image is too top and too left");
                 canvasWidth = document.getElementById("editImage").width - left;
                 canvasHeight = document.getElementById("editImage").height - top;
                 canvasW = canvasWidth;
@@ -170,7 +148,6 @@ angular
 
             //image is too top and right
             else if (bottom > document.getElementById("editImage").height && left < 0){
-                alert("image is too top and too right");
                 left = 0;
                 canvasWidth = right;
                 canvasHeight = document.getElementById("editImage").height - top;
@@ -181,7 +158,6 @@ angular
 
             //image is too bottom
             else if (top < 0){
-                alert("image is too bottom");
                 top = 0;
                 canvasWidth = 150;
                 canvasHeight = bottom;
@@ -193,8 +169,6 @@ angular
             //image is too top
             else if (bottom > document.getElementById("editImage").height)
             {   
-                alert("image is too top");
-                //left += 20;
                 canvasWidth = 150;
                 canvasHeight = document.getElementById("editImage").height - top;               
                 canvasW = canvasWidth;
@@ -204,7 +178,6 @@ angular
             
             //image is too left
             else if (right > document.getElementById("editImage").width){
-                alert("image is too left");
                 canvasWidth = document.getElementById("editImage").width - left;
                 canvasHeight = 220;
                 canvasW = canvasWidth;
@@ -213,7 +186,6 @@ angular
 
             //image is too right
             else if (left < 0){
-                alert("image is too right");
                 left = 0;
                 canvasWidth = right;
                 canvasHeight = 220;
@@ -258,14 +230,10 @@ angular
         // save image button function 
         // delete the first 22 characters which are "data:image/png;base64,", then the rest will be the real image data that we want to save
         $scope.progresstable['photo']=photoSaved.substr(22);
-        //document.getElementById("theimage").src;
         newprogresstable = new Progresstable($scope.progresstable);
         newprogresstable.save();
         $scope.bool = true;
         $scope.showSpinner = true;
-        /*.then( function () {
-            //supersonic.ui.modal.hide();    
-        });*/
     }
 
     
