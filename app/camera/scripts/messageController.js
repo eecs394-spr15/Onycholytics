@@ -20,4 +20,8 @@ angular
         }
     });
 
+    $scope.buttonTapped = function () {
+        supersonic.ui.modal.show("camera#newMessage");
+    }
+
 });
