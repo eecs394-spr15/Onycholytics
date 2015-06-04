@@ -52,7 +52,6 @@ You may throw an error where you have to delete the cloud.json file under the co
 1. Lots of issues on Android. (Survey cannot be viewed, image rotates 90 degrees on editing, and Camera app fails to open at times)
 2. Survey is too big, we can't find a way to resize it.
 3. There is a "myPhotos" column in the User table in Parse, which contains the objectIDs of a user's photos, but we are having trouble getting them to display in the correct order in the gallery. The gallery displays out of order, and when you initially load the page, you have to hit next before the first image shows.
-4. Messages don't update in realtime. Must logout and login before updating.
 
 ## Limitations
 1. An appropriate Camera Plugin wasn't found to create an overlay on the camera. 
