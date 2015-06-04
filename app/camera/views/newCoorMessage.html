@@ -1,0 +1,13 @@
+<div ng-controller="newCoorMessageController" class="container-fluid">
+	 <super-navbar>
+    	<super-navbar-title>Compose a message</super-navbar-title> 
+    </super-navbar>
+    
+    <form ng-submit="submitForm()" id="newMessageForm">
+    	<input class="form-control" id="messageTitle" placeholder="Message Title" type="text">
+    	<textarea style="border: none" type = "text" text class="form-control" rows="5" id="messageBody" placeholder="Message body"></textarea>
+
+    	<button class="button button-block button-positive" id="saveButton">Send</button>
+    </form>
+
+</div>

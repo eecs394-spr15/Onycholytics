@@ -21,7 +21,14 @@ angular
     });
 
     $scope.buttonTapped = function () {
-        supersonic.ui.modal.show("camera#newMessage");
+
+        if($scope.userType == true){
+            supersonic.ui.modal.show("camera#newPatientMessage");
+        }
+        else{
+            supersonic.ui.modal.show("camera#newCoorMessage");
+        }
+        
     }
 
 });
