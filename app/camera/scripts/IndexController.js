@@ -16,7 +16,7 @@ angular
 	};
 
     Usertable.all().whenChanged( function (users) {
-        // only show the image for current user
+        /* only show the image for current user */
         Usertable.find(localStorage.objectId).then( function (user) {
             $scope.$apply( function () {
                 //show one users' own photos
@@ -34,15 +34,16 @@ angular
             });
         });
     });
-    Progresstable.all().whenChanged(function(progresstables){                          
-    });
+
     $scope.previousImage = function() {
+        /*show previous photo*/
     	$scope.numImage = Math.max(0, ($scope.numImage - 1)% $scope.totalImage);
     }
 
     $scope.nextImage = function() {
-      if($scope.numImage!=$scope.totalImage-1){
+        /*show the next photo*/
+        if($scope.numImage!=$scope.totalImage-1){
         $scope.numImage = ($scope.numImage + 1) % $scope.totalImage;
-      }
+        }
     }    	
   });

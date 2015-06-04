@@ -1,9 +1,10 @@
 <div ng-controller="IndexController">
     <super-navbar>
-    <super-navbar-title>
-      My Photos
-    </super-navbar-title>
+        <super-navbar-title>
+          My Photos
+        </super-navbar-title>
     </super-navbar>
+    
     <div class="padding">
       <h2 align="center">{{
                           photeDate[numImage].split('-')[1] + "/" +
@@ -11,8 +12,9 @@
                           photeDate[numImage].split('-')[0]
                           }}</h2>
     </div>
+    
     <div id="image-container" class="padding"> 
-    <img id="viewed-img" align="middle" ng-src="data:image/jpeg;base64,{{ photoArray[ numImage ]}}" alt="Image"/>
+        <img id="viewed-img" align="middle" ng-src="data:image/jpeg;base64,{{ photoArray[ numImage ]}}" alt="Image"/>
     </div>
     <br>
     <div class="padding"><p align="center">Image {{numImage + 1}} / {{totalImage}}</p></div>
