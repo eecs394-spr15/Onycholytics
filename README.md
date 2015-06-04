@@ -1,6 +1,6 @@
 # Onycholytics App
 
-Onycholytics is a disease-tracking applicaion for mobile and tablet devices that help patients track their nails’ conditions during the curing process. Patients may take photos on their toes and edit afterwords to do standardization, then put it in the gallary to do comparison. Besides different patients are able to communicate with this app to know more about their stages of disease.
+Onycholytics is a disease-tracking applicaion for mobile and tablet devices that helps patients track the healing progress of Onycholysis infected nails. Patients may take photos on their toes and edit afterwards for standardization purposes. After editing, patients may view their photos in a gallery presented in timeline form. Onycholytics also allows patients to reach out and contact doctors with questions. 
 
 ##Motivation
 
