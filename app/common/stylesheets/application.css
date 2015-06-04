@@ -123,3 +123,8 @@ button#login-button {
     width: 100%;
     background-color: pink;
 }
+
+.form-container {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
