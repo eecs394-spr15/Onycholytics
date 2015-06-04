@@ -1,43 +1,24 @@
 <div ng-controller="IndexController">
-
-  <super-navbar>
+    <super-navbar>
     <super-navbar-title>
       My Photos
     </super-navbar-title>
-  </super-navbar>
-
-  <!--
-  <div class="padding">
-    <button class="button button-block button-positive" ng-click="takePhoto()">Take a picture!</button>
-  </div>
--->
-<div class="padding">
-  <h2 align="center">{{
-                      photeDate[numImage].split('-')[1] + "/" +
-                      photeDate[numImage].split('-')[2].substring(0,2) + "/" +
-                      photeDate[numImage].split('-')[0]
-                      }}</h2>
-</div>
-
-  <div id="image-container" class="padding"> 
+    </super-navbar>
+    <div class="padding">
+      <h2 align="center">{{
+                          photeDate[numImage].split('-')[1] + "/" +
+                          photeDate[numImage].split('-')[2].substring(0,2) + "/" +
+                          photeDate[numImage].split('-')[0]
+                          }}</h2>
+    </div>
+    <div id="image-container" class="padding"> 
     <img id="viewed-img" align="middle" ng-src="data:image/jpeg;base64,{{ photoArray[ numImage ]}}" alt="Image"/>
-  </div>
-  <br>
-  <div class="padding"><p align="center">Image {{numImage + 1}} / {{totalImage}}</p></div>
-  <br>
-  <div class="button-bar">
+    </div>
+    <br>
+    <div class="padding"><p align="center">Image {{numImage + 1}} / {{totalImage}}</p></div>
+    <br>
+    <div class="button-bar">
       <a id="image-view-button" class="button icon-left super-chevron-left button-energized" ng-click="previousImage()">Previous</a>
       <a id="image-view-button" class="button icon-right super-chevron-right button-energized" ng-click="nextImage()">Next</a>
-  </div>
-
-
-<!--
-  <div class="padding" ng-repeat="progress in progresstables">
-    <img ng-src="data:image/jpeg;base64,{{ progress['photo'] }}" alt="Description"/>
-  </div>
--->
-
-<!--   <div class="crop" >
-      <img src="data:image/jpeg;base64,{{ photoToken }}" alt="pic" width="300px" height="300px" />
-  </div> -->
+    </div>
 </div>

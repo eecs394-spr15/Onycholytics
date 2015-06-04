@@ -34,15 +34,10 @@ angular
             });
         });
     });
-
-    Progresstable.all().whenChanged(function(progresstables){
-                           
+    Progresstable.all().whenChanged(function(progresstables){                          
     });
     $scope.previousImage = function() {
     	$scope.numImage = Math.max(0, ($scope.numImage - 1)% $scope.totalImage);
-
-    	//alert('Previous Image');
-
     }
 
     $scope.nextImage = function() {
@@ -50,20 +45,4 @@ angular
         $scope.numImage = ($scope.numImage + 1) % $scope.totalImage;
       }
     }    	
-    	//alert('Next Image');
-
-
-	// $scope.takePhoto = function() {
-	// 	supersonic.media.camera.takePicture(options).then( function(result){
- //  		// Do something with the image URI
- //  			$scope.progresstable['photo'] = result;
-	//   		newprogresstable = new Progresstable($scope.progresstable);
-	//      	newprogresstable.save().then( function () {
-	//         	alert("Photo saved");
- //            $scope.photoToken=result;
-	//       	});
-	// 	});
-	
-	// }
-	
   });
