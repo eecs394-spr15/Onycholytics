@@ -58,6 +58,6 @@ At the top of the file there should be a short introduction and/ or overview tha
 
 ## Limitations to improve
 1. Let the survey page fit the screen.
-```1. Improve the signin and signup system.    2,resolution```
 2. Use camera plugins instead of editing photos.
 3. Improve the function of coordinators, such as respond the patients problem and give them suggestion.
+4. Reduce the resolution lost.
