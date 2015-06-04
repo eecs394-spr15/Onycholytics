@@ -48,5 +48,13 @@ At the top of the file there should be a short introduction and/ or overview tha
 ## Current bugs
 1. Taken photos in our apps got rotated 90 degree in our app before editing.
 2. Survey is too big for view at present.
+3. Survey cannot be viewed in Android system.
+4. The signin and signup system is not completed.
+5. The order of taken photos may be wrong.
 
 ## Limitations to improve
+1. Fix the bugs of survey and rotate bug in the Android device.
+2. Let the survey page fit the screen.
+3. Complete the signin and signup system.
+4. Fix the bug of disorder photos.
+5. Use camera plugins instead of editing photos.
