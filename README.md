@@ -33,14 +33,12 @@ steroids connect
 ```
 A web page will open containing a QR code that you may scan using the [AppGyver Scanner app](https://play.google.com/store/apps/details?id=com.appgyver.freshandroid&hl=en) on your device. You may also open it on an emulator. Instructions for setting up the Android Emulator can be found [here.](http://docs.appgyver.com/tooling/cli/emulators/genymotion/)
 
-## Using the Parse.com Backend
-
+## Deployment
 To test the code your application, open the Command Line (Windows) or Terminal (OSX) in the Onycholytics directory and run:
 ```
 steroids deploy
 ```
-You may throw an error where you have to delete the cloud.json file under the config folder and rerun the deploy command. After successfully deploying, follow the share.appgyver link to view a preview of your app. The next step for deployment is to go to cloud.appgyver.com where you can manage your deployed applications. Enter the appropriate configurations for iOS or Android, and hit Build when ready. For more information, follow this link (http://docs.appgyver.com/tooling/build-service/build-settings/deploying-to-cloud/).
-## Deployment
+You may throw an error where you have to delete the cloud.json file under the config folder and rerun the deploy command. After successfully deploying, follow the share.appgyver link to view a preview of your app. The next step for deployment is to go to cloud.appgyver.com where you can manage your deployed applications. Enter the appropriate configurations for iOS or Android, and hit Build when ready. For more information, follow this [link.](http://docs.appgyver.com/tooling/build-service/build-settings/deploying-to-cloud/)
 
 ## Present Features
 1. Users may login as either a Patient or Coordinator. 
