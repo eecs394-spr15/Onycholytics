@@ -9,17 +9,25 @@ angular
         $scope.$apply( function () {
             $scope.userType = row["isPatient"];
         }); 
-        if ($scope.userType == true ) {
-            Usermessage.all().whenChanged( function (usermessages) {
-                $scope.messages = usermessages;         
-            });
-        } else {
-                Coormessage.all().whenChanged( function (usermessages) {
-                $scope.messages = usermessages;         
-            });
-        }
-    });
+    });    
 
+
+    Usermessage.all().whenChanged( function (usermessages) {
+        $scope.$apply( function () {
+            if($scope.userType == true){
+               $scope.messages = usermessages; 
+            }
+        });       
+    });
+       
+    Coormessage.all().whenChanged( function (usermessages) {
+        $scope.$apply( function () {
+            if($scope.userType != null && $scope.userType == false){
+                $scope.messages = usermessages;
+            }
+        });        
+    });
+    
     $scope.buttonTapped = function () {
 
         if($scope.userType == true){
