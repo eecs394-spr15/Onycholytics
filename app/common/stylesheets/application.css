@@ -128,3 +128,9 @@ button#login-button {
   padding-bottom: 5px;
 }
 
+#message-footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    background-color: pink;
+}
