@@ -5,7 +5,6 @@ angular
     $scope.hello = "Taxi";
     $scope.userdata = {};
     $scope.userdatas = null;    
-    //$scope.users = null;
 
     
     Usertable.all().whenChanged( function (userdatas) {
@@ -16,7 +15,6 @@ angular
     $scope.loginButton2 = "Coordinator Login";
 
     $scope.clickLogin1 = function() {
-
       var flag = false;
       $scope.username = "patient";
       $scope.password = "patient";
@@ -26,19 +24,16 @@ angular
           flag = true;
           document.getElementById("login-password").value = "";
           localStorage.username2=$scope.username;
-          //localStorage.firstName=$scope.userdatas[i].firstName;
           localStorage.objectId=$scope.userdatas[i].id;
-
           supersonic.ui.initialView.dismiss();
-          //window.open("getting-started.html")
           break;
-        }          
-      }
+          }          
+        }
 
-      if (flag == false){
+        if (flag == false){
         alert("Invalid username or password!");
-      }
-      supersonic.ui.modal.show("camera#initialsurvey");
+        }
+        supersonic.ui.modal.show("camera#initialsurvey");
     }
 
     $scope.clickLogin2 = function() {
@@ -51,11 +46,8 @@ angular
           flag = true;
           document.getElementById("login-password").value = "";
           localStorage.username2=$scope.username;
-          //localStorage.firstName=$scope.userdatas[i].firstName;
           localStorage.objectId=$scope.userdatas[i].id;
-
           supersonic.ui.initialView.dismiss();
-          //window.open("getting-started.html")
           break;
         }          
       }
@@ -75,11 +67,8 @@ angular
           flag = true;
           document.getElementById("login-password").value = "";
           localStorage.username2=$scope.username;
-          //localStorage.firstName=$scope.userdatas[i].firstName;
           localStorage.objectId=$scope.userdatas[i].id;
-
           supersonic.ui.initialView.dismiss();
-          //window.open("getting-started.html")
           break;
         }          
       }
@@ -93,11 +82,8 @@ angular
     $scope.clickSignup = function() {
       if ($scope.signupButton == "Sign Up"){
         var flag = false;
-        //$scope.userdata['firstName'] = document.getElementById('signup-firstname').value;
-        //$scope.userdata['lastName'] = document.getElementById('signup-lastname').value;
         $scope.userdata['username'] = document.getElementById('signup-username').value;
         $scope.userdata['password'] = document.getElementById('signup-password').value;
-        //$scope.userdata['phoneNumber'] = document.getElementById('signup-phonenumber').value;
         for (i = 0; i < $scope.userdatas.length; i++){
           if ($scope.userdata['username']  ==  $scope.userdatas[i].username ){           
             flag = true;
@@ -126,22 +112,6 @@ angular
         document.getElementById("signup-password").value = "";
         document.getElementById("signup-phonenumber").value = "";
       }
-
-
     };
 
-
-
-
-    /*
-    var usert = supersonic.data.model('userTable');
-    var query = {"lastName": "Diaz"};
-    usert.findAll({query: JSON.stringify(query)}).then(function(users){
-      $scope.$apply( function () {
-        $scope.users = users;
-        supersonic.logger.log(users);
-      });
-    });
-    */
-
-  });
+});

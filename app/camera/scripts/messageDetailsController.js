@@ -30,7 +30,6 @@ angular
     supersonic.ui.views.current.params.onValue( function (values) {
       $scope.dataId = values.xid;
       $scope.userType = values.zid;
-      //$scope.userType = values.uType;
       _refreshViewData();
     });  
 
