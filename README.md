@@ -53,8 +53,7 @@ At the top of the file there should be a short introduction and/ or overview tha
 5. The order of taken photos may be wrong.
 
 ## Limitations to improve
-1. Fix the bugs of survey and rotate bug in the Android device.
-2. Let the survey page fit the screen.
-3. Complete the signin and signup system.
-4. Fix the bug of disorder photos.
-5. Use camera plugins instead of editing photos.
+1. Let the survey page fit the screen.
+```1. Improve the signin and signup system.    2,resolution```
+2. Use camera plugins instead of editing photos.
+3. Improve the function of coordinators, such as respond the patients problem and give them suggestion.
