@@ -227,8 +227,8 @@ angular
     });
 
     $scope.imageSave=function(){
-        // save image button function 
-        // delete the first 22 characters which are "data:image/png;base64,", then the rest will be the real image data that we want to save
+        /* save image button function 
+        delete the first 22 characters which are "data:image/png;base64,", then the rest will be the real image data that we want to save */
         $scope.progresstable['photo']=photoSaved.substr(22);
         newprogresstable = new Progresstable($scope.progresstable);
         newprogresstable.save();
