@@ -40,7 +40,7 @@ angular
       
     var pinch = new Hammer.Pinch();
     var pan = new Hammer.Pan();
-
+    mc.add([pinch, pan]);
     mc.on("pinchout", function(ev) {
         if(document.myImage.width <400 && document.myImage.height<400) {
             document.myImage.width *= 1.02;
