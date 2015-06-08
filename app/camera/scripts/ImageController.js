@@ -34,75 +34,37 @@ angular
     }
 
    
-    $scope.myElement = document.getElementById("draggable");
+    var myElement = document.getElementById("draggable");
 
-    // var mc = new Hammer.Manager(myElement);
+    var mc = new Hammer.Manager(myElement);
       
-    // var pinch = new Hammer.Pinch();
-    // var pan = new Hammer.Pan();
-    // mc.add([pinch, pan]);
-    // mc.on("pinchout", function(ev) {
-    //     if(document.myImage.width <400 && document.myImage.height<400) {
-    //         document.myImage.width *= 1.02;
-    //         document.myImage.height *= 1.02;
-    //         //myElement.textContent += ev.scale +" ";
-    //     }
-    // });
+    var pinch = new Hammer.Pinch();
+    var pan = new Hammer.Pan();
+    mc.add([pinch, pan]);
+    mc.on("pinchout", function(ev) {
+        if(document.myImage.width <400 && document.myImage.height<400) {
+            document.myImage.width *= 1.02;
+            document.myImage.height *= 1.02;
+            //myElement.textContent += ev.scale +" ";
+        }
+    });
 
-    // mc.on("pinchin", function(ev) {
-    //     if(document.myImage.width > 200 && document.myImage.height>200){
-    //         document.myImage.width /=1.02;
-    //         document.myImage.height /=1.02;
-    //     }
-    // });
+    mc.on("pinchin", function(ev) {
+        if(document.myImage.width > 200 && document.myImage.height>200){
+            document.myImage.width /=1.02;
+            document.myImage.height /=1.02;
+        }
+    });
 
     //drag stuff below
     var tempLeft = 0;
     var tempTop = 0;
-    // mc.on("panleft panright panup pandown", function(ev) {
-    //     myElement.style.left = (ev.center.x - document.myImage.width/2.0) + "px";
-    //     myElement.style.top = (ev.center.y - document.myImage.height/4.0) + "px";
-    //     tempLeft = ev.center.x - document.myImage.width/2.0;
-    //     tempTop = ev.center.y - document.myImage.height/4.0;
-    // });
-    if ($scope.myElement){
-        $scope.myElement.addEventListener('touchmove', function(event) {
-            var touch = event.targetTouches[0];
-            // var topmax = 290, topmin = 120; 
-            // var leftmax = 20, rightmax = 330;
-        // Place element where the finger is
-            
-            $scope.myElement.style.left = (touch.pageX - document.myImage.width/2.0) + 'px';
-            $scope.myElement.style.top = (touch.pageY - document.myImage.height/4.0) + 'px';
-            tempLeft = touch.pageX - document.myImage.width/2.0;
-            tempTop = touch.pageY - document.myImage.height/4.0;
-            event.preventDefault();
-        }, false);
-    }
-
-    //old version of zoomin and zoomout 
-    $scope.zoomIn = function() {
-        if (document.myImage.width < screen.width && document.myImage.height < screen.height) {
-            document.myImage.width = currentWidth*1.2; 
-            document.myImage.height = currentHeight*1.2; 
-            zoomLevel = zoomLevel + 1; 
-            update(); 
-        }
-        else {
-            alert("Too Big!");
-        }
-    }
-    $scope.zoomOut=function(){ 
-        if (document.myImage.width < 20 || document.myImage.height < 20) {
-            alert("Too Small!")
-        }
-        else {
-            document.myImage.width = currentWidth/1.2; 
-            document.myImage.height = currentHeight/1.2; 
-            zoomLevel = zoomLevel - 1; 
-            update(); 
-        }
-    } 
+    mc.on("panleft panright panup pandown", function(ev) {
+        myElement.style.left = (ev.center.x - document.myImage.width/2.0) + "px";
+        myElement.style.top = (ev.center.y - document.myImage.height/4.0) + "px";
+        tempLeft = ev.center.x - document.myImage.width/2.0;
+        tempTop = ev.center.y - document.myImage.height/4.0;
+    });
 
     var originalWidth = 300;
     var originalHeight = 300;
@@ -110,9 +72,9 @@ angular
     $scope.resetImage=function(){ 
         document.myImage.width = originalWidth; 
         document.myImage.height = originalHeight; 
-        $scope.myElement.style.left = 20 + "px";
-        $scope.myElement.style.top = 200 + "px";
-        $scope.myElement.reset(); 
+        myElement.style.left = 20 + "px";
+        myElement.style.top = 200 + "px";
+        myElement.reset(); 
     } 
 
     $scope.imagechange=function(){

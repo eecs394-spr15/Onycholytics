@@ -18,17 +18,18 @@ angular
       var flag = false;
       $scope.username = "patient";
       $scope.password = "patient";
-    
-      for (i = 0; i < $scope.userdatas.length; i++){
-        if ($scope.username != "" && $scope.password != "" && $scope.userdatas[i].username == $scope.username && $scope.userdatas[i].password == $scope.password){           
-          flag = true;
-          document.getElementById("login-password").value = "";
-          localStorage.username2=$scope.username;
-          localStorage.objectId=$scope.userdatas[i].id;
-          supersonic.ui.initialView.dismiss();
-          break;
-          }          
+      if ($scope.userdatas){
+        for (i = 0; i < $scope.userdatas.length; i++){
+          if ($scope.username != "" && $scope.password != "" && $scope.userdatas[i].username == $scope.username && $scope.userdatas[i].password == $scope.password){           
+              flag = true;
+              document.getElementById("login-password").value = "";
+              localStorage.username2=$scope.username;
+              localStorage.objectId=$scope.userdatas[i].id;
+              supersonic.ui.initialView.dismiss();
+              break;
+            }          
         }
+      }
 
         if (flag == false){
         alert("Invalid username or password!");
@@ -40,18 +41,18 @@ angular
       var flag = false;
       $scope.username = "studyCoordinator";
       $scope.password = "studyCoordinator";
-
-      for (i = 0; i < $scope.userdatas.length; i++){
-        if ($scope.username != "" && $scope.password != "" && $scope.userdatas[i].username == $scope.username && $scope.userdatas[i].password == $scope.password){           
-          flag = true;
-          document.getElementById("login-password").value = "";
-          localStorage.username2=$scope.username;
-          localStorage.objectId=$scope.userdatas[i].id;
-          supersonic.ui.initialView.dismiss();
-          break;
-        }          
+      if ($scope.userdatas){
+        for (i = 0; i < $scope.userdatas.length; i++){
+          if ($scope.username != "" && $scope.password != "" && $scope.userdatas[i].username == $scope.username && $scope.userdatas[i].password == $scope.password){           
+            flag = true;
+            document.getElementById("login-password").value = "";
+            localStorage.username2=$scope.username;
+            localStorage.objectId=$scope.userdatas[i].id;
+            supersonic.ui.initialView.dismiss();
+            break;
+          }          
+        }
       }
-
       if (flag == false){
         alert("Invalid username or password!");
       }
