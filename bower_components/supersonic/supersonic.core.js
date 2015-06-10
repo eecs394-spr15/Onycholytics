@@ -1,7 +1,7 @@
 /**
  * supersonic
- * Version: 1.5.5
- * Published: 2015-05-25
+ * Version: 1.5.7
+ * Published: 2015-06-08
  * Homepage: https://github.com/AppGyver/supersonic
  * License: MIT
  */
@@ -23848,6 +23848,509 @@ module.exports = asap;
 }).call(window);
 
 },{"./drivers/indexeddb":190,"./drivers/localstorage":191,"./drivers/websql":192,"promise":188}],194:[function(require,module,exports){
+module.exports = require('./lib/');
+
+},{"./lib/":195}],195:[function(require,module,exports){
+// Load modules
+
+var Stringify = require('./stringify');
+var Parse = require('./parse');
+
+
+// Declare internals
+
+var internals = {};
+
+
+module.exports = {
+    stringify: Stringify,
+    parse: Parse
+};
+
+},{"./parse":196,"./stringify":197}],196:[function(require,module,exports){
+// Load modules
+
+var Utils = require('./utils');
+
+
+// Declare internals
+
+var internals = {
+    delimiter: '&',
+    depth: 5,
+    arrayLimit: 20,
+    parameterLimit: 1000,
+    strictNullHandling: false
+};
+
+
+internals.parseValues = function (str, options) {
+
+    var obj = {};
+    var parts = str.split(options.delimiter, options.parameterLimit === Infinity ? undefined : options.parameterLimit);
+
+    for (var i = 0, il = parts.length; i < il; ++i) {
+        var part = parts[i];
+        var pos = part.indexOf(']=') === -1 ? part.indexOf('=') : part.indexOf(']=') + 1;
+
+        if (pos === -1) {
+            obj[Utils.decode(part)] = '';
+
+            if (options.strictNullHandling) {
+                obj[Utils.decode(part)] = null;
+            }
+        }
+        else {
+            var key = Utils.decode(part.slice(0, pos));
+            var val = Utils.decode(part.slice(pos + 1));
+
+            if (!Object.prototype.hasOwnProperty.call(obj, key)) {
+                obj[key] = val;
+            }
+            else {
+                obj[key] = [].concat(obj[key]).concat(val);
+            }
+        }
+    }
+
+    return obj;
+};
+
+
+internals.parseObject = function (chain, val, options) {
+
+    if (!chain.length) {
+        return val;
+    }
+
+    var root = chain.shift();
+
+    var obj;
+    if (root === '[]') {
+        obj = [];
+        obj = obj.concat(internals.parseObject(chain, val, options));
+    }
+    else {
+        obj = Object.create(null);
+        var cleanRoot = root[0] === '[' && root[root.length - 1] === ']' ? root.slice(1, root.length - 1) : root;
+        var index = parseInt(cleanRoot, 10);
+        var indexString = '' + index;
+        if (!isNaN(index) &&
+            root !== cleanRoot &&
+            indexString === cleanRoot &&
+            index >= 0 &&
+            (options.parseArrays &&
+             index <= options.arrayLimit)) {
+
+            obj = [];
+            obj[index] = internals.parseObject(chain, val, options);
+        }
+        else {
+            obj[cleanRoot] = internals.parseObject(chain, val, options);
+        }
+    }
+
+    return obj;
+};
+
+
+internals.parseKeys = function (key, val, options) {
+
+    if (!key) {
+        return;
+    }
+
+    // Transform dot notation to bracket notation
+
+    if (options.allowDots) {
+        key = key.replace(/\.([^\.\[]+)/g, '[$1]');
+    }
+
+    // The regex chunks
+
+    var parent = /^([^\[\]]*)/;
+    var child = /(\[[^\[\]]*\])/g;
+
+    // Get the parent
+
+    var segment = parent.exec(key);
+
+    // Stash the parent if it exists
+
+    var keys = [];
+    if (segment[1]) {
+        keys.push(segment[1]);
+    }
+
+    // Loop through children appending to the array until we hit depth
+
+    var i = 0;
+    while ((segment = child.exec(key)) !== null && i < options.depth) {
+
+        ++i;
+        keys.push(segment[1]);
+    }
+
+    // If there's a remainder, just add whatever is left
+
+    if (segment) {
+        keys.push('[' + key.slice(segment.index) + ']');
+    }
+
+    return internals.parseObject(keys, val, options);
+};
+
+
+module.exports = function (str, options) {
+
+    if (str === '' ||
+        str === null ||
+        typeof str === 'undefined') {
+
+        return Object.create(null);
+    }
+
+    options = options || {};
+    options.delimiter = typeof options.delimiter === 'string' || Utils.isRegExp(options.delimiter) ? options.delimiter : internals.delimiter;
+    options.depth = typeof options.depth === 'number' ? options.depth : internals.depth;
+    options.arrayLimit = typeof options.arrayLimit === 'number' ? options.arrayLimit : internals.arrayLimit;
+    options.parseArrays = options.parseArrays !== false;
+    options.allowDots = options.allowDots !== false;
+    options.parameterLimit = typeof options.parameterLimit === 'number' ? options.parameterLimit : internals.parameterLimit;
+    options.strictNullHandling = typeof options.strictNullHandling === 'boolean' ? options.strictNullHandling : internals.strictNullHandling;
+
+
+    var tempObj = typeof str === 'string' ? internals.parseValues(str, options) : str;
+    var obj = Object.create(null);
+
+    // Iterate over the keys and setup the new object
+
+    var keys = Object.keys(tempObj);
+    for (var i = 0, il = keys.length; i < il; ++i) {
+        var key = keys[i];
+        var newObj = internals.parseKeys(key, tempObj[key], options);
+        obj = Utils.merge(obj, newObj);
+    }
+
+    return Utils.compact(obj);
+};
+
+},{"./utils":198}],197:[function(require,module,exports){
+// Load modules
+
+var Utils = require('./utils');
+
+
+// Declare internals
+
+var internals = {
+    delimiter: '&',
+    arrayPrefixGenerators: {
+        brackets: function (prefix, key) {
+
+            return prefix + '[]';
+        },
+        indices: function (prefix, key) {
+
+            return prefix + '[' + key + ']';
+        },
+        repeat: function (prefix, key) {
+
+            return prefix;
+        }
+    },
+    strictNullHandling: false
+};
+
+
+internals.stringify = function (obj, prefix, generateArrayPrefix, strictNullHandling, filter) {
+
+    if (typeof filter === 'function') {
+        obj = filter(prefix, obj);
+    }
+    else if (Utils.isBuffer(obj)) {
+        obj = obj.toString();
+    }
+    else if (obj instanceof Date) {
+        obj = obj.toISOString();
+    }
+    else if (obj === null) {
+        if (strictNullHandling) {
+            return Utils.encode(prefix);
+        }
+
+        obj = '';
+    }
+
+    if (typeof obj === 'string' ||
+        typeof obj === 'number' ||
+        typeof obj === 'boolean') {
+
+        return [Utils.encode(prefix) + '=' + Utils.encode(obj)];
+    }
+
+    var values = [];
+
+    if (typeof obj === 'undefined') {
+        return values;
+    }
+
+    var objKeys = Array.isArray(filter) ? filter : Object.keys(obj);
+    for (var i = 0, il = objKeys.length; i < il; ++i) {
+        var key = objKeys[i];
+
+        if (Array.isArray(obj)) {
+            values = values.concat(internals.stringify(obj[key], generateArrayPrefix(prefix, key), generateArrayPrefix, strictNullHandling, filter));
+        }
+        else {
+            values = values.concat(internals.stringify(obj[key], prefix + '[' + key + ']', generateArrayPrefix, strictNullHandling, filter));
+        }
+    }
+
+    return values;
+};
+
+
+module.exports = function (obj, options) {
+
+    options = options || {};
+    var delimiter = typeof options.delimiter === 'undefined' ? internals.delimiter : options.delimiter;
+    var strictNullHandling = typeof options.strictNullHandling === 'boolean' ? options.strictNullHandling : internals.strictNullHandling;
+    var objKeys;
+    var filter;
+    if (typeof options.filter === 'function') {
+        filter = options.filter;
+        obj = filter('', obj);
+    }
+    else if (Array.isArray(options.filter)) {
+        objKeys = filter = options.filter;
+    }
+
+    var keys = [];
+
+    if (typeof obj !== 'object' ||
+        obj === null) {
+
+        return '';
+    }
+
+    var arrayFormat;
+    if (options.arrayFormat in internals.arrayPrefixGenerators) {
+        arrayFormat = options.arrayFormat;
+    }
+    else if ('indices' in options) {
+        arrayFormat = options.indices ? 'indices' : 'repeat';
+    }
+    else {
+        arrayFormat = 'indices';
+    }
+
+    var generateArrayPrefix = internals.arrayPrefixGenerators[arrayFormat];
+
+    if (!objKeys) {
+        objKeys = Object.keys(obj);
+    }
+    for (var i = 0, il = objKeys.length; i < il; ++i) {
+        var key = objKeys[i];
+        keys = keys.concat(internals.stringify(obj[key], key, generateArrayPrefix, strictNullHandling, filter));
+    }
+
+    return keys.join(delimiter);
+};
+
+},{"./utils":198}],198:[function(require,module,exports){
+// Load modules
+
+
+// Declare internals
+
+var internals = {};
+internals.hexTable = new Array(256);
+for (var i = 0; i < 256; ++i) {
+    internals.hexTable[i] = '%' + ((i < 16 ? '0' : '') + i.toString(16)).toUpperCase();
+}
+
+
+exports.arrayToObject = function (source) {
+
+    var obj = Object.create(null);
+    for (var i = 0, il = source.length; i < il; ++i) {
+        if (typeof source[i] !== 'undefined') {
+
+            obj[i] = source[i];
+        }
+    }
+
+    return obj;
+};
+
+
+exports.merge = function (target, source) {
+
+    if (!source) {
+        return target;
+    }
+
+    if (typeof source !== 'object') {
+        if (Array.isArray(target)) {
+            target.push(source);
+        }
+        else if (typeof target === 'object') {
+            target[source] = true;
+        }
+        else {
+            target = [target, source];
+        }
+
+        return target;
+    }
+
+    if (typeof target !== 'object') {
+        target = [target].concat(source);
+        return target;
+    }
+
+    if (Array.isArray(target) &&
+        !Array.isArray(source)) {
+
+        target = exports.arrayToObject(target);
+    }
+
+    var keys = Object.keys(source);
+    for (var k = 0, kl = keys.length; k < kl; ++k) {
+        var key = keys[k];
+        var value = source[key];
+
+        if (!target[key]) {
+            target[key] = value;
+        }
+        else {
+            target[key] = exports.merge(target[key], value);
+        }
+    }
+
+    return target;
+};
+
+
+exports.decode = function (str) {
+
+    try {
+        return decodeURIComponent(str.replace(/\+/g, ' '));
+    } catch (e) {
+        return str;
+    }
+};
+
+exports.encode = function (str) {
+
+    // This code was originally written by Brian White (mscdex) for the io.js core querystring library.
+    // It has been adapted here for stricter adherence to RFC 3986
+    if (str.length === 0) {
+        return str;
+    }
+
+    if (typeof str !== 'string') {
+        str = '' + str;
+    }
+
+    var out = '';
+    for (var i = 0, il = str.length; i < il; ++i) {
+        var c = str.charCodeAt(i);
+
+        if (c === 0x2D || // -
+            c === 0x2E || // .
+            c === 0x5F || // _
+            c === 0x7E || // ~
+            (c >= 0x30 && c <= 0x39) || // 0-9
+            (c >= 0x41 && c <= 0x5A) || // a-z
+            (c >= 0x61 && c <= 0x7A)) { // A-Z
+
+            out += str[i];
+            continue;
+        }
+
+        if (c < 0x80) {
+            out += internals.hexTable[c];
+            continue;
+        }
+
+        if (c < 0x800) {
+            out += internals.hexTable[0xC0 | (c >> 6)] + internals.hexTable[0x80 | (c & 0x3F)];
+            continue;
+        }
+
+        if (c < 0xD800 || c >= 0xE000) {
+            out += internals.hexTable[0xE0 | (c >> 12)] + internals.hexTable[0x80 | ((c >> 6) & 0x3F)] + internals.hexTable[0x80 | (c & 0x3F)];
+            continue;
+        }
+
+        ++i;
+        c = 0x10000 + (((c & 0x3FF) << 10) | (str.charCodeAt(i) & 0x3FF));
+        out += internals.hexTable[0xF0 | (c >> 18)] + internals.hexTable[0x80 | ((c >> 12) & 0x3F)] + internals.hexTable[0x80 | ((c >> 6) & 0x3F)] + internals.hexTable[0x80 | (c & 0x3F)];
+    }
+
+    return out;
+};
+
+exports.compact = function (obj, refs) {
+
+    if (typeof obj !== 'object' ||
+        obj === null) {
+
+        return obj;
+    }
+
+    refs = refs || [];
+    var lookup = refs.indexOf(obj);
+    if (lookup !== -1) {
+        return refs[lookup];
+    }
+
+    refs.push(obj);
+
+    if (Array.isArray(obj)) {
+        var compacted = [];
+
+        for (var i = 0, il = obj.length; i < il; ++i) {
+            if (typeof obj[i] !== 'undefined') {
+                compacted.push(obj[i]);
+            }
+        }
+
+        return compacted;
+    }
+
+    var keys = Object.keys(obj);
+    for (i = 0, il = keys.length; i < il; ++i) {
+        var key = keys[i];
+        obj[key] = exports.compact(obj[key], refs);
+    }
+
+    return obj;
+};
+
+
+exports.isRegExp = function (obj) {
+
+    return Object.prototype.toString.call(obj) === '[object RegExp]';
+};
+
+
+exports.isBuffer = function (obj) {
+
+    if (obj === null ||
+        typeof obj === 'undefined') {
+
+        return false;
+    }
+
+    return !!(obj.constructor &&
+              obj.constructor.isBuffer &&
+              obj.constructor.isBuffer(obj));
+};
+
+},{}],199:[function(require,module,exports){
 var Window, data, env, global, logger, steroids;
 
 global = typeof window !== "undefined" && window !== null ? window : (Window = require('./mock/window'), new Window());
@@ -23885,7 +24388,7 @@ if ((typeof window !== "undefined" && window !== null)) {
 
 
 
-},{"./core/app":196,"./core/auth":201,"./core/data":204,"./core/debug":210,"./core/device":217,"./core/env":223,"./core/logger":225,"./core/media":227,"./core/module":228,"./core/ui":238,"./mock/steroids":249,"./mock/window":250,"baconjs":165,"bluebird":166}],195:[function(require,module,exports){
+},{"./core/app":201,"./core/auth":206,"./core/data":209,"./core/debug":215,"./core/device":222,"./core/env":228,"./core/logger":230,"./core/media":232,"./core/module":234,"./core/ui":245,"./mock/steroids":256,"./mock/window":257,"baconjs":165,"bluebird":166}],200:[function(require,module,exports){
 var Promise;
 
 Promise = require('bluebird');
@@ -23957,7 +24460,7 @@ module.exports = function(steroids) {
 
 
 
-},{"bluebird":166}],196:[function(require,module,exports){
+},{"bluebird":166}],201:[function(require,module,exports){
 var Promise, events;
 
 Promise = require('bluebird');
@@ -23986,7 +24489,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../events":224,"./getLaunchURL":195,"./openURL":197,"./sleep":198,"./splashscreen":199,"./statusBar":200,"bluebird":166}],197:[function(require,module,exports){
+},{"../events":229,"./getLaunchURL":200,"./openURL":202,"./sleep":203,"./splashscreen":204,"./statusBar":205,"bluebird":166}],202:[function(require,module,exports){
 var Promise, superify;
 
 Promise = require('bluebird');
@@ -24054,7 +24557,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../superify":229,"bluebird":166}],198:[function(require,module,exports){
+},{"../superify":236,"bluebird":166}],203:[function(require,module,exports){
 var Promise, superify;
 
 Promise = require('bluebird');
@@ -24134,7 +24637,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../superify":229,"bluebird":166}],199:[function(require,module,exports){
+},{"../superify":236,"bluebird":166}],204:[function(require,module,exports){
 var Promise, superify;
 
 Promise = require('bluebird');
@@ -24220,7 +24723,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../superify":229,"bluebird":166}],200:[function(require,module,exports){
+},{"../superify":236,"bluebird":166}],205:[function(require,module,exports){
 var Promise, superify;
 
 Promise = require('bluebird');
@@ -24318,7 +24821,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../superify":229,"bluebird":166}],201:[function(require,module,exports){
+},{"../superify":236,"bluebird":166}],206:[function(require,module,exports){
 module.exports = function(logger, window, data, env) {
   var users;
   users = require("./users")(logger, window, data.session, env);
@@ -24330,7 +24833,7 @@ module.exports = function(logger, window, data, env) {
 
 
 
-},{"./users":202}],202:[function(require,module,exports){
+},{"./users":207}],207:[function(require,module,exports){
 var Promise, data;
 
 data = require('ag-data');
@@ -24390,7 +24893,7 @@ module.exports = function(logger, window, session, env) {
 
 
 
-},{"ag-data":3,"bluebird":166}],203:[function(require,module,exports){
+},{"ag-data":3,"bluebird":166}],208:[function(require,module,exports){
 var Bacon, deepEqual,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -24492,7 +24995,7 @@ module.exports = function(window) {
 
 
 
-},{"baconjs":165,"deep-equal":167}],204:[function(require,module,exports){
+},{"baconjs":165,"deep-equal":167}],209:[function(require,module,exports){
 var Promise, Session, adapters;
 
 adapters = require('./storage/adapters');
@@ -24534,7 +25037,7 @@ module.exports = function(logger, window) {
 
 
 
-},{"./channel":203,"./model":205,"./session":206,"./storage/adapters":207,"./storage/property":209,"bluebird":166}],205:[function(require,module,exports){
+},{"./channel":208,"./model":210,"./session":211,"./storage/adapters":212,"./storage/property":214,"bluebird":166}],210:[function(require,module,exports){
 var Bacon, data;
 
 data = require('ag-data');
@@ -24968,7 +25471,7 @@ module.exports = function(logger, window, getDefaultCacheStorage, session) {
 
 
 
-},{"ag-data":3,"baconjs":165}],206:[function(require,module,exports){
+},{"ag-data":3,"baconjs":165}],211:[function(require,module,exports){
 var Session, SessionValidationError, adapters,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -25051,7 +25554,7 @@ module.exports = Session;
 
 
 
-},{"./storage/adapters":207}],207:[function(require,module,exports){
+},{"./storage/adapters":212}],212:[function(require,module,exports){
 var JsonLocalStorage, Promise, data, localforage;
 
 Promise = require('bluebird');
@@ -25083,7 +25586,7 @@ module.exports = {
 
 
 
-},{"./adapters/JsonLocalStorage":208,"ag-data":3,"bluebird":166,"localforage":193}],208:[function(require,module,exports){
+},{"./adapters/JsonLocalStorage":213,"ag-data":3,"bluebird":166,"localforage":193}],213:[function(require,module,exports){
 var JsonLocalStorage;
 
 JsonLocalStorage = (function() {
@@ -25117,7 +25620,7 @@ module.exports = JsonLocalStorage;
 
 
 
-},{}],209:[function(require,module,exports){
+},{}],214:[function(require,module,exports){
 var Bacon,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -25175,7 +25678,7 @@ module.exports = function(logger, window, channel) {
 
 
 
-},{"baconjs":165}],210:[function(require,module,exports){
+},{"baconjs":165}],215:[function(require,module,exports){
 module.exports = function(steroids, log) {
   return {
     ping: require("./ping")(steroids, log)
@@ -25184,7 +25687,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"./ping":211}],211:[function(require,module,exports){
+},{"./ping":216}],216:[function(require,module,exports){
 var Promise, superify;
 
 Promise = require('bluebird');
@@ -25234,7 +25737,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../superify":229,"bluebird":166}],212:[function(require,module,exports){
+},{"../superify":236,"bluebird":166}],217:[function(require,module,exports){
 var Bacon, Promise, deviceready, superify;
 
 Promise = require('bluebird');
@@ -25392,7 +25895,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../events":224,"../superify":229,"baconjs":165,"bluebird":166}],213:[function(require,module,exports){
+},{"../events":229,"../superify":236,"baconjs":165,"bluebird":166}],218:[function(require,module,exports){
 module.exports = function(steroids, log) {
   var bug, callbacks, override, whenPressed, _addCallback, _handler, _removeCallback;
   bug = log.debuggable("supersonic.device.buttons.back");
@@ -25479,7 +25982,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{}],214:[function(require,module,exports){
+},{}],219:[function(require,module,exports){
 
 /*
   * @namespace supersonic.device
@@ -25495,7 +25998,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"./back":213}],215:[function(require,module,exports){
+},{"./back":218}],220:[function(require,module,exports){
 var Bacon, Promise, deviceready, superify;
 
 Promise = require('bluebird');
@@ -25649,7 +26152,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../events":224,"../superify":229,"baconjs":165,"bluebird":166}],216:[function(require,module,exports){
+},{"../events":229,"../superify":236,"baconjs":165,"bluebird":166}],221:[function(require,module,exports){
 var Bacon, Promise, deviceready, superify;
 
 Promise = require('bluebird');
@@ -25803,7 +26306,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../events":224,"../superify":229,"baconjs":165,"bluebird":166}],217:[function(require,module,exports){
+},{"../events":229,"../superify":236,"baconjs":165,"bluebird":166}],222:[function(require,module,exports){
 var Promise;
 
 Promise = require('bluebird');
@@ -25824,7 +26327,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"./accelerometer":212,"./buttons":214,"./compass":215,"./geolocation":216,"./network":218,"./platform":219,"./push":220,"./ready":221,"./vibrate":222,"bluebird":166}],218:[function(require,module,exports){
+},{"./accelerometer":217,"./buttons":219,"./compass":220,"./geolocation":221,"./network":223,"./platform":224,"./push":225,"./ready":226,"./vibrate":227,"bluebird":166}],223:[function(require,module,exports){
 var Promise, network;
 
 Promise = require('bluebird');
@@ -25918,7 +26421,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../events":224,"bluebird":166}],219:[function(require,module,exports){
+},{"../events":229,"bluebird":166}],224:[function(require,module,exports){
 var Promise, deviceready;
 
 Promise = require('bluebird');
@@ -25980,7 +26483,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../events":224,"bluebird":166}],220:[function(require,module,exports){
+},{"../events":229,"bluebird":166}],225:[function(require,module,exports){
 var Bacon, Promise, deviceready, superify;
 
 Promise = require('bluebird');
@@ -26124,7 +26627,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../events":224,"../superify":229,"baconjs":165,"bluebird":166}],221:[function(require,module,exports){
+},{"../events":229,"../superify":236,"baconjs":165,"bluebird":166}],226:[function(require,module,exports){
 var Promise, deviceready;
 
 Promise = require('bluebird');
@@ -26158,7 +26661,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../events":224,"bluebird":166}],222:[function(require,module,exports){
+},{"../events":229,"bluebird":166}],227:[function(require,module,exports){
 var Promise, deviceready;
 
 Promise = require('bluebird');
@@ -26196,7 +26699,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../events":224,"bluebird":166}],223:[function(require,module,exports){
+},{"../events":229,"bluebird":166}],228:[function(require,module,exports){
 module.exports = function(logger, window) {
   var _ref;
   return ((_ref = window.parent.appgyver) != null ? _ref.environment : void 0) || {
@@ -26206,7 +26709,7 @@ module.exports = function(logger, window) {
 
 
 
-},{}],224:[function(require,module,exports){
+},{}],229:[function(require,module,exports){
 var Bacon, Promise;
 
 Promise = require('bluebird');
@@ -26272,7 +26775,7 @@ module.exports = {
 
 
 
-},{"baconjs":165,"bluebird":166}],225:[function(require,module,exports){
+},{"baconjs":165,"bluebird":166}],230:[function(require,module,exports){
 var Bacon, Promise, logMessageEnvelope, logMessageStream, startFlushing,
   __slice = [].slice;
 
@@ -26495,7 +26998,7 @@ module.exports = function(steroids, window) {
 
 
 
-},{"baconjs":165,"bluebird":166}],226:[function(require,module,exports){
+},{"baconjs":165,"bluebird":166}],231:[function(require,module,exports){
 var Promise, deviceready, superify;
 
 Promise = require('bluebird');
@@ -26792,7 +27295,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../events":224,"../superify":229,"bluebird":166}],227:[function(require,module,exports){
+},{"../events":229,"../superify":236,"bluebird":166}],232:[function(require,module,exports){
 var Promise;
 
 Promise = require('bluebird');
@@ -26805,16 +27308,81 @@ module.exports = function(steroids, log) {
 
 
 
-},{"./camera":226,"bluebird":166}],228:[function(require,module,exports){
-var Promise, enterpriseModule;
+},{"./camera":231,"bluebird":166}],233:[function(require,module,exports){
+var querystring;
+
+querystring = require('qs');
+
+module.exports = function(logger) {
+  var getAttribute, getModuleFrameAttribute, getUrlParamAttribute, hasAttribute;
+  getModuleFrameAttribute = function(name) {
+    var _ref;
+    return typeof window !== "undefined" && window !== null ? (_ref = window.frameElement) != null ? typeof _ref.getAttribute === "function" ? _ref.getAttribute("data-" + name) : void 0 : void 0 : void 0;
+  };
+  getUrlParamAttribute = (function() {
+    var getHrefParamsString, getParentLocationHrefParams, params;
+    getHrefParamsString = function() {
+      var href, _ref;
+      href = (typeof window !== "undefined" && window !== null ? (_ref = window.parent) != null ? _ref.location.href : void 0 : void 0) || "";
+      return href.slice(href.indexOf('?') + 1);
+    };
+    getParentLocationHrefParams = function() {
+      return querystring.parse(getHrefParamsString());
+    };
+    params = null;
+    return function(name) {
+      if (params == null) {
+        params = getParentLocationHrefParams();
+      }
+      return params[name];
+    };
+  })();
+  getAttribute = function(name, defaultValue) {
+    var get, value, _i, _len, _ref;
+    if (defaultValue == null) {
+      defaultValue = null;
+    }
+    _ref = [getModuleFrameAttribute, getUrlParamAttribute];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      get = _ref[_i];
+      value = get(name);
+      if (value != null) {
+        return value;
+      }
+    }
+    return defaultValue;
+  };
+  hasAttribute = function(name) {
+    return (getModuleFrameAttribute(name) != null) || (getUrlParamAttribute(name) != null);
+  };
+  return {
+    get: getAttribute,
+    has: hasAttribute
+  };
+};
+
+
+
+},{"qs":194}],234:[function(require,module,exports){
+module.exports = function(logger) {
+  return {
+    initialModuleElements: require('./initial-module-elements')(logger),
+    attributes: require('./attributes')(logger)
+  };
+};
+
+
+
+},{"./attributes":233,"./initial-module-elements":235}],235:[function(require,module,exports){
+var Promise;
 
 Promise = require('bluebird');
 
-module.exports = enterpriseModule = function(logger) {
+module.exports = function(logger) {
   var createObserverFor, initialModuleElements, observeModuleElementSize, resizeModuleElement;
   initialModuleElements = Promise.delay(0).then(function() {
     var element, moduleElements, _fn, _i, _len;
-    moduleElements = document.querySelectorAll("iframe[data-module]");
+    moduleElements = (typeof document !== "undefined" && document !== null ? document.querySelectorAll("iframe[data-module]") : void 0) || [];
     _fn = function(element) {
       observeModuleElementSize(element);
       return element.onload = function() {
@@ -26850,14 +27418,12 @@ module.exports = enterpriseModule = function(logger) {
     height = moduleElement.contentDocument.body.scrollHeight;
     return moduleElement.style.height = height + unit;
   };
-  return {
-    initialModuleElements: initialModuleElements
-  };
+  return initialModuleElements;
 };
 
 
 
-},{"bluebird":166}],229:[function(require,module,exports){
+},{"bluebird":166}],236:[function(require,module,exports){
 var Bacon,
   __slice = [].slice;
 
@@ -26928,7 +27494,7 @@ module.exports = function(namespace, logger) {
 
 
 
-},{"baconjs":165}],230:[function(require,module,exports){
+},{"baconjs":165}],237:[function(require,module,exports){
 var Promise;
 
 Promise = require('bluebird');
@@ -26993,7 +27559,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"bluebird":166}],231:[function(require,module,exports){
+},{"bluebird":166}],238:[function(require,module,exports){
 var Promise, parseRoute,
   __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
@@ -27260,7 +27826,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"./views/parseRoute":247,"bluebird":166}],232:[function(require,module,exports){
+},{"./views/parseRoute":254,"bluebird":166}],239:[function(require,module,exports){
 var Promise,
   __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
@@ -27408,7 +27974,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"bluebird":166}],233:[function(require,module,exports){
+},{"bluebird":166}],240:[function(require,module,exports){
 var Promise, deviceready, superify;
 
 Promise = require('bluebird');
@@ -27479,7 +28045,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../../events":224,"../../superify":229,"bluebird":166}],234:[function(require,module,exports){
+},{"../../events":229,"../../superify":236,"bluebird":166}],241:[function(require,module,exports){
 var Promise, deviceready, superify;
 
 Promise = require('bluebird');
@@ -27560,7 +28126,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../../events":224,"../../superify":229,"bluebird":166}],235:[function(require,module,exports){
+},{"../../events":229,"../../superify":236,"bluebird":166}],242:[function(require,module,exports){
 
 /*
   * @namespace supersonic.ui
@@ -27578,7 +28144,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"./alert":233,"./confirm":234,"./prompt":236}],236:[function(require,module,exports){
+},{"./alert":240,"./confirm":241,"./prompt":243}],243:[function(require,module,exports){
 var Promise, deviceready, superify;
 
 Promise = require('bluebird');
@@ -27662,7 +28228,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../../events":224,"../../superify":229,"bluebird":166}],237:[function(require,module,exports){
+},{"../../events":229,"../../superify":236,"bluebird":166}],244:[function(require,module,exports){
 var Promise, superify;
 
 Promise = require('bluebird');
@@ -28044,7 +28610,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../superify":229,"bluebird":166}],238:[function(require,module,exports){
+},{"../superify":236,"bluebird":166}],245:[function(require,module,exports){
 module.exports = function(steroids, log, global) {
   return {
     View: require("./View")(steroids, log),
@@ -28064,7 +28630,7 @@ module.exports = function(steroids, log, global) {
 
 
 
-},{"./NavigationBarButton":230,"./View":231,"./animate":232,"./dialog":235,"./drawers":237,"./initialView":239,"./layers":240,"./modal":241,"./navigationBar":242,"./screen":243,"./tabs":244,"./views":245}],239:[function(require,module,exports){
+},{"./NavigationBarButton":237,"./View":238,"./animate":239,"./dialog":242,"./drawers":244,"./initialView":246,"./layers":247,"./modal":248,"./navigationBar":249,"./screen":250,"./tabs":251,"./views":252}],246:[function(require,module,exports){
 var Promise, superify;
 
 Promise = require("bluebird");
@@ -28158,7 +28724,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../superify":229,"bluebird":166}],240:[function(require,module,exports){
+},{"../superify":236,"bluebird":166}],247:[function(require,module,exports){
 var Promise, superify;
 
 Promise = require('bluebird');
@@ -28360,7 +28926,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../superify":229,"bluebird":166}],241:[function(require,module,exports){
+},{"../superify":236,"bluebird":166}],248:[function(require,module,exports){
 var Promise, superify;
 
 Promise = require('bluebird');
@@ -28567,7 +29133,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../superify":229,"bluebird":166}],242:[function(require,module,exports){
+},{"../superify":236,"bluebird":166}],249:[function(require,module,exports){
 var Promise, superify;
 
 Promise = require('bluebird');
@@ -28857,7 +29423,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../superify":229,"bluebird":166}],243:[function(require,module,exports){
+},{"../superify":236,"bluebird":166}],250:[function(require,module,exports){
 var Promise, superify;
 
 Promise = require('bluebird');
@@ -28958,7 +29524,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../superify":229,"bluebird":166}],244:[function(require,module,exports){
+},{"../superify":236,"bluebird":166}],251:[function(require,module,exports){
 var Promise, parseRoute, superify;
 
 Promise = require('bluebird');
@@ -29315,7 +29881,7 @@ module.exports = function(steroids, log) {
 
 
 
-},{"../superify":229,"./views/parseRoute":247,"bluebird":166}],245:[function(require,module,exports){
+},{"../superify":236,"./views/parseRoute":254,"bluebird":166}],252:[function(require,module,exports){
 var Promise, superify;
 
 Promise = require('bluebird');
@@ -29492,7 +30058,7 @@ module.exports = function(steroids, log, global) {
 
 
 
-},{"../superify":229,"./View":231,"./views/current":246,"bluebird":166}],246:[function(require,module,exports){
+},{"../superify":236,"./View":238,"./views/current":253,"bluebird":166}],253:[function(require,module,exports){
 var Bacon, Promise, channel, events;
 
 Bacon = require('baconjs');
@@ -29665,7 +30231,7 @@ module.exports = function(steroids, log, global) {
 
 
 
-},{"../../data/channel":203,"../../events":224,"baconjs":165,"bluebird":166}],247:[function(require,module,exports){
+},{"../../data/channel":208,"../../events":229,"baconjs":165,"bluebird":166}],254:[function(require,module,exports){
 module.exports = function(location, options) {
   var module, parts, path, query, routePattern, view, whole;
   if (options == null) {
@@ -29687,7 +30253,7 @@ module.exports = function(location, options) {
 
 
 
-},{}],248:[function(require,module,exports){
+},{}],255:[function(require,module,exports){
 var createLocalStorage;
 
 module.exports = createLocalStorage = function() {
@@ -29708,7 +30274,7 @@ module.exports = createLocalStorage = function() {
 
 
 
-},{}],249:[function(require,module,exports){
+},{}],256:[function(require,module,exports){
 var __slice = [].slice;
 
 module.exports = (function() {
@@ -29798,7 +30364,7 @@ module.exports = (function() {
 
 
 
-},{}],250:[function(require,module,exports){
+},{}],257:[function(require,module,exports){
 var Window, localStorage;
 
 localStorage = require('./localStorage');
@@ -29827,4 +30393,4 @@ module.exports = Window;
 
 
 
-},{"./localStorage":248}]},{},[194])
+},{"./localStorage":255}]},{},[199])

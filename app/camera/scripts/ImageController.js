@@ -5,10 +5,22 @@ angular
     $scope.zoomchange=1;  
     var photoSaved={};
     $scope.progresstable = {};
-  	$scope.progresstables = null;
+    $scope.progresstables = null;
     $scope.photoToken=null;
     $scope.bool = false;
-
+    $scope.bool2 = false;
+    if (document.getElementById("editImage")==null){
+        height = 300;
+    }
+    else{
+        height = document.getElementById("editImage").height;
+    }
+    if (document.getElementById("editImage")==null){
+        width = 300;
+    }
+    else{
+        width = document.getElementById("editImage").width;
+    }
       
     $scope.Back = function(){
         supersonic.ui.modal.hide();
@@ -28,43 +40,53 @@ angular
 
     if (localStorage.imageURL) {
         $scope.photo = "data:image/png;base64,"+localStorage.imageURL;
+        $scope.bool2 = true;
     }
     else{
         $scope.photo = "/images/bigtoe.png"
     }
+    $scope.imagesetting = function(){
+       if( $scope.bool2 = true){
+        var myElement = document.getElementById("draggable");
 
-   
-    var myElement = document.getElementById("draggable");
-
-    var mc = new Hammer.Manager(myElement);
-      
-    var pinch = new Hammer.Pinch();
-    var pan = new Hammer.Pan();
-    mc.add([pinch, pan]);
-    mc.on("pinchout", function(ev) {
-        if(document.myImage.width <400 && document.myImage.height<400) {
-            document.myImage.width *= 1.02;
-            document.myImage.height *= 1.02;
-            //myElement.textContent += ev.scale +" ";
+        var mc = new Hammer.Manager(myElement);
+          
+        var pinch = new Hammer.Pinch();
+        var pan = new Hammer.Pan();
+        mc.add([pinch, pan]);
         }
-    });
+        else{
+        var myElement = "/images/bigtoe.png";
 
-    mc.on("pinchin", function(ev) {
-        if(document.myImage.width > 200 && document.myImage.height>200){
-            document.myImage.width /=1.02;
-            document.myImage.height /=1.02;
+        var mc = "/images/bigtoe.png";
+    
         }
-    });
+    
+        mc.on("pinchout", function(ev) {
+            if(document.myImage.width <400 && document.myImage.height<400) {
+                document.myImage.width *= 1.02;
+                document.myImage.height *= 1.02;
+                //myElement.textContent += ev.scale +" ";
+            }
+        });
 
-    //drag stuff below
-    var tempLeft = 0;
-    var tempTop = 0;
-    mc.on("panleft panright panup pandown", function(ev) {
+        mc.on("pinchin", function(ev) {
+            if(document.myImage.width > 200 && document.myImage.height>200){
+                document.myImage.width /=1.02;
+                document.myImage.height /=1.02;
+            }
+        });
+        mc.on("panleft panright panup pandown", function(ev) {
         myElement.style.left = (ev.center.x - document.myImage.width/2.0) + "px";
         myElement.style.top = (ev.center.y - document.myImage.height/4.0) + "px";
         tempLeft = ev.center.x - document.myImage.width/2.0;
         tempTop = ev.center.y - document.myImage.height/4.0;
-    });
+        });
+    }
+    //drag stuff below
+    var tempLeft = 0;
+    var tempTop = 0;
+
 
 
     var originalWidth = 300;
@@ -137,6 +159,7 @@ angular
                 startY = tempTop - startHeight - 15;
                 startX = -tempWidth;
             }
+
 
             //image is too top and too left
             else if (bottom > document.getElementById("editImage").height && right > document.getElementById("editImage").width){
