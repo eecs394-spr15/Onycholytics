@@ -1,9 +1,7 @@
 // Karma configuration
-<<<<<<< Updated upstream
+
 // Generated on Mon Jun 08 2015 12:39:50 GMT-0500 (CDT)
-=======
-// Generated on Fri Jun 05 2015 15:53:36 GMT-0500 (CDT)
->>>>>>> Stashed changes
+
 
 module.exports = function(config) {
   config.set({
@@ -19,11 +17,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-<<<<<<< Updated upstream
-        //'test/**/*Spec.js'
-=======
-      //'test/**/*Spec.js'
->>>>>>> Stashed changes
+
       '/Users/zhouqing/Onycholytics/bower_components/angular/angular.js',
       '/Users/zhouqing/Onycholytics/bower_components/angular-mocks/angular-mocks.js',
       '/Users/zhouqing/Onycholytics/dist/cloud-resources.js',
