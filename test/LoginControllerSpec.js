@@ -1,7 +1,6 @@
 describe("camera module", function () {
     beforeEach(module('camera'));
 
-<<<<<<< Updated upstream
     describe("LoginController.js", function () {
         var rootsScope, scope, controller;
 
@@ -39,23 +38,6 @@ describe("camera module", function () {
             expect(scope.username).toBe('studyCoordinator');
             expect(scope.password).toBe('studyCoordinator');
             //expect(scope.username).toBe('patient');
-            
-=======
-    describe("IndexController", function () {
-        var $scope;
-
-        beforeEach(inject(function ($rootScope, $controller) {
-            $scope = $rootScope.$new();
-            $controller('IndexController', {$scope: $scope});
-        }));
-
-        it("numImage should be 0", function () {
-            expect($scope.numImage).toBe(0);
-        });
-
-        it("totalImage should be 0", function () {
-            expect($scope.totalImage).toBe(0);
->>>>>>> Stashed changes
         });
     });
 });
