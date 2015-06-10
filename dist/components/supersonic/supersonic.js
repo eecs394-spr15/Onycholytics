@@ -1,7 +1,12 @@
 /**
  * supersonic
+<<<<<<< Updated upstream
  * Version: 1.5.7
  * Published: 2015-06-08
+=======
+ * Version: 1.5.6
+ * Published: 2015-06-04
+>>>>>>> Stashed changes
  * Homepage: https://github.com/AppGyver/supersonic
  * License: MIT
  */

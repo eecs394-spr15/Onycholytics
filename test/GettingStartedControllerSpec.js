@@ -1,7 +1,10 @@
 describe("example module", function () {
+<<<<<<< Updated upstream
     it("should be true", function(){
         expect(true).toBe(true);
     });
+=======
+>>>>>>> Stashed changes
     beforeEach(module('example'));
 
     describe("GettingStartedController.js", function () {
@@ -17,8 +20,13 @@ describe("example module", function () {
 
         it("test takePhoto()", function () {
             controller("GettingStartedController", {$scope: scope});
+<<<<<<< Updated upstream
             //console.log(window.localStorage.getItem('imageURL'));
             //console.log(scope.result);
+=======
+            console.log(window.localStorage.getItem('imageURL'));
+            console.log(scope.result);
+>>>>>>> Stashed changes
         });
     });
 });

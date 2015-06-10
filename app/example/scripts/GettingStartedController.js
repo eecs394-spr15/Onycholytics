@@ -2,7 +2,7 @@
 angular
   .module('example')
   .controller('GettingStartedController', function($scope, supersonic) {
-
+    $scope.result = null;
 	var options = {
 	  quality: 100,
 	  allowEdit: false,

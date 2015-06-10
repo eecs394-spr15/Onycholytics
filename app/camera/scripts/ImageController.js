@@ -233,6 +233,7 @@ angular
         $scope.bool = true;
         $scope.showSpinner = true;
     }
+        
 
     
      

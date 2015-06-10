@@ -7,6 +7,7 @@
         <methods>
           <include name="test"/>
           <include name="beforeTest"/>
+          <include name="afterTest"/>
         </methods>
       </class> <!-- com.YangHong.NGTest -->
     </classes>

@@ -6,7 +6,7 @@ angular
     $scope.photoToken=null;
   	$scope.numImage = 0;
   	$scope.totalImage = 0;
-
+    //$scope.usertableLength = Usertable.length;
     var options = {
 	  quality: 100,
 	  targetWidth: 300,
