@@ -10,16 +10,16 @@ angular
     $scope.bool = false;
     $scope.bool2 = false;
     if (document.getElementById("editImage")==null){
-        height = 300;
+        $scope.height = 300;
     }
     else{
-        height = document.getElementById("editImage").height;
+        $scope.height = document.getElementById("editImage").height;
     }
     if (document.getElementById("editImage")==null){
-        width = 300;
+        $scope.width = 300;
     }
     else{
-        width = document.getElementById("editImage").width;
+        $scope.width = document.getElementById("editImage").width;
     }
       
     $scope.Back = function(){
@@ -30,8 +30,8 @@ angular
         var img = document.createElement("img");
         img.name = "myImage";
         img.src = src;
-        img.width = width;
-        img.height = height;
+        img.width = $scope.width;
+        img.height = $scope.height;
 
         // This next line will just add it to the <body> tag
         document.getElementById("draggable").appendChild(img);
@@ -95,9 +95,11 @@ angular
     $scope.resetImage=function(){ 
         document.myImage.width = originalWidth; 
         document.myImage.height = originalHeight; 
-        myElement.style.left = 20 + "px";
-        myElement.style.top = 200 + "px";
-        myElement.reset();
+        document.getElementById("draggable").style.left = 20 + "px";
+        document.getElementById("draggable").style.top = 200 + "px";
+        //myElement=document.getElementById("draggable");
+        //if (myElement!=undefined)
+        //    myElement.reset();
  
     } 
 

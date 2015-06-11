@@ -10,6 +10,11 @@ angular
       $scope.message['message'] = {};
       if (document.getElementById("messageTitle") == true){
       $scope.message['message']['title'] = document.getElementById("messageTitle").value;}
+      else
+      {
+        document.getElementById("messageTitle").value = "New Message";
+        $scope.message['message']['title'] = document.getElementById("messageTitle").value;
+      }
       if (document.getElementById("messageBody") == true){
       $scope.message['message']['text'] = document.getElementById("messageBody").value;}
       $scope.message['patientID'] = "tQ9kOyUEJE";
